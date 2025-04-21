@@ -4,33 +4,96 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Level {
+    private static final int TILE_SIZE = 50;
+    private static final int LIN = 600 / TILE_SIZE; // 12
+    private static final int COLS = 800 / TILE_SIZE; // 16
     ArrayList<Platform> platforms;
     ArrayList<Trap> traps;
+
+    private static final int[][] mapa1 = {
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 4, 4, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 4, 4, 4, 0, 2, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 1, 2, 3, 1, 1, 2, 2, 3, 3, 1, 2, 1, 2, 1, 1, 1 }
+    };
+
+    private static final int[][] mapa2 = {
+            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
+    };
 
     public Level(int number) {
         platforms = new ArrayList<>();
         traps = new ArrayList<>();
 
-        // chão
-        platforms.add(new Platform(0, 550, 800, 50));
-
+        /*
+         * // chão
+         * platforms.add(new Platform(0, 550, 800, 50));
+         */
         if (number == 1) {
-            platforms.add(new Platform(200, 450, 100, 20));
-            platforms.add(new Platform(400, 350, 100, 20));
-
-            traps.add(new Trap(300, 530, 40, 20));
-            traps.add(new Trap(600, 530, 40, 20));
+            carregarMapa(mapa1);
+            /*
+             * 
+             * platforms.add(new Platform(200, 450, 100, 20));
+             * platforms.add(new Platform(400, 350, 100, 20));
+             * 
+             * traps.add(new Trap(300, 530, 40, 20));
+             * traps.add(new Trap(600, 530, 40, 20));
+             */
         } else if (number == 2) {
-            platforms.add(new Platform(150, 450, 100, 20));
-            platforms.add(new Platform(350, 400, 100, 20));
-            platforms.add(new Platform(560, 250, 100, 20));
-            platforms.add(new Platform(500, 300, 10, 10));
-
-            traps.add(new Trap(265, 390, 40, 160));
-            traps.add(new Trap(440, 530, 230, 20));
-            traps.add(new Trap(750, 180, 50, 280));
+            carregarMapa(mapa2);
+            /*
+             * 
+             * platforms.add(new Platform(150, 450, 100, 20));
+             * platforms.add(new Platform(350, 400, 100, 20));
+             * platforms.add(new Platform(560, 250, 100, 20));
+             * platforms.add(new Platform(500, 300, 10, 10));
+             * 
+             * traps.add(new Trap(265, 390, 40, 160));
+             * traps.add(new Trap(440, 530, 230, 20));
+             * traps.add(new Trap(750, 180, 50, 280));
+             */
         }
         // Adicione mais níveis se quiser
+    }
+
+    private void carregarMapa(int[][] mapa) {
+        for (int row = 0; row < LIN; row++) {
+            for (int col = 0; col < COLS; col++) {
+                int valor = mapa[row][col];
+                int x = col * TILE_SIZE;
+                int y = row * TILE_SIZE;
+
+                switch (valor) {
+                    // PLATAFORMA
+                    case 1, 2, 3, 4:
+                        platforms.add(new Platform(x, y, TILE_SIZE, TILE_SIZE, valor));
+                        break;
+                    // TRAPS
+                    case 5:
+                        traps.add(new Trap(x, y, TILE_SIZE, TILE_SIZE));
+                        break;
+                }
+            }
+        }
     }
 
     public void draw(Graphics g) {
@@ -43,7 +106,8 @@ public class Level {
 
     public boolean checkTrapCollision(Player player) {
         for (Trap t : traps) {
-            if (t.checkCollision(player)) return true;
+            if (t.checkCollision(player))
+                return true;
         }
         return false;
     }
