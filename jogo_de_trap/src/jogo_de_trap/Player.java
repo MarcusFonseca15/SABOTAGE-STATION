@@ -33,6 +33,13 @@ public class Player {
             velY += GRAVITY;
         }
 
+        // Pulando se estiver no chão
+        if (wantToJump && onGround) {
+            velY = -15;
+            jumping = true;
+            onGround = false;
+        }
+
         y += velY;
 
         // Impede sair da tela
@@ -45,7 +52,11 @@ public class Player {
             jumping = false;
             onGround = true;
         }
+
+        wantToJump = false; // Limpa após a tentativa
     }
+
+    boolean wantToJump = false;
 
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
@@ -54,12 +65,11 @@ public class Player {
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             velX = -5;
         }
-        if (e.getKeyCode() == KeyEvent.VK_SPACE && onGround) {
-            jumping = true;
-            onGround = false;
-            velY = -15;
+        if (e.getKeyCode() == KeyEvent.VK_X) {
+            wantToJump = true;
         }
     }
+
 
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_LEFT) {
