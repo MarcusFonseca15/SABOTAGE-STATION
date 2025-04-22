@@ -14,7 +14,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private Level level;
 
     private int currentLevel = 1;
-    private final int maxLevels = 2; // total de níveis disponíveis
+    private final int maxLevels = 3; // total de níveis disponíveis
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(LARGURA, ALTURA));
