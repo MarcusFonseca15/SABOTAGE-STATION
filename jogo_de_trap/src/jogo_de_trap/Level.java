@@ -2,6 +2,7 @@ package jogo_de_trap;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.awt.Rectangle;
 
 public class Level {
     private static final int TILE_SIZE = 50;
@@ -39,7 +40,7 @@ public class Level {
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
     };
-    
+
     private static final int[][] mapa3 = {
             { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -86,8 +87,7 @@ public class Level {
              * traps.add(new Trap(440, 530, 230, 20));
              * traps.add(new Trap(750, 180, 50, 280));
              */
-        }
-        else if (number == 3) {
+        } else if (number == 3) {
             carregarMapa(mapa3);
             /*
              * 
