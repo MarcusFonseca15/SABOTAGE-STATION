@@ -60,46 +60,15 @@ public class Level {
         platforms = new ArrayList<>();
         traps = new ArrayList<>();
 
-        /*
-         * // chão
-         * platforms.add(new Platform(0, 550, 800, 50));
-         */
         if (number == 1) {
             carregarMapa(mapa1);
-            /*
-             * 
-             * platforms.add(new Platform(200, 450, 100, 20));
-             * platforms.add(new Platform(400, 350, 100, 20));
-             * 
-             * traps.add(new Trap(300, 530, 40, 20));
-             * traps.add(new Trap(600, 530, 40, 20));
-             */
+
         } else if (number == 2) {
             carregarMapa(mapa2);
-            /*
-             * 
-             * platforms.add(new Platform(150, 450, 100, 20));
-             * platforms.add(new Platform(350, 400, 100, 20));
-             * platforms.add(new Platform(560, 250, 100, 20));
-             * platforms.add(new Platform(500, 300, 10, 10));
-             * 
-             * traps.add(new Trap(265, 390, 40, 160));
-             * traps.add(new Trap(440, 530, 230, 20));
-             * traps.add(new Trap(750, 180, 50, 280));
-             */
+ 
         } else if (number == 3) {
             carregarMapa(mapa3);
-            /*
-             * 
-             * platforms.add(new Platform(150, 450, 100, 20));
-             * platforms.add(new Platform(350, 400, 100, 20));
-             * platforms.add(new Platform(560, 250, 100, 20));
-             * platforms.add(new Platform(500, 300, 10, 10));
-             * 
-             * traps.add(new Trap(265, 390, 40, 160));
-             * traps.add(new Trap(440, 530, 230, 20));
-             * traps.add(new Trap(750, 180, 50, 280));
-             */
+
         }
         // Adicione mais níveis se quiser
     }
@@ -150,15 +119,24 @@ public class Level {
 
             if (playerBounds.intersects(platformBounds)) {
                 if (player.y + player.height - player.velY <= p.y) {
+                    // colisão por cima
                     player.y = p.y - player.height;
                     player.velY = 0;
                     player.jumping = false;
                     player.onGround = true;
                 } else if (player.y - player.velY >= p.y + p.height) {
+                    // colisão por baixo
                     player.y = p.y + p.height;
                     player.velY = 0;
+                } else if (player.x + player.width - player.velX <= p.x) {
+                    // colisão pela esquerda
+                    player.x = p.x - player.width;
+                } else if (player.x - player.velX >= p.x + p.width) {
+                    // colisão pela direita
+                    player.x = p.x + p.width;
                 }
             }
+
         }
     }
 }
