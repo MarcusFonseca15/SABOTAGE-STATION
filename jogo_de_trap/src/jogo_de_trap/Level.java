@@ -87,13 +87,14 @@ public abstract class Level {
             case 1, 2, 3, 4:
                 return new Platform(x, y, TILE_SIZE, TILE_SIZE, tipo);
             case 5: // pistao normal
-                return new Pistao(x, y, 1, false);
+                return new Pistao(x, y, TILE_SIZE, TILE_SIZE, 1, false);
             case 6: // pistao camuflado
-                return new Pistao(x, y, 3, true);
-            case 7, 8, 9:
-                Laser laser = new Laser(x, y, TILE_SIZE, TILE_SIZE, tipo);
-                lasers.add(laser);
-                return laser;
+                return new Pistao(x, y, TILE_SIZE, TILE_SIZE, 3, true);
+            case 7: // feixe de laser
+                return new Laser(x, y + 15, TILE_SIZE, 20, tipo);
+            case 9, 8: // base do laser
+                return new Laser(x, y, TILE_SIZE, TILE_SIZE, tipo);
+
             default:
                 return null;
         }

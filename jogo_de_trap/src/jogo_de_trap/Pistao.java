@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class Pistao extends Objeto {
-    int nivelForca; // 1, 2, 3
+    int forca; // 1, 2, 3
     boolean ativo = false;
     int frameAtual = 0;
     int contFrame = 0;
@@ -17,19 +17,21 @@ public class Pistao extends Objeto {
 
     Player player;
 
-    public Pistao(int x, int y, int nivelForca, boolean camufla) {
-        super(x, y, 50, 50);
-        this.nivelForca = nivelForca;
+    public Pistao(int x, int y, int width, int height, int forca, boolean camufla) {
+        super(x, y, width, height);
+        this.forca = forca;
+
+        // carregarSprites();
 
         // Mostra frames de acordo com nivel de força
-        int totalFrames = nivelForca == 1 ? 3 : (nivelForca == 2 ? 5 : 7);
+        int totalFrames = forca == 1 ? 3 : (forca == 2 ? 5 : 7);
         sprites = new BufferedImage[totalFrames];
 
         String tipoSup = camufla ? "pistaoCam" : "pistaoNormal";
 
         for (int i = 0; i < totalFrames; i++) {
             try {
-                String path = "/jogo_de_trap/assets/pistaoSprites/" + tipoSup + (i + 1) + ".png";
+                String path = "/assets/pistaoSprites/" + tipoSup + (i + 1) + ".png";
                 var stream = getClass().getResourceAsStream(path);
 
                 if (stream == null) {
@@ -72,7 +74,7 @@ public class Pistao extends Objeto {
     private void propulsionar() {
         // se player está em cima, ativa o pistão
         if (player.y + player.height <= y + 10) {
-            int impulso = nivelForca == 1 ? -12 : (nivelForca == 2 ? -18 : -24);
+            int impulso = forca == 1 ? -16 : (forca == 2 ? -19 : -30);
             player.velY = impulso;
             player.jumping = true;
             player.onGround = false;
@@ -83,11 +85,21 @@ public class Pistao extends Objeto {
     public void draw(Graphics g) {
         BufferedImage img = sprites[frameAtual];
         if (img == null)
-            return; // evitar o NullPointerException
-        int alturaImg = img.getHeight(); // Altura original do frame
-        int yVisual = y + height - alturaImg; // Alinha a base do pistão com a base da célula
-        g.drawImage(img, x, yVisual, width, alturaImg, null);
+            return;
 
+        int alturaImg = img.getHeight();
+        int larguraImg = img.getWidth();
+
+        // Redimensiona SÓ a largura pra caber no TILE_SIZE (50), mantém altura real da
+        // imagem
+        // MUDAR DEPOIS PRA TILE_SIZE
+        int novaLargura = 50;
+        int novaAltura = alturaImg * novaLargura / larguraImg; // preserva proporção original
+
+        // Alinha a base da imagem com a base do tile
+        int yVisual = y + 50 - novaAltura;
+
+        g.drawImage(img, x, yVisual, novaLargura, novaAltura, null);
     }
 
     public Rectangle getBounds() {
@@ -96,4 +108,17 @@ public class Pistao extends Objeto {
         int yVisual = y + height - alturaImg;
         return new Rectangle(x, yVisual, width, alturaImg);
     }
+
+    /*
+     * @Override
+     * public Rectangle getBounds() {
+     * BufferedImage img = sprites[frameAtual];
+     * int alturaImg = img.getHeight();
+     * int yBaseCelula = y + height;
+     * int yVisual = yBaseCelula - alturaImg;
+     * 
+     * return new Rectangle(x, yVisual, img.getWidth(), alturaImg);
+     * 
+     * }
+     */
 }
