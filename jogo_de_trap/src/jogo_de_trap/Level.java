@@ -9,8 +9,10 @@ public abstract class Level {
     private static final int LIN = 600 / TILE_SIZE; // 12
     private static final int COLS = 800 / TILE_SIZE; // 16
     protected Objeto[][] mapaObjetos = new Objeto[LIN][COLS];
+
     ArrayList<Platform> platforms = new ArrayList<>();
     ArrayList<Trap> traps = new ArrayList<>();
+    ArrayList<Pistao> pistoes = new ArrayList<>();
 
     public Level(int number) {
         carregarMapa(getMapa());
@@ -32,6 +34,8 @@ public abstract class Level {
                         platforms.add((Platform) obj);
                     } else if (obj instanceof Trap) {
                         traps.add((Trap) obj);
+                    } else if (obj instanceof Pistao) {
+                        pistoes.add((Pistao) obj);
                     }
                 }
             }
@@ -44,6 +48,9 @@ public abstract class Level {
 
         for (Trap t : traps)
             t.draw(g);
+
+        for (Pistao pistao : pistoes)
+            pistao.draw(g);
     }
 
     public boolean checkTrapCollision(Player player) {
@@ -81,8 +88,18 @@ public abstract class Level {
                 return new Platform(x, y, TILE_SIZE, TILE_SIZE, tipo);
             case 5:
                 return new Trap(x, y, TILE_SIZE, TILE_SIZE);
+            case 6: // pistao normal
+                return new Pistao(x, y, 1, false);
+            case 7: // pistao camuflado
+                return new Pistao(x, y, 3, true);
             default:
                 return null;
+        }
+    }
+
+    public void updatePistaos(Player p) {
+        for (Pistao pistao : pistoes) {
+            pistao.update(p);
         }
     }
 

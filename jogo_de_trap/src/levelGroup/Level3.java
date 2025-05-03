@@ -1,6 +1,9 @@
 package levelGroup;
 
-public class Level3 {
+import jogo_de_trap.Level;
+import jogo_de_trap.Platform;
+
+public class Level3 extends Level {
 
     private static int[][] mapa = {
             { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -16,6 +19,7 @@ public class Level3 {
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
     };
+
     @Override
     protected int[][] getMapa() {
         return mapa;
@@ -30,6 +34,5 @@ public class Level3 {
     protected void designTraps() {
 
     }
-
 
 }
