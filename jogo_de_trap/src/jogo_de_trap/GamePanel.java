@@ -71,7 +71,7 @@ public class GamePanel extends JPanel implements ActionListener {
         level.checkPlatformCollision(player);
         level.updatePistaos(player);
 
-        if (level.checkTrapCollision(player)) {
+        if (level.checkLaserCollision(player)) {
             System.out.println("Você caiu em uma armadilha! Resetando...");
             player.reset();
         }

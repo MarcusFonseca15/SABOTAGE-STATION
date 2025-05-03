@@ -11,7 +11,7 @@ public abstract class Level {
     protected Objeto[][] mapaObjetos = new Objeto[LIN][COLS];
 
     ArrayList<Platform> platforms = new ArrayList<>();
-    ArrayList<Trap> traps = new ArrayList<>();
+    ArrayList<Laser> lasers = new ArrayList<>();
     ArrayList<Pistao> pistoes = new ArrayList<>();
 
     public Level(int number) {
@@ -32,8 +32,8 @@ public abstract class Level {
 
                     if (obj instanceof Platform) {
                         platforms.add((Platform) obj);
-                    } else if (obj instanceof Trap) {
-                        traps.add((Trap) obj);
+                    } else if (obj instanceof Laser) {
+                        lasers.add((Laser) obj);
                     } else if (obj instanceof Pistao) {
                         pistoes.add((Pistao) obj);
                     }
@@ -46,16 +46,16 @@ public abstract class Level {
         for (Platform p : platforms)
             p.draw(g);
 
-        for (Trap t : traps)
+        for (Laser t : lasers)
             t.draw(g);
 
         for (Pistao pistao : pistoes)
             pistao.draw(g);
     }
 
-    public boolean checkTrapCollision(Player player) {
-        for (Trap t : traps) {
-            if (t.checkCollision(player))
+    public boolean checkLaserCollision(Player player) {
+        for (Laser l : lasers) {
+            if (l.checkCollision(player))
                 return true;
         }
         return false;
@@ -86,12 +86,14 @@ public abstract class Level {
         switch (tipo) {
             case 1, 2, 3, 4:
                 return new Platform(x, y, TILE_SIZE, TILE_SIZE, tipo);
-            case 5:
-                return new Trap(x, y, TILE_SIZE, TILE_SIZE);
-            case 6: // pistao normal
+            case 5: // pistao normal
                 return new Pistao(x, y, 1, false);
-            case 7: // pistao camuflado
+            case 6: // pistao camuflado
                 return new Pistao(x, y, 3, true);
+            case 7, 8, 9:
+                Laser laser = new Laser(x, y, TILE_SIZE, TILE_SIZE, tipo);
+                lasers.add(laser);
+                return laser;
             default:
                 return null;
         }

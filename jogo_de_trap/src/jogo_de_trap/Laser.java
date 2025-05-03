@@ -9,11 +9,12 @@ import java.awt.Rectangle;
 
 import javax.imageio.ImageIO;
 
-public class Trap extends Objeto {
+public class Laser extends Objeto {
     // int x, y, width, height;
     boolean active = true;
     boolean debug = false; // altere para true se quiser ver as armadilhas
-    public boolean visible = false; // <-- adiciona isso aqui
+    public boolean visible = true;
+
     private BufferedImage sprite;
 
     // Laser possui 4 sprites (um no começo e no final, e um no meio, e as suas
@@ -37,36 +38,31 @@ public class Trap extends Objeto {
      * }
      */
 
-    public Trap(int x, int y, int width, int height) {
+    public Laser(int x, int y, int width, int height, int tipo) {
         super(x, y, width, height);
-        this.height = height;
+        // this.height = height;
 
-        try {
-            sprite = ImageIO.read(getClass().getResourceAsStream("/assets/laserSprites/laser1.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
+        String path = switch (tipo) {
+            case 7 -> "/assets/laserSprites/laser1.png";
+            case 8 -> "/assets/laserSprites/laserBase1Dir.png";
+            case 9 -> "/assets/laserSprites/laserBase1Esq.png";
+            default -> throw new IllegalArgumentException("Tipo" + tipo + "é inválido");
+        };
+
+        if (path != null) {
+            try {
+                sprite = ImageIO.read(getClass().getResourceAsStream(path));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
     }
-    //
-    // public void draw(Graphics g) {
-    // if (active && debug) {
-    // g.setColor(Color.GRAY);
-    // g.fillRect(x, y, width, height);
-    // }
-    // }
 
     public boolean checkCollision(Player player) {
         Rectangle playerBounds = new Rectangle(player.x, player.y, player.width, player.height);
         return getBounds().intersects(playerBounds);
     }
-    /*
-     * public boolean checkCollision(Player player) {
-     * Rectangle trapBounds = new Rectangle(x, y, width, height);
-     * Rectangle playerBounds = new Rectangle(player.x, player.y, player.width,
-     * player.height);
-     * return trapBounds.intersects(playerBounds);
-     * }
-     */
 
     public Rectangle getBounds() {
         return new Rectangle(x, y, width, height);
