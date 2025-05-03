@@ -13,6 +13,6 @@ Matriz de objetos (ao invés de apenas números), onde cada objeto será uma ins
 Cada posição no mapa de nível poderia ser um objeto, e a matriz de mapa só faria a ligação com o tipo de objeto.
 Ex.: 
 Objeto[][] mapaObjetos = new Objeto[LIN][COLS];
-Onde Objeto é a classe abstrata e Platform, Trap, etc., são as subclasses. Cada valor no mapa de nível poderia ser associado a um objeto instanciado, JOIELBAS?
+Onde Objeto é a classe abstrata e Platform, Trap, etc., são as subclasses. Cada valor no mapa de nível poderia ser associado a um objeto instanciado
 
 -----------------------------

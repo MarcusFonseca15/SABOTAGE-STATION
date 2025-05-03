@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import levelGroup.Level1;
+import levelGroup.Level2;
+import levelGroup.Level3;
+
 public class GamePanel extends JPanel implements ActionListener {
 
     private final int LARGURA = 800;
@@ -41,8 +45,16 @@ public class GamePanel extends JPanel implements ActionListener {
         timer.start();
     }
 
-    private void loadLevel(int levelNumber) {
-        level = new Level(levelNumber);
+    private void loadLevel(int number) {
+        switch (number) {
+            case 1 -> level = new Level1();
+            case 2 -> level = new Level2();
+            case 3 -> level = new Level3();
+            default -> {
+                System.out.println("Level inválido!");
+                System.exit(0);
+            }
+        }
         player.reset();
     }
 
