@@ -4,73 +4,18 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.awt.Rectangle;
 
-public class Level {
+public abstract class Level {
     private static final int TILE_SIZE = 50;
     private static final int LIN = 600 / TILE_SIZE; // 12
     private static final int COLS = 800 / TILE_SIZE; // 16
-    ArrayList<Platform> platforms;
-    ArrayList<Trap> traps;
+    protected Objeto[][] mapaObjetos = new Objeto[LIN][COLS];
 
-    private static final int[][] mapa1 = {
-            { 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 4, 4, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 4, 4, 4, 0, 2, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 2, 3, 1, 1, 2, 2, 3, 3, 1, 2, 1, 2, 1, 1, 1 }
-    };
-
-    private static final int[][] mapa2 = {
-            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
-    };
-
-    private static final int[][] mapa3 = {
-            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
-    };
+    ArrayList<Platform> platforms = new ArrayList<>();
+    ArrayList<Laser> lasers = new ArrayList<>();
+    ArrayList<Pistao> pistoes = new ArrayList<>();
 
     public Level(int number) {
-        platforms = new ArrayList<>();
-        traps = new ArrayList<>();
 
-        if (number == 1) {
-            carregarMapa(mapa1);
-
-        } else if (number == 2) {
-            carregarMapa(mapa2);
- 
-        } else if (number == 3) {
-            carregarMapa(mapa3);
-
-        }
-        // Adicione mais níveis se quiser
     }
 
     private void carregarMapa(int[][] mapa) {
@@ -80,15 +25,17 @@ public class Level {
                 int x = col * TILE_SIZE;
                 int y = row * TILE_SIZE;
 
-                switch (valor) {
-                    // PLATAFORMA
-                    case 1, 2, 3, 4:
-                        platforms.add(new Platform(x, y, TILE_SIZE, TILE_SIZE, valor));
-                        break;
-                    // TRAPS
-                    case 5:
-                        traps.add(new Trap(x, y, TILE_SIZE, TILE_SIZE));
-                        break;
+                Objeto obj = criarObjetoPorCodigo(valor, x, y);
+                if (obj != null) {
+                    mapaObjetos[row][col] = obj;
+
+                    if (obj instanceof Platform) {
+                        platforms.add((Platform) obj);
+                    } else if (obj instanceof Laser) {
+                        lasers.add((Laser) obj);
+                    } else if (obj instanceof Pistao) {
+                        pistoes.add((Pistao) obj);
+                    }
                 }
             }
         }
@@ -98,13 +45,16 @@ public class Level {
         for (Platform p : platforms)
             p.draw(g);
 
-        for (Trap t : traps)
+        for (Laser t : lasers)
             t.draw(g);
+
+        for (Pistao pistao : pistoes)
+            pistao.draw(g);
     }
 
-    public boolean checkTrapCollision(Player player) {
-        for (Trap t : traps) {
-            if (t.checkCollision(player))
+    public boolean checkLaserCollision(Player player) {
+        for (Laser l : lasers) {
+            if (l.checkCollision(player))
                 return true;
         }
         return false;
@@ -139,4 +89,32 @@ public class Level {
 
         }
     }
+
+    private Objeto criarObjetoPorCodigo(int tipo, int x, int y) {
+        switch (tipo) {
+            case 1, 2, 3, 4:
+                return new Platform(x, y, TILE_SIZE, TILE_SIZE, tipo);
+            case 5: // pistao normal
+                return new Pistao(x, y, TILE_SIZE, TILE_SIZE, 1, false);
+            case 6: // pistao camuflado
+                return new Pistao(x, y, TILE_SIZE, TILE_SIZE, 1, true);
+            case 7: // feixe de laser
+                return new Laser(x, y + 15, TILE_SIZE, 20, tipo);
+            case 9, 8: // base do laser
+                return new Laser(x, y, TILE_SIZE, TILE_SIZE, tipo);
+
+            default:
+                return null;
+        }
+    }
+
+    public void updatePistaos(Player p) {
+        for (Pistao pistao : pistoes) {
+            pistao.update(p);
+        }
+    }
+
+    protected abstract int[][] getMapa();
+
+    protected abstract void designTraps();
 }
