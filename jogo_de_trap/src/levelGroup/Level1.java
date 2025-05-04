@@ -2,6 +2,7 @@ package levelGroup;
 
 import jogo_de_trap.Level;
 import jogo_de_trap.Platform;
+import jogo_de_trap.Pistao;
 
 public class Level1 extends Level {
 
@@ -16,8 +17,8 @@ public class Level1 extends Level {
             { 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 2, 3, 1, 5, 6, 6, 9, 7, 7, 8, 5, 5, 1, 1, 1 }
+            { 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 5, 0, 0, 0, 0 },
+            { 1, 2, 3, 1, 1, 6, 1, 6, 1, 1, 1, 1, 9, 7, 8, 1 }
     };
 
     @Override
@@ -37,7 +38,13 @@ public class Level1 extends Level {
 
         sobeDesce(p1, 150, 250, 2);
         sobeDesce(p2, 150, 250, 2);
-    }
+
+        Pistao pt1 = (Pistao) mapaObjetos[11][5];
+        pt1.forca = 3;
+        Pistao pt2 = (Pistao) mapaObjetos[11][7];
+        pt2.forca = 3;
+
+    }// FIM DO DESIGNTRAPS
 
     private void sobeDesce(Platform plataforma, int altuMin, int altMax, int vel) {
         new Thread(() -> {

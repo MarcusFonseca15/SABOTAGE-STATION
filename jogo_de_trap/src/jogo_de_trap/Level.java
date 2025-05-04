@@ -89,7 +89,7 @@ public abstract class Level {
             case 5: // pistao normal
                 return new Pistao(x, y, TILE_SIZE, TILE_SIZE, 1, false);
             case 6: // pistao camuflado
-                return new Pistao(x, y, TILE_SIZE, TILE_SIZE, 3, true);
+                return new Pistao(x, y, TILE_SIZE, TILE_SIZE, 1, true);
             case 7: // feixe de laser
                 return new Laser(x, y + 15, TILE_SIZE, 20, tipo);
             case 9, 8: // base do laser

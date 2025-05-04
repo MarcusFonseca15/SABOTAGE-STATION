@@ -7,8 +7,11 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class Pistao extends Objeto {
-    int forca; // 1, 2, 3
+    public int forca; // 1, 2, 3
+
     boolean ativo = false;
+    private boolean voltando = false;
+
     int frameAtual = 0;
     int contFrame = 0;
     int periodoFrames = 3; // tempo entre frames
@@ -52,8 +55,14 @@ public class Pistao extends Objeto {
         Rectangle pistaoBounds = new Rectangle(x, y, width, height);
 
         // se player está em cima, ativa o pistão
-        if (playerBounds.intersects(pistaoBounds)) {
-            ativo = true;
+        boolean playerAcima = (p.y + p.height <= y + 5) && // pé do player encosta no topo do pistão
+                (p.y + p.height >= y - 10) && // limite pra não atravessar
+                (p.x + p.width > x && p.x < x + width); // sobreposição horizontal
+
+        if (playerAcima) {
+            if (!ativo && !voltando) {
+                ativo = true;
+            }
             propulsionar();
         }
 
@@ -64,7 +73,20 @@ public class Pistao extends Objeto {
                     frameAtual++;
                 } else {
                     ativo = false;
-                    frameAtual = 0;
+                    voltando = true;
+                }
+                contFrame = 0;
+            }
+        }
+
+        // retraindo)
+        if (voltando) {
+            contFrame++;
+            if (contFrame >= periodoFrames) {
+                if (frameAtual > 0) {
+                    frameAtual--;
+                } else {
+                    voltando = false; // volta
                 }
                 contFrame = 0;
             }
@@ -74,7 +96,7 @@ public class Pistao extends Objeto {
     private void propulsionar() {
         // se player está em cima, ativa o pistão
         if (player.y + player.height <= y + 10) {
-            int impulso = forca == 1 ? -16 : (forca == 2 ? -19 : -30);
+            int impulso = forca == 1 ? -19 : (forca == 2 ? -25 : -30);
             player.velY = impulso;
             player.jumping = true;
             player.onGround = false;
