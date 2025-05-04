@@ -10,15 +10,16 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 public class Platform extends Objeto {
-    // int x, y, width, height;
     private BufferedImage sprite;
 
     // Mapeia números para sprites. Carrega apeans uma vez
     private static final Map<Integer, BufferedImage> sprites = new HashMap<>();
 
-    // Nao coloquei o static aqui, porque ele só vai carregar os sprites uma vez, e
-    // não
-    // toda vez que criar uma plataforma. É mais eficiente assim
+    /* Nao coloquei o static aqui, porque ele só vai carregar os sprites uma vez, e
+    * não
+    * toda vez que criar uma plataforma. É mais eficiente assim
+    */
+    
     static {
         try {
             sprites.put(1, ImageIO.read(Platform.class.getResourceAsStream("/assets/metal_Tiles/metalTile1.png")));

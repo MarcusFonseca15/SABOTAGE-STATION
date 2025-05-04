@@ -15,8 +15,7 @@ public abstract class Level {
     ArrayList<Pistao> pistoes = new ArrayList<>();
 
     public Level(int number) {
-        carregarMapa(getMapa());
-        designTraps();
+
     }
 
     private void carregarMapa(int[][] mapa) {
@@ -70,15 +69,24 @@ public abstract class Level {
 
             if (playerBounds.intersects(platformBounds)) {
                 if (player.y + player.height - player.velY <= p.y) {
+                    // colisão por cima
                     player.y = p.y - player.height;
                     player.velY = 0;
                     player.jumping = false;
                     player.onGround = true;
                 } else if (player.y - player.velY >= p.y + p.height) {
+                    // colisão por baixo
                     player.y = p.y + p.height;
                     player.velY = 0;
+                } else if (player.x + player.width - player.velX <= p.x) {
+                    // colisão pela esquerda
+                    player.x = p.x - player.width;
+                } else if (player.x - player.velX >= p.x + p.width) {
+                    // colisão pela direita
+                    player.x = p.x + p.width;
                 }
             }
+
         }
     }
 
