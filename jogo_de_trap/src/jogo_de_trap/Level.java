@@ -15,7 +15,8 @@ public abstract class Level {
     ArrayList<Pistao> pistoes = new ArrayList<>();
 
     public Level(int number) {
-
+    	carregarMapa(getMapa());
+        designTraps();
     }
 
     private void carregarMapa(int[][] mapa) {
