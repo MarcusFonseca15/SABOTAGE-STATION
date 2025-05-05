@@ -16,17 +16,19 @@ public class GamePanel extends JPanel implements ActionListener {
     private Timer timer;
     private Player player;
     private Level level;
+    private Image backgroundImage;
 
     private int currentLevel = 1;
-    private final int maxLevels = 3; // total de níveis disponíveis
+    private final int maxLevels = 3;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(LARGURA, ALTURA));
-        this.setBackground(Color.BLACK);
         this.setFocusable(true);
 
-        player = new Player(100, 500);
+        // Carregar imagem de fundo corretamente
+        backgroundImage = new ImageIcon(getClass().getResource("/assets/background2.png")).getImage();
 
+        player = new Player(100, 500);
         loadLevel(currentLevel);
 
         this.addKeyListener(new KeyAdapter() {
@@ -41,7 +43,8 @@ public class GamePanel extends JPanel implements ActionListener {
             }
         });
 
-        timer = new Timer(16, this); // ~60 fps
+        timer = new Timer(16, this);
+        setLayout(null);
         timer.start();
     }
 
@@ -59,8 +62,14 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     @Override
-    public void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        // Desenhar imagem de fundo
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
+
         level.draw(g);
         player.draw(g);
     }
@@ -76,7 +85,6 @@ public class GamePanel extends JPanel implements ActionListener {
             player.reset();
         }
 
-        // Avançar para o próximo level
         if (player.x + player.width >= LARGURA) {
             currentLevel++;
             if (currentLevel <= maxLevels) {
@@ -84,7 +92,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 System.out.println("Avançando para o nível " + currentLevel);
             } else {
                 System.out.println("Parabéns! Você terminou o jogo!");
-                timer.stop(); // Para o jogo
+                timer.stop();
                 JOptionPane.showMessageDialog(this, "Você venceu todos os níveis!");
                 System.exit(0);
             }
