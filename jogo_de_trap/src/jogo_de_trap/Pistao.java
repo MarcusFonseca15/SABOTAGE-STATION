@@ -41,7 +41,7 @@ public class Pistao extends Objeto {
                     System.out.println("Imagem não encontrada: " + path);
                 } else {
                     sprites[i] = ImageIO.read(stream);
-                    System.out.println("Imagem carregada com sucesso: " + path);
+                    // System.out.println("Sucesso: " + path);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
