@@ -28,7 +28,9 @@ public class GamePanel extends JPanel implements ActionListener {
         // Carregar imagem de fundo corretamente
         backgroundImage = new ImageIcon(getClass().getResource("/assets/background2.png")).getImage();
 
-        player = new Player(100, 500);
+        Gravity gravityInit = new Gravity(1.0);
+        player = new Player(100, 500, gravityInit);
+
         loadLevel(currentLevel);
 
         this.addKeyListener(new KeyAdapter() {
@@ -50,9 +52,9 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void loadLevel(int number) {
         switch (number) {
-            case 1 -> level = new Level1();
-            case 2 -> level = new Level2();
-            case 3 -> level = new Level3();
+            case 1 -> level = new Level1(player);
+            case 2 -> level = new Level2(player);
+            case 3 -> level = new Level3(player);
             default -> {
                 System.out.println("Level inválido!");
                 System.exit(0);

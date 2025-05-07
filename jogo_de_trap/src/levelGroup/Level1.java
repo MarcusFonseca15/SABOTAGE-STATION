@@ -1,10 +1,18 @@
 package levelGroup;
 
+import jogo_de_trap.Gravity;
 import jogo_de_trap.Level;
 import jogo_de_trap.Platform;
 import jogo_de_trap.Pistao;
 
+import jogo_de_trap.Player;
+import jogo_de_trap.Gravity;
+
 public class Level1 extends Level {
+
+    private Player player;
+
+    public Gravity g;
 
     private static int[][] mapa = {
             { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -26,9 +34,10 @@ public class Level1 extends Level {
         return mapa;
     }
 
-    public Level1() {
+    public Level1(Player player) {
         super(1);
-        // TODO Auto-generated constructor stub
+        this.player = player;
+        designTraps();
     }
 
     @Override
@@ -44,6 +53,21 @@ public class Level1 extends Level {
         Pistao pt2 = (Pistao) mapaObjetos[11][7];
         pt2.forca = 3;
 
+        // normal
+        player.g.setGravity(1.0);
+        player.g.setPulo(-15);
+
+        // zero
+        // player.g.setGravity(0);
+        // player.g.setPulo(-15);
+
+        // invertida
+        // player.g.setGravity(-1);
+        // player.g.setPulo(15);
+
+        // solar (forte)
+        // player.g.setGravity(5);
+        // player.g.setPulo(-5);
     }// FIM DO DESIGNTRAPS
 
     private void sobeDesce(Platform plataforma, int altuMin, int altMax, int vel) {

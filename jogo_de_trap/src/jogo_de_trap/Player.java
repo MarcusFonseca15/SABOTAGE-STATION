@@ -3,10 +3,14 @@ package jogo_de_trap;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import jogo_de_trap.Gravity;
 
 public class Player {
     int x, y;
     int width = 50, height = 50;
+
+    // public int GRAVITY = 1;
+    public Gravity g;
 
     int velX = 0;
     int velY = 0;
@@ -15,15 +19,13 @@ public class Player {
     boolean wantToJump = false;
     boolean TrocaTroca = true;
 
-    final int GRAVITY = 1;
-    
     Image PersoPulandoD;
     Image PersoPulandoE;
     Image[] PersoCorrendoD;
     Image[] PersoCorrendoE;
     Image[] PersoParadoD;
     Image[] PersoParadoE;
-    
+
     int ControleDoIndex = 0;
     int IntervaloDoFrame = 5;
     int ContDoFrame = 0;
@@ -32,45 +34,46 @@ public class Player {
     int PIntervaloDoFrame = 5;
     int PContDoFrame = 0;
 
-    public Player(int x, int y) {
+    public Player(int x, int y, Gravity g) {
         this.x = x;
         this.y = y;
+        this.g = g;
 
-        PersoParadoD = new Image[]{
-            new ImageIcon(getClass().getResource("/assets/playerSprites/playerSTILL1.png")).getImage(),
-            new ImageIcon(getClass().getResource("/assets/playerSprites/playerSTILL2.png")).getImage(),
-            new ImageIcon(getClass().getResource("/assets/playerSprites/playerSTILL3.png")).getImage(),
-            new ImageIcon(getClass().getResource("/assets/playerSprites/playerSTILL4.png")).getImage()
+        PersoParadoD = new Image[] {
+                new ImageIcon(getClass().getResource("/assets/playerSprites/playerSTILL1.png")).getImage(),
+                new ImageIcon(getClass().getResource("/assets/playerSprites/playerSTILL2.png")).getImage(),
+                new ImageIcon(getClass().getResource("/assets/playerSprites/playerSTILL3.png")).getImage(),
+                new ImageIcon(getClass().getResource("/assets/playerSprites/playerSTILL4.png")).getImage()
         };
 
-        PersoParadoE = new Image[]{
-            new ImageIcon(getClass().getResource("/assets/playerSprites/playerSTILL1-left.png")).getImage(),
-            new ImageIcon(getClass().getResource("/assets/playerSprites/playerSTILL2-left.png")).getImage(),
-            new ImageIcon(getClass().getResource("/assets/playerSprites/playerSTILL3-left.png")).getImage(),
-            new ImageIcon(getClass().getResource("/assets/playerSprites/playerSTILL4-left.png")).getImage()
+        PersoParadoE = new Image[] {
+                new ImageIcon(getClass().getResource("/assets/playerSprites/playerSTILL1-left.png")).getImage(),
+                new ImageIcon(getClass().getResource("/assets/playerSprites/playerSTILL2-left.png")).getImage(),
+                new ImageIcon(getClass().getResource("/assets/playerSprites/playerSTILL3-left.png")).getImage(),
+                new ImageIcon(getClass().getResource("/assets/playerSprites/playerSTILL4-left.png")).getImage()
         };
 
-        PersoCorrendoD = new Image[]{
-            new ImageIcon(getClass().getResource("/assets/playerSprites/playerRUN1.png")).getImage(),
-            new ImageIcon(getClass().getResource("/assets/playerSprites/playerRUN2.png")).getImage(),
-            new ImageIcon(getClass().getResource("/assets/playerSprites/playerRUN3.png")).getImage(),
-            new ImageIcon(getClass().getResource("/assets/playerSprites/playerRUN4.png")).getImage()
+        PersoCorrendoD = new Image[] {
+                new ImageIcon(getClass().getResource("/assets/playerSprites/playerRUN1.png")).getImage(),
+                new ImageIcon(getClass().getResource("/assets/playerSprites/playerRUN2.png")).getImage(),
+                new ImageIcon(getClass().getResource("/assets/playerSprites/playerRUN3.png")).getImage(),
+                new ImageIcon(getClass().getResource("/assets/playerSprites/playerRUN4.png")).getImage()
         };
 
-        PersoCorrendoE = new Image[]{
-            new ImageIcon(getClass().getResource("/assets/playerSprites/playerRUN1-left.png")).getImage(),
-            new ImageIcon(getClass().getResource("/assets/playerSprites/playerRUN2-left.png")).getImage(),
-            new ImageIcon(getClass().getResource("/assets/playerSprites/playerRUN3-left.png")).getImage(),
-            new ImageIcon(getClass().getResource("/assets/playerSprites/playerRUN4-left.png")).getImage()
+        PersoCorrendoE = new Image[] {
+                new ImageIcon(getClass().getResource("/assets/playerSprites/playerRUN1-left.png")).getImage(),
+                new ImageIcon(getClass().getResource("/assets/playerSprites/playerRUN2-left.png")).getImage(),
+                new ImageIcon(getClass().getResource("/assets/playerSprites/playerRUN3-left.png")).getImage(),
+                new ImageIcon(getClass().getResource("/assets/playerSprites/playerRUN4-left.png")).getImage()
         };
 
         PersoPulandoD = new ImageIcon(getClass().getResource("/assets/playerSprites/playerJUMP.png")).getImage();
         PersoPulandoE = new ImageIcon(getClass().getResource("/assets/playerSprites/playerJUMP-left.png")).getImage();
     }
 
-    public void draw(Graphics g) {
-        
-    	Image Lado;
+    public void draw(Graphics gh) {
+
+        Image Lado;
 
         if (jumping) {
             Lado = TrocaTroca ? PersoPulandoD : PersoPulandoE;
@@ -80,18 +83,26 @@ public class Player {
             Lado = TrocaTroca ? PersoParadoD[PControleDoIndex] : PersoParadoE[PControleDoIndex];
         }
 
-        g.drawImage(Lado, x, y, width, height, null);
+        // SE GRAVIDADE INVERTIDA, DE CABEÇA PRA BAIXO
+        if (this.g.valor == -1) {
+            gh.drawImage(Lado, x, y + height, x + width, y, 0, 0, Lado.getWidth(null), Lado.getHeight(null), null);
+        } else {
+            gh.drawImage(Lado, x, y, width, height, null);
+        }
     }
 
     public void update() {
         x += velX;
 
         if (!onGround) {
-            velY += GRAVITY;
+            velY += g.getGravity();
+            // ColisionManager.checarColisoes(this, level.getMapaObjetos();
         }
 
         if (wantToJump && onGround) {
             velY = -15;
+            // velY = -g.getDirection() * (int) g.getForcaPulo();
+            // ColisionManager.checarColisoes(this, level.getMapaObjetos();
             jumping = true;
             onGround = false;
         }
@@ -99,19 +110,21 @@ public class Player {
         y += velY;
 
         // Limitar na tela
-        if (x < 0) x = 0;
-        if (x + width > 800) x = 800 - width;
+        if (x < 0)
+            x = 0;
+        if (x + width > 800)
+            x = 800 - width;
 
-        if (y + height >= 600) {
+        if (g.valor == 0 && y + height >= 600) {
             y = 600 - height;
             velY = 0;
+            // ColisionManager.checarColisoes(this, level.getMapaObjetos();
             onGround = true;
         }
 
-        //fiz isso aqui  para atualizar o pulo
+        // fiz isso aqui para atualizar o pulo
         jumping = !onGround;
 
-        
         if (velX != 0) {
             ContDoFrame++;
             if (ContDoFrame >= IntervaloDoFrame) {
@@ -132,11 +145,11 @@ public class Player {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             velX = 5;
-            TrocaTroca = true;  
+            TrocaTroca = true;
         }
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             velX = -5;
-            TrocaTroca = false; 
+            TrocaTroca = false;
         }
         if (e.getKeyCode() == KeyEvent.VK_X) {
             wantToJump = true;
@@ -157,4 +170,5 @@ public class Player {
         this.jumping = false;
         this.onGround = true;
     }
+
 }

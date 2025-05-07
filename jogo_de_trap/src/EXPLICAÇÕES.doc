@@ -1,4 +1,4 @@
-EXPLICAÇÃO MATRIZ OBJETOS
+>>> OBJETOS IMAGEM - MAPA - LEVEIS <<<
 
 OBJETIVO:
 - Após criar a matriz, precisamos personalizar os objetos. Cada fase terá sua própria personalização, como mover um tile, ou alguma programação que acontece quando usuario faz alguma coisa. Portanto, deve estar muito bem estruturado e conciso. 
@@ -16,3 +16,5 @@ Objeto[][] mapaObjetos = new Objeto[LIN][COLS];
 Onde Objeto é a classe abstrata e Platform, Trap, etc., são as subclasses. Cada valor no mapa de nível poderia ser associado a um objeto instanciado
 
 -----------------------------
+>>> GRAVIDADE <<<
+A gravidade é uma mecanica

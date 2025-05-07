@@ -2,6 +2,7 @@ package levelGroup;
 
 import jogo_de_trap.Level;
 import jogo_de_trap.Platform;
+import jogo_de_trap.Player;
 
 public class Level3 extends Level {
 
@@ -25,7 +26,7 @@ public class Level3 extends Level {
         return mapa;
     }
 
-    public Level3() {
+    public Level3(Player player) {
         super(3);
         // TODO Auto-generated constructor stub
     }
