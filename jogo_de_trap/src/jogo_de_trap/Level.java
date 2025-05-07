@@ -13,7 +13,9 @@ public abstract class Level {
     ArrayList<Platform> platforms = new ArrayList<>();
     ArrayList<Laser> lasers = new ArrayList<>();
     ArrayList<Pistao> pistoes = new ArrayList<>();
-
+    ArrayList<Espinhos> espinhos = new ArrayList<>();
+    ArrayList<EspinhosP> espinhosP = new ArrayList<>();
+    
     public Level(int number) {
         carregarMapa(getMapa());
         // designTraps();
@@ -37,7 +39,16 @@ public abstract class Level {
                     } else if (obj instanceof Pistao) {
                         pistoes.add((Pistao) obj);
                     }
+                    else if (obj instanceof Espinhos) {
+                    	espinhos.add((Espinhos) obj);
+                    }
+                    else if (obj instanceof EspinhosP) {
+                        espinhosP.add((EspinhosP) obj);
+                    }
                 }
+                
+                
+                
             }
         }
     }
@@ -51,6 +62,12 @@ public abstract class Level {
 
         for (Pistao pistao : pistoes)
             pistao.draw(g);
+        
+        for(Espinhos espinho : espinhos)
+        	espinho.draw(g);
+        
+        for(EspinhosP espinhosP : espinhosP)
+        	espinhosP.draw(g);
     }
 
     public boolean checkLaserCollision(Player player) {
@@ -61,6 +78,24 @@ public abstract class Level {
         return false;
     }
 
+    public boolean checkEspinhosCollision(Player player) {
+        for (Espinhos l : espinhos) {
+            if (l.checkCollision(player))
+                return true;
+        }
+        return false;
+    }
+    
+    public boolean checkEspinhosPCollision(Player player) {
+        for (EspinhosP l : espinhosP) {
+            if (l.checkCollision(player))
+                return true;
+        }
+        return false;
+    }
+    
+    
+    
     public void checkPlatformCollision(Player player) {
         Rectangle playerBounds = new Rectangle(player.x, player.y, player.width, player.height);
         player.onGround = false;
@@ -103,7 +138,10 @@ public abstract class Level {
                 return new Laser(x, y + 15, TILE_SIZE, 20, tipo);
             case 9, 8: // base do laser
                 return new Laser(x, y, TILE_SIZE, TILE_SIZE, tipo);
-
+            case 10: // espinhos
+            	return new Espinhos(x, y +30, TILE_SIZE, TILE_SIZE);
+            case 11: // espinhosP
+            	return new EspinhosP(x,y +30, TILE_SIZE, TILE_SIZE);
             default:
                 return null;
         }
@@ -115,6 +153,11 @@ public abstract class Level {
         }
     }
 
+    public void updateEspinhos() {
+        for (Espinhos espinho : espinhos) {
+            espinho.update();
+        }
+    }
     protected abstract int[][] getMapa();
 
     protected abstract void designTraps();
