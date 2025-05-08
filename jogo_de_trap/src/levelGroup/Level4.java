@@ -15,18 +15,18 @@ public class Level4 extends Level {
     public Gravity g;
 
     private static int[][] mapa = {
-            { 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 9,  7, 7, 7, 8, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 11, 0, 0, 11, 0, 0, 0, 0, 6, 11, 11, 5, 11, 0, 0, 0 },
-            { 1,  2, 3, 1,  1, 6, 1, 6, 1, 1, 1, 1, 1, 1, 1, 1 }
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 9, 7, 7, 7, 8, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 11, 0, 0, 0, 0, 0, 0, 0, 5, 11, 11, 5, 11, 0, 0, 0 },
+            { 1, 2, 3, 1, 1, 6, 1, 6, 1, 1, 1, 1, 1, 1, 1, 1 }
     };
 
     @Override
@@ -44,9 +44,9 @@ public class Level4 extends Level {
     protected void designTraps() {
         Platform p1 = (Platform) mapaObjetos[0][0];
         Platform p2 = (Platform) mapaObjetos[0][1];
-//
-//        sobeDesce(p1, 150, 250, 2);
-//        sobeDesce(p2, 150, 250, 2);
+        //
+        // sobeDesce(p1, 150, 250, 2);
+        // sobeDesce(p2, 150, 250, 2);
 
         Pistao pt1 = (Pistao) mapaObjetos[11][5];
         pt1.forca = 3;
@@ -70,27 +70,28 @@ public class Level4 extends Level {
         // player.g.setPulo(-5);
     }// FIM DO DESIGNTRAPS
 
-//    private void sobeDesce(Platform plataforma, int altuMin, int altMax, int vel) {
-//        new Thread(() -> {
-//            try {
-//                boolean subindo = true;
-//                while (true) {
-//                    if (subindo) {
-//                        plataforma.setY(plataforma.getY() - vel);
-//                        if (plataforma.getY() <= altuMin) {
-//                            subindo = false;
-//                        }
-//                    } else {
-//                        plataforma.setY(plataforma.getY() + vel);
-//                        if (plataforma.getY() >= altMax) {
-//                            subindo = true;
-//                        }
-//                    }
-//                    Thread.sleep(20); // suavidade
-//                }
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }).start();
-//    }
+    // private void sobeDesce(Platform plataforma, int altuMin, int altMax, int vel)
+    // {
+    // new Thread(() -> {
+    // try {
+    // boolean subindo = true;
+    // while (true) {
+    // if (subindo) {
+    // plataforma.setY(plataforma.getY() - vel);
+    // if (plataforma.getY() <= altuMin) {
+    // subindo = false;
+    // }
+    // } else {
+    // plataforma.setY(plataforma.getY() + vel);
+    // if (plataforma.getY() >= altMax) {
+    // subindo = true;
+    // }
+    // }
+    // Thread.sleep(20); // suavidade
+    // }
+    // } catch (InterruptedException e) {
+    // e.printStackTrace();
+    // }
+    // }).start();
+    // }
 }
