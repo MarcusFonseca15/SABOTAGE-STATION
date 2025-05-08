@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class Pistao extends Objeto {
-    public int forca; // 1, 2, 3
+    public float forca; // 1, 2, 3
 
     boolean ativo = false;
     private boolean voltando = false;
@@ -97,8 +97,8 @@ public class Pistao extends Objeto {
     private void propulsionar() {
         // se player está em cima, ativa o pistão
         if (player.y + player.height <= y + 10) {
-            int impulso = forca == 1 ? -19 : (forca == 2 ? -25 : -30);
-            player.velY = impulso;
+            float impulso = 20;
+            player.velY = (int) (-forca * impulso);
             player.jumping = true;
             player.onGround = false;
         }
@@ -132,12 +132,12 @@ public class Pistao extends Objeto {
         return new Rectangle(x, yVisual, width, alturaImg);
     }
 
-    
     private boolean camufla;
 
     public boolean isCamufla() {
         return camufla;
     }
+
     private final int baseAltura = 30; // ajuste com base na sua imagem
 
     public Rectangle getBaseBounds() {
@@ -145,9 +145,7 @@ public class Pistao extends Objeto {
         return new Rectangle(x, y + height - baseAltura, width, baseAltura);
     }
 
-    
-    
-/*
+    /*
      * @Override
      * public Rectangle getBounds() {
      * BufferedImage img = sprites[frameAtual];

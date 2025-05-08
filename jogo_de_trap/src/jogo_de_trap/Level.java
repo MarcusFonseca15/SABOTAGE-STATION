@@ -15,10 +15,10 @@ public abstract class Level {
     ArrayList<Pistao> pistoes = new ArrayList<>();
     ArrayList<Espinhos> espinhos = new ArrayList<>();
     ArrayList<EspinhosP> espinhosP = new ArrayList<>();
-    
+
     public Level(int number) {
         carregarMapa(getMapa());
-        // designTraps();
+        designTraps();
     }
 
     private void carregarMapa(int[][] mapa) {
@@ -38,17 +38,13 @@ public abstract class Level {
                         lasers.add((Laser) obj);
                     } else if (obj instanceof Pistao) {
                         pistoes.add((Pistao) obj);
-                    }
-                    else if (obj instanceof Espinhos) {
-                    	espinhos.add((Espinhos) obj);
-                    }
-                    else if (obj instanceof EspinhosP) {
+                    } else if (obj instanceof Espinhos) {
+                        espinhos.add((Espinhos) obj);
+                    } else if (obj instanceof EspinhosP) {
                         espinhosP.add((EspinhosP) obj);
                     }
                 }
-                
-                
-                
+
             }
         }
     }
@@ -62,12 +58,12 @@ public abstract class Level {
 
         for (Pistao pistao : pistoes)
             pistao.draw(g);
-        
-        for(Espinhos espinho : espinhos)
-        	espinho.draw(g);
-        
-        for(EspinhosP espinhosP : espinhosP)
-        	espinhosP.draw(g);
+
+        for (Espinhos espinho : espinhos)
+            espinho.draw(g);
+
+        for (EspinhosP espinhosP : espinhosP)
+            espinhosP.draw(g);
     }
 
     public boolean checkLaserCollision(Player player) {
@@ -107,7 +103,6 @@ public abstract class Level {
         }
     }
 
-    
     public boolean checkEspinhosCollision(Player player) {
         for (Espinhos l : espinhos) {
             if (l.checkCollision(player))
@@ -115,7 +110,7 @@ public abstract class Level {
         }
         return false;
     }
-    
+
     public boolean checkEspinhosPCollision(Player player) {
         for (EspinhosP l : espinhosP) {
             if (l.checkCollision(player))
@@ -123,9 +118,7 @@ public abstract class Level {
         }
         return false;
     }
-    
-    
-    
+
     public void checkPlatformCollision(Player player) {
         Rectangle playerBounds = new Rectangle(player.x, player.y, player.width, player.height);
         player.onGround = false;
@@ -161,8 +154,10 @@ public abstract class Level {
         }
     }
 
-
     private Objeto criarObjetoPorCodigo(int tipo, int x, int y) {
+        if (tipo == 5 || tipo == 6)
+            System.out.println("Criando pistão com força: " + (tipo == 5 ? 2 : 1));
+
         switch (tipo) {
             case 1, 2, 3, 4:
                 return new Platform(x, y, TILE_SIZE, TILE_SIZE, tipo);
@@ -175,12 +170,13 @@ public abstract class Level {
             case 9, 8: // base do laser
                 return new Laser(x, y, TILE_SIZE, TILE_SIZE, tipo);
             case 10: // espinhos
-            	return new Espinhos(x, y +30, TILE_SIZE, TILE_SIZE);
+                return new Espinhos(x, y + 30, TILE_SIZE, TILE_SIZE);
             case 11: // espinhosP
-            	return new EspinhosP(x,y +30, TILE_SIZE, TILE_SIZE);
+                return new EspinhosP(x, y + 30, TILE_SIZE, TILE_SIZE);
             default:
                 return null;
         }
+
     }
 
     public void updatePistaos(Player p) {
@@ -194,6 +190,7 @@ public abstract class Level {
             espinho.update();
         }
     }
+
     protected abstract int[][] getMapa();
 
     protected abstract void designTraps();
