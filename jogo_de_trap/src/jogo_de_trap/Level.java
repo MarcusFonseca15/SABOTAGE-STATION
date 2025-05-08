@@ -78,6 +78,36 @@ public abstract class Level {
         return false;
     }
 
+    public void checkPistaoCollision(Player player) {
+        Rectangle playerBounds = new Rectangle(player.x, player.y, player.width, player.height);
+
+        for (Pistao pistao : pistoes) {
+            Rectangle pistaoBounds = pistao.getBaseBounds();
+
+            if (playerBounds.intersects(pistaoBounds)) {
+                // Colisão por cima
+                if (player.y + player.height - player.velY <= pistaoBounds.y) {
+                    player.y = pistaoBounds.y - player.height;
+                    player.velY = 0;
+                    player.jumping = false;
+                    player.onGround = true;
+                } else if (player.y - player.velY >= pistaoBounds.y + pistaoBounds.height) {
+                    // Colisão por baixo
+                    player.y = pistaoBounds.y + pistaoBounds.height;
+                    player.velY = 0;
+                } else {
+                    // Colisão lateral (opcional: ajusta conforme necessário)
+                    if (player.x + player.width - player.velX <= pistaoBounds.x) {
+                        player.x = pistaoBounds.x - player.width;
+                    } else if (player.x - player.velX >= pistaoBounds.x + pistaoBounds.width) {
+                        player.x = pistaoBounds.x + pistaoBounds.width;
+                    }
+                }
+            }
+        }
+    }
+
+    
     public boolean checkEspinhosCollision(Player player) {
         for (Espinhos l : espinhos) {
             if (l.checkCollision(player))
@@ -114,17 +144,23 @@ public abstract class Level {
                     // colisão por baixo
                     player.y = p.y + p.height;
                     player.velY = 0;
-                } else if (player.x + player.width - player.velX <= p.x) {
-                    // colisão pela esquerda
-                    player.x = p.x - player.width;
-                } else if (player.x - player.velX >= p.x + p.width) {
-                    // colisão pela direita
-                    player.x = p.x + p.width;
+                }
+
+                // Verificar colisão horizontal
+                if (player.x + player.width >= p.x && player.x <= p.x + p.width) {
+                    // Colisão pela esquerda
+                    if (player.x + player.width - player.velX <= p.x) {
+                        player.x = p.x - player.width;
+                    }
+                    // Colisão pela direita
+                    else if (player.x - player.velX >= p.x + p.width) {
+                        player.x = p.x + p.width;
+                    }
                 }
             }
-
         }
     }
+
 
     private Objeto criarObjetoPorCodigo(int tipo, int x, int y) {
         switch (tipo) {
