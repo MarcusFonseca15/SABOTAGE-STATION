@@ -163,7 +163,7 @@ public class Player {
     }
 
     public void reset() {
-        this.x = 100;
+        this.x = 70;
         this.y = 500;
         this.velX = 0;
         this.velY = 0;

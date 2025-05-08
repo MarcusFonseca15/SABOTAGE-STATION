@@ -23,6 +23,7 @@ public class Pistao extends Objeto {
     public Pistao(int x, int y, int width, int height, int forca, boolean camufla) {
         super(x, y, width, height);
         this.forca = forca;
+        this.camufla = camufla;
 
         // carregarSprites();
 
@@ -131,7 +132,22 @@ public class Pistao extends Objeto {
         return new Rectangle(x, yVisual, width, alturaImg);
     }
 
-    /*
+    
+    private boolean camufla;
+
+    public boolean isCamufla() {
+        return camufla;
+    }
+    private final int baseAltura = 30; // ajuste com base na sua imagem
+
+    public Rectangle getBaseBounds() {
+        // Considera apenas a parte inferior (base azul)
+        return new Rectangle(x, y + height - baseAltura, width, baseAltura);
+    }
+
+    
+    
+/*
      * @Override
      * public Rectangle getBounds() {
      * BufferedImage img = sprites[frameAtual];
