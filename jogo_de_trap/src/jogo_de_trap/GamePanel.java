@@ -19,10 +19,8 @@ public class GamePanel extends JPanel implements ActionListener {
     private Level level;
     private Image backgroundImage;
 
-
-    private int currentLevel = 2;
+    private int currentLevel = 4;
     private final int maxLevels = 3;
-
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(LARGURA, ALTURA));

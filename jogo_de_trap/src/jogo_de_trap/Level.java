@@ -18,7 +18,7 @@ public abstract class Level {
 
     public Level(int number) {
         carregarMapa(getMapa());
-        designTraps();
+        // designTraps();
     }
 
     private void carregarMapa(int[][] mapa) {

@@ -9,7 +9,7 @@ import jogo_de_trap.Pistao;
 public class Level2 extends Level {
 
     private Player player;
-	
+
     private static int[][] mapa = {
 
             { 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4 },
@@ -34,12 +34,11 @@ public class Level2 extends Level {
 
     public Level2(Player player) {
         super(2);
-
+        designTraps();
     }
 
     @Override
     protected void designTraps() {
-
 
         Pistao pistaoForte = (Pistao) mapaObjetos[11][14];
         pistaoForte.forca = 1.5f;
