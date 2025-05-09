@@ -8,25 +8,25 @@ import jogo_de_trap.Pistao;
 import jogo_de_trap.Player;
 import jogo_de_trap.Gravity;
 
-public class Level4 extends Level {
+public class Level01 extends Level {
 
     private Player player;
 
     public Gravity g;
 
     private static int[][] mapa = {
+            { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0 },
+            { 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 9, 7, 7, 7, 8, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 4, 0, 0, 0, 0, 9, 7, 7, 7, 8, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 11, 0, 0, 0, 0, 0, 0, 0, 5, 11, 11, 5, 11, 11, 11, 0 },
-            { 1, 2, 3, 1, 1, 6, 1, 6, 1, 1, 1, 1, 1, 1,  1, 1 }
+            { 0, 0, 0, 11, 0, 0, 0, 0, 6, 0, 0, 5, 0, 0, 0, 0 },
+            { 1, 2, 3, 1, 1, 6, 1, 6, 1, 1, 1, 1, 9, 7, 8, 1 }
     };
 
     @Override
@@ -34,7 +34,7 @@ public class Level4 extends Level {
         return mapa;
     }
 
-    public Level4(Player player) {
+    public Level01(Player player) {
         super(1);
         this.player = player;
         designTraps();
@@ -44,14 +44,14 @@ public class Level4 extends Level {
     protected void designTraps() {
         Platform p1 = (Platform) mapaObjetos[0][0];
         Platform p2 = (Platform) mapaObjetos[0][1];
-        //
-        // sobeDesce(p1, 150, 250, 2);
-        // sobeDesce(p2, 150, 250, 2);
+
+        sobeDesce(p1, 150, 250, 2);
+        sobeDesce(p2, 150, 250, 2);
 
         Pistao pt1 = (Pistao) mapaObjetos[11][5];
-        pt1.forca = 3;
+        pt1.forca = 1.5f;
         Pistao pt2 = (Pistao) mapaObjetos[11][7];
-        pt2.forca = 2;
+        pt2.forca = 1.5f;
 
         // normal
         player.g.setGravity(1.0);
@@ -70,28 +70,27 @@ public class Level4 extends Level {
         // player.g.setPulo(-5);
     }// FIM DO DESIGNTRAPS
 
-    // private void sobeDesce(Platform plataforma, int altuMin, int altMax, int vel)
-    // {
-    // new Thread(() -> {
-    // try {
-    // boolean subindo = true;
-    // while (true) {
-    // if (subindo) {
-    // plataforma.setY(plataforma.getY() - vel);
-    // if (plataforma.getY() <= altuMin) {
-    // subindo = false;
-    // }
-    // } else {
-    // plataforma.setY(plataforma.getY() + vel);
-    // if (plataforma.getY() >= altMax) {
-    // subindo = true;
-    // }
-    // }
-    // Thread.sleep(20); // suavidade
-    // }
-    // } catch (InterruptedException e) {
-    // e.printStackTrace();
-    // }
-    // }).start();
-    // }
+    private void sobeDesce(Platform plataforma, int altuMin, int altMax, int vel) {
+        new Thread(() -> {
+            try {
+                boolean subindo = true;
+                while (true) {
+                    if (subindo) {
+                        plataforma.setY(plataforma.getY() - vel);
+                        if (plataforma.getY() <= altuMin) {
+                            subindo = false;
+                        }
+                    } else {
+                        plataforma.setY(plataforma.getY() + vel);
+                        if (plataforma.getY() >= altMax) {
+                            subindo = true;
+                        }
+                    }
+                    Thread.sleep(20); // suavidade
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
 }

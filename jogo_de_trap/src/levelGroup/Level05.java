@@ -6,7 +6,7 @@ import jogo_de_trap.Platform;
 import jogo_de_trap.Player;
 import jogo_de_trap.Pistao;
 
-public class Level2 extends Level {
+public class Level05 extends Level {
 
     private Player player;
 
@@ -32,7 +32,7 @@ public class Level2 extends Level {
         return mapa;
     }
 
-    public Level2(Player player) {
+    public Level05(Player player) {
         super(2);
         designTraps();
     }
