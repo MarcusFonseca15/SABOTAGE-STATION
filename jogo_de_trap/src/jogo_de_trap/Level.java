@@ -155,8 +155,6 @@ public abstract class Level {
     }
 
     private Objeto criarObjetoPorCodigo(int tipo, int x, int y) {
-        if (tipo == 5 || tipo == 6)
-            System.out.println("Criando pistão com força: " + (tipo == 5 ? 2 : 1));
 
         switch (tipo) {
             case 1, 2, 3, 4:
