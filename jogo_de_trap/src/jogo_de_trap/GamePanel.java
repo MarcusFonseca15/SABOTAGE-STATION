@@ -4,10 +4,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-import levelGroup.Level1;
-import levelGroup.Level2;
-import levelGroup.Level3;
-import levelGroup.Level4;
+import levelGroup.Level01;
+import levelGroup.Level10;
+import levelGroup.Level05;
+import levelGroup.Level06;
+import levelGroup.Level07;
+import levelGroup.Level08;
+import levelGroup.Level09;
+import levelGroup.Level02;
+import levelGroup.Level03;
+import levelGroup.Level04;
 
 public class GamePanel extends JPanel implements ActionListener {
 
@@ -20,7 +26,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private Image backgroundImage;
 
     private int currentLevel = 1;
-    private final int maxLevels = 3;
+    private final int maxLevels = 10;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(LARGURA, ALTURA));
@@ -53,10 +59,16 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void loadLevel(int number) {
         switch (number) {
-            case 1 -> level = new Level1(player);
-            case 2 -> level = new Level2(player);
-            case 3 -> level = new Level3(player);
-            case 4 -> level = new Level4(player);
+            case 1 -> level = new Level01(player);
+            case 2 -> level = new Level02(player);
+            case 3 -> level = new Level03(player);
+            case 4 -> level = new Level04(player);
+            case 5 -> level = new Level05(player);
+            case 6 -> level = new Level06(player);
+            case 7 -> level = new Level07(player);
+            case 8 -> level = new Level08(player);
+            case 9 -> level = new Level09(player);
+            case 10 -> level = new Level10(player);
             default -> {
                 System.out.println("Level inválido!");
                 System.exit(0);

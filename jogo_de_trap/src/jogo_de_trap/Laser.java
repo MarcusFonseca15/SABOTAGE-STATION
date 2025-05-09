@@ -46,6 +46,13 @@ public class Laser extends Objeto {
             case 7 -> "/assets/laserSprites/laser1.png";
             case 8 -> "/assets/laserSprites/laserBase1Dir.png";
             case 9 -> "/assets/laserSprites/laserBase1Esq.png";
+            case 72 -> "/assets/laserSprites/laser2.png";
+            case 82 -> "/assets/laserSprites/laserBase2Dir.png";
+            case 92 -> "/assets/laserSprites/laserBase2Esq.png";
+            
+            case 35 -> "/assets/laserSprites/laserBase1Top.png";
+            case 36 -> "/assets/laserSprites/laser1Vertical.png";
+            case 37 -> "/assets/laserSprites/laserBase1Bottom.png";
             default -> throw new IllegalArgumentException("Tipo" + tipo + "é inválido");
         };
 
