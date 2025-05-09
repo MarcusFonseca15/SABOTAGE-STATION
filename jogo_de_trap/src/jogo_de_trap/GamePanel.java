@@ -19,13 +19,10 @@ public class GamePanel extends JPanel implements ActionListener {
     private Level level;
     private Image backgroundImage;
 
-<<<<<<< HEAD
-    private int currentLevel = 1;
-    private final int maxLevels = 4;
-=======
+
     private int currentLevel = 2;
     private final int maxLevels = 3;
->>>>>>> branch 'master' of https://github.com/MateusSKV9/jogo_de_trap
+
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(LARGURA, ALTURA));

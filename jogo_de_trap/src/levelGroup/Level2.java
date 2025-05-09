@@ -11,20 +11,7 @@ public class Level2 extends Level {
     private Player player;
 	
     private static int[][] mapa = {
-<<<<<<< HEAD
-            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 7 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 1, 9, 7, 7, 8, 2, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 11, 0, 0, 11 },
-            { 1, 1, 1, 1, 1, 1, 1, 6, 6, 1, 1, 1, 1, 1, 1, 1 }
-=======
+
             { 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4 },
             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -37,7 +24,7 @@ public class Level2 extends Level {
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
             { 0, 0, 0, 0, 0, 11, 11, 11, 0, 0, 0, 0, 0, 0, 0, 1 },
             { 1, 1, 1, 5, 5, 1, 1, 1, 1, 1, 6, 1, 1, 1, 5, 4 }
->>>>>>> branch 'master' of https://github.com/MateusSKV9/jogo_de_trap
+
     };
 
     @Override
@@ -53,9 +40,7 @@ public class Level2 extends Level {
     @Override
     protected void designTraps() {
 
-<<<<<<< HEAD
 
-=======
         Pistao pistaoForte = (Pistao) mapaObjetos[11][14];
         pistaoForte.forca = 1.5f;
 
@@ -64,7 +49,7 @@ public class Level2 extends Level {
         Pistao pistCam = (Pistao) mapaObjetos[11][10];
         pistCam.forca = 1.5f;
         System.out.println("pistCam.forca = " + pistCam.forca);
->>>>>>> branch 'master' of https://github.com/MateusSKV9/jogo_de_trap
+
     }
 
 }
