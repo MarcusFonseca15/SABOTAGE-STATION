@@ -20,7 +20,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private Image backgroundImage;
 
     private int currentLevel = 1;
-    private final int maxLevels = 3;
+    private final int maxLevels = 4;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(LARGURA, ALTURA));
@@ -53,9 +53,10 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void loadLevel(int number) {
         switch (number) {
-            case 1 -> level = new Level4(player);
+            case 1 -> level = new Level1(player);
             case 2 -> level = new Level2(player);
             case 3 -> level = new Level3(player);
+            case 4 -> level = new Level4(player);
             default -> {
                 System.out.println("Level inválido!");
                 System.exit(0);
