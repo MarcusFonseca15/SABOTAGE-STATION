@@ -99,13 +99,15 @@ public class Player {
             // ColisionManager.checarColisoes(this, level.getMapaObjetos();
         }
 
-        if (wantToJump && onGround) {
-            velY = -15;
-            // velY = -g.getDirection() * (int) g.getForcaPulo();
-            // ColisionManager.checarColisoes(this, level.getMapaObjetos();
-            jumping = true;
-            onGround = false;
+        if (wantToJump) {
+            if (onGround) {
+                velY = -15;
+                jumping = true;
+                onGround = false;
+                wantToJump = false; // só reseta aqui
+            }
         }
+
 
         y += velY;
 
@@ -139,7 +141,7 @@ public class Player {
             }
         }
 
-        wantToJump = false;
+       
     }
 
     public void keyPressed(KeyEvent e) {
