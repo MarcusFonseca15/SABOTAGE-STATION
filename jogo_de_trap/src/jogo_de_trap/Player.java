@@ -153,7 +153,7 @@ public class Player {
             velX = -5;
             TrocaTroca = false;
         }
-        if (e.getKeyCode() == KeyEvent.VK_X) {
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             wantToJump = true;
         }
     }

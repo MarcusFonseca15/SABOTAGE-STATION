@@ -177,6 +177,8 @@ public abstract class Level {
                 return new EspinhosP(x, y + 30, TILE_SIZE, TILE_SIZE, tipo);
             case 111: // espinhosP
                 return new EspinhosP(x, y-10, TILE_SIZE, TILE_SIZE, tipo);
+            case 112, 113: // espinhosP
+                return new EspinhosP(x, y, TILE_SIZE, TILE_SIZE, tipo);
             default:
                 return null;
         }
