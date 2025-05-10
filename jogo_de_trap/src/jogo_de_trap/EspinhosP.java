@@ -16,14 +16,29 @@ public class EspinhosP extends Objeto {
     public boolean visible = true;
     int tipo;
 
-    public EspinhosP(int x, int y, int width, int height) {
+    public EspinhosP(int x, int y, int width, int height, int tipo) {
         super(x, y, width, height);
    
+//        try {
+//            sprite = ImageIO.read(getClass().getResource("/assets/espinhoSprite/espinho4.png"));
+//        } catch (IOException e) {
+//            
+//        }
+        
+        String path = switch (tipo) {
+        case 11 -> "/assets/espinhoSprite/espinho4.png";
+        case 111 -> "/assets/espinhoSprite/espinho-top.png";
+        
+        default -> throw new IllegalArgumentException("Tipo" + tipo + "é inválido");
+        };
+
+    if (path != null) {
         try {
-            sprite = ImageIO.read(getClass().getResource("/assets/espinhoSprite/espinho4.png"));
+            sprite = ImageIO.read(getClass().getResourceAsStream(path));
         } catch (IOException e) {
-            
+            e.printStackTrace();
         }
+    }
     }      
     public boolean checkCollision(Player player) {
         Rectangle playerBounds = new Rectangle(player.x, player.y, player.width, player.height);
