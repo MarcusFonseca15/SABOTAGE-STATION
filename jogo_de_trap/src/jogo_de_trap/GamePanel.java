@@ -25,7 +25,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private Level level;
     private Image backgroundImage;
 
-    private int currentLevel = 1;
+    private int currentLevel = 5;
     private final int maxLevels = 10;
 
     public GamePanel() {
@@ -59,7 +59,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void loadLevel(int number) {
         switch (number) {
-            case 1 -> level = new Level08(player);
+            case 1 -> level = new Level01(player);
             case 2 -> level = new Level02(player);
             case 3 -> level = new Level03(player);
             case 4 -> level = new Level04(player);

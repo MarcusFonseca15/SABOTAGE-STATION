@@ -20,13 +20,13 @@ public class Espinhos extends Objeto {
 
     public Espinhos(int x, int y, int width, int height) {
         super(x, y, width, height);
-       
-        sprites = new Image[]{
-            new ImageIcon(getClass().getResource("/assets/espinhoSprite/espinho1.png")).getImage(),
-            new ImageIcon(getClass().getResource("/assets/espinhoSprite/espinho2.png")).getImage(),
-            new ImageIcon(getClass().getResource("/assets/espinhoSprite/espinho3.png")).getImage(),
-            new ImageIcon(getClass().getResource("/assets/espinhoSprite/espinho4.png")).getImage()
-            
+
+        sprites = new Image[] {
+                new ImageIcon(getClass().getResource("/assets/espinhoSprite/espinho1.png")).getImage(),
+                new ImageIcon(getClass().getResource("/assets/espinhoSprite/espinho2.png")).getImage(),
+                new ImageIcon(getClass().getResource("/assets/espinhoSprite/espinho3.png")).getImage(),
+                new ImageIcon(getClass().getResource("/assets/espinhoSprite/espinho4.png")).getImage()
+
         };
     }
 
@@ -39,7 +39,7 @@ public class Espinhos extends Objeto {
     }
 
     public boolean checkCollision(Player player) {
-        
+
         if (Index == 3 || Index == 2 || Index == 1) {
             Rectangle playerBounds = new Rectangle(player.x, player.y, player.width, player.height);
             return getBounds().intersects(playerBounds);
@@ -55,10 +55,14 @@ public class Espinhos extends Objeto {
     public void draw(Graphics g) {
         if (visible && sprites != null && sprites[Index] != null) {
             g.drawImage(sprites[Index], x, y, width, height, null);
-        } 
+        }
     }
 
     public void setDebug(boolean debug) {
         this.debug = debug;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 }
