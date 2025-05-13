@@ -25,7 +25,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private Level level;
     private Image backgroundImage;
 
-    private int currentLevel = 1;
+    private int currentLevel = 6;
     private final int maxLevels = 10;
 
     public GamePanel() {
@@ -120,6 +120,9 @@ public class GamePanel extends JPanel implements ActionListener {
 
         if (player.x + player.width >= LARGURA) {
             currentLevel++;
+            if (currentLevel > 6) {
+                level.pararThread();
+            }
             if (currentLevel <= maxLevels) {
                 loadLevel(currentLevel);
                 System.out.println("Avançando para o nível " + currentLevel);

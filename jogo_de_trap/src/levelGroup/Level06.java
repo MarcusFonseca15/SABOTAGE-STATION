@@ -18,6 +18,7 @@ public class Level06 extends Level {
 
     Player player;
     Gravity g;
+    private boolean ativo = true;
 
     private static int[][] mapa = {
             { 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4 },
@@ -101,7 +102,7 @@ public class Level06 extends Level {
 
     private void monitorarPulo() {
         new Thread(() -> {
-            while (true) {
+            while (ativo) {
                 if (player.wantToJump && player.onGround) {
                     if (g.getGravity() != 0) {
                         g.setGravity(0);
@@ -136,4 +137,8 @@ public class Level06 extends Level {
         }).start();
     }
 
+    @Override
+    public void pararThread() {
+        ativo = false;
+    }
 }

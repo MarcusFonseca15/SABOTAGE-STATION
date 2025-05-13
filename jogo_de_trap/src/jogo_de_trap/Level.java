@@ -23,6 +23,8 @@ public abstract class Level {
     protected int titleX = 60;
     protected int titleY = 43;
 
+    private boolean ativo = true;
+
     public Level(int number) {
         carregarMapa(getMapa());
         // designTraps();
@@ -191,6 +193,10 @@ public abstract class Level {
                 return null;
         }
 
+    }
+
+    public void pararThread() {
+        ativo = false;
     }
 
     public void updatePistaos(Player p) {
