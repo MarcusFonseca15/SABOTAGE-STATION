@@ -162,7 +162,7 @@ public abstract class Level {
         }
     }
 
-    private Objeto criarObjetoPorCodigo(int tipo, int x, int y) {
+    protected Objeto criarObjetoPorCodigo(int tipo, int x, int y) {
 
         switch (tipo) {
             case 1, 2, 3, 4:
