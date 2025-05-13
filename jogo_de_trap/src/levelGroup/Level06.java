@@ -1,9 +1,11 @@
 package levelGroup;
 
 import jogo_de_trap.Level;
+import jogo_de_trap.Objeto;
 import jogo_de_trap.Platform;
 import jogo_de_trap.Pistao;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import jogo_de_trap.Espinhos;
@@ -41,8 +43,11 @@ public class Level06 extends Level {
         super(6);
         this.player = player;
         this.g = player.g;
+
         designTraps();
         monitorarPulo();
+
+        this.titulo = "03. DON'T DO IT...";
     }
 
     @Override
@@ -52,21 +57,11 @@ public class Level06 extends Level {
 
         Pistao pF = (Pistao) mapaObjetos[11][14];
         pF.forca = 2f;
+
         EspinhosP esp = (EspinhosP) mapaObjetos[10][15];
         esp.visible = false;
 
         ArrayList<Laser> lasers = new ArrayList<>();
-
-        /*
-         * for (int y = 0; y < mapa.length; y++) {
-         * for (int x = 0; x < mapa[y].length; x++) {
-         * if (mapa[y][x] == 7 || mapa[y][x] == 8 || mapa[y][x] == 9) {
-         * Laser l = (Laser) mapaObjetos[x][y];
-         * lasers.add(l);
-         * }
-         * }
-         * }
-         */
 
         for (int i = 1; i <= 12; i++) {
             lasers.add((Laser) mapaObjetos[1][i]);
@@ -111,6 +106,7 @@ public class Level06 extends Level {
                     if (g.getGravity() != 0) {
                         g.setGravity(0);
                         g.setPulo(-500);
+                        setTitulo("03. DON'T DO IT... VOCÊ QUEM PEDIU");
                     }
                     player.velY = -15;
                     player.jumping = true;

@@ -16,9 +16,17 @@ public abstract class Level {
     ArrayList<Espinhos> espinhos = new ArrayList<>();
     ArrayList<EspinhosP> espinhosP = new ArrayList<>();
 
+    ////////////// TITULO
+    protected String titulo = "";
+    protected Color cortitle = Color.WHITE;
+    protected int sizeTitle = 27;
+    protected int titleX = 60;
+    protected int titleY = 43;
+
     public Level(int number) {
         carregarMapa(getMapa());
         // designTraps();
+
     }
 
     private void carregarMapa(int[][] mapa) {
@@ -204,4 +212,43 @@ public abstract class Level {
     public Objeto[][] getMapaObjetos() {
         return mapaObjetos;
     }
+
+    // TITULO
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public void setCorTitle(Color cor) {
+        this.cortitle = cor;
+    }
+
+    public void setSizeTitle(int tamanho) {
+        this.sizeTitle = tamanho;
+    }
+
+    public void setTitlePos(int x, int y) {
+        this.titleX = x;
+        this.titleY = y;
+    }
+
+    public Color getCorTitle() {
+        return cortitle;
+    }
+
+    public int getSizeTitle() {
+        return sizeTitle;
+    }
+
+    public int getTitleX() {
+        return titleX;
+    }
+
+    public int getTitleY() {
+        return titleY;
+    }
+
 }

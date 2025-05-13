@@ -88,6 +88,11 @@ public class GamePanel extends JPanel implements ActionListener {
 
         level.draw(g);
         player.draw(g);
+
+        // TITULO
+        g.setColor(level.getCorTitle());
+        g.setFont(new Font("Arial", Font.BOLD, level.getSizeTitle()));
+        g.drawString(level.getTitulo(), level.getTitleX(), level.getTitleY());
     }
 
     @Override
