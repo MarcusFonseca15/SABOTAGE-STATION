@@ -12,11 +12,11 @@ public class Player {
     // public int GRAVITY = 1;
     public Gravity g;
 
-    int velX = 0;
-    int velY = 0;
-    boolean jumping = false;
-    boolean onGround = true;
-    boolean wantToJump = false;
+    public int velX = 0;
+    public int velY = 0;
+    public boolean jumping = false;
+    public boolean onGround = true;
+    public boolean wantToJump = false;
     boolean TrocaTroca = true;
 
     Image PersoPulandoD;
@@ -108,7 +108,6 @@ public class Player {
             }
         }
 
-
         y += velY;
 
         // Limitar na tela
@@ -141,7 +140,6 @@ public class Player {
             }
         }
 
-       
     }
 
     public void keyPressed(KeyEvent e) {

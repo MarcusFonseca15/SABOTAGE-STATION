@@ -19,24 +19,6 @@ public class Laser extends Objeto {
 
     // Laser possui 4 sprites (um no começo e no final, e um no meio, e as suas
     // versões em azul)
-    // private static final Map<Integer, BufferedImage> sprites = new HashMap<>();
-    /*
-     * Vai precisar disso depois:
-     * static {
-     * try {
-     * sprites.put(5, ImageIO.read(Platform.class.getResourceAsStream(
-     * "/assets/laserSprites/laser1.png")));
-     * sprites.put(6, ImageIO.read(Platform.class.getResourceAsStream(
-     * "/assets/laserSprites/laser2.png")));
-     * sprites.put(7, ImageIO.read(Platform.class.getResourceAsStream(
-     * "/assets/laserSprites/laserBase1.png")));
-     * sprites.put(8, ImageIO.read(Platform.class.getResourceAsStream(
-     * "/assets/laserSprites/laserBase3.png")));
-     * } catch (IOException e) {
-     * e.printStackTrace();
-     * }
-     * }
-     */
 
     public Laser(int x, int y, int width, int height, int tipo) {
         super(x, y, width, height);
@@ -49,7 +31,7 @@ public class Laser extends Objeto {
             case 72 -> "/assets/laserSprites/laser2.png";
             case 82 -> "/assets/laserSprites/laserBase2Dir.png";
             case 92 -> "/assets/laserSprites/laserBase2Esq.png";
-            
+
             case 35 -> "/assets/laserSprites/laserBase1Top.png";
             case 36 -> "/assets/laserSprites/laser1Vertical.png";
             case 37 -> "/assets/laserSprites/laserBase1Bottom.png";
@@ -82,12 +64,19 @@ public class Laser extends Objeto {
         }
     }
 
-    /*
-     * public void draw(Graphics g) {
-     * if (visible || debug) {
-     * g.setColor(Color.GRAY);
-     * g.fillRect(x, y, width, height);
-     * }
-     * }
-     */
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 }
