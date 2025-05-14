@@ -29,6 +29,7 @@ public class Level07 extends Level {
     public Level07(Player player) {
         super(3);
         // TODO Auto-generated constructor stub
+        this.titulo = "0.";
     }
 
     @Override

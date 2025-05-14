@@ -26,7 +26,7 @@ public class Level04 extends Level {
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 11, 0, 0, 0, 0, 0, 0, 0, 5, 11, 11, 5, 11, 11, 11, 0 },
-            { 1, 2, 3, 1, 1, 6, 1, 6, 1, 1, 1, 1, 1, 1,  1, 1 }
+            { 1, 2, 3, 1, 1, 6, 1, 6, 1, 1, 1, 1, 1, 1, 1, 1 }
     };
 
     @Override
@@ -38,6 +38,7 @@ public class Level04 extends Level {
         super(1);
         this.player = player;
         designTraps();
+        this.titulo = "0.";
     }
 
     @Override

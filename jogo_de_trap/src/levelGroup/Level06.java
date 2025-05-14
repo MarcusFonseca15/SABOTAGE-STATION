@@ -48,13 +48,11 @@ public class Level06 extends Level {
         designTraps();
         monitorarPulo();
 
-        this.titulo = "03. DON'T DO IT...";
+        this.titulo = "06. DON'T DO IT...";
     }
 
     @Override
     protected void designTraps() {
-
-        // TITULO: "03. DON'T DO IT... VOCE QUEM PEDIU"
 
         Pistao pF = (Pistao) mapaObjetos[11][14];
         pF.forca = 2f;

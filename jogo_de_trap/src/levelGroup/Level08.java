@@ -32,22 +32,23 @@ public class Level08 extends Level {
         super(3);
         this.player = player;
         designTraps();
+        this.titulo = "0.";
     }
 
     @Override
     protected void designTraps() {
-       	Pistao pt1 = (Pistao) mapaObjetos[11][0];
+        Pistao pt1 = (Pistao) mapaObjetos[11][0];
         pt1.forca = 1.45f;
-        
-    	Pistao pt2 = (Pistao) mapaObjetos[3][5];
+
+        Pistao pt2 = (Pistao) mapaObjetos[3][5];
         pt2.forca = 0.1f;
-        
+
         Pistao pt3 = (Pistao) mapaObjetos[11][14];
         pt3.forca = 3f;
-        
+
         Pistao pt4 = (Pistao) mapaObjetos[11][15];
         pt4.forca = 3f;
-        
+
         Pistao pt5 = (Pistao) mapaObjetos[3][6];
         pt5.forca = 0.1f;
     }
