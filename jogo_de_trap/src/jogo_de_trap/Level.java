@@ -2,6 +2,9 @@ package jogo_de_trap;
 
 import java.awt.*;
 import java.util.ArrayList;
+
+import levelGroup.Level03;
+
 import java.awt.Rectangle;
 
 public abstract class Level {
@@ -122,9 +125,23 @@ public abstract class Level {
     }
 
     public boolean checkEspinhosPCollision(Player player) {
+
         for (EspinhosP l : espinhosP) {
-            if (l.checkCollision(player))
+            if (l.checkCollision(player)) {
+                l.setVisible(true);
+
+                // VAI MOSTRAR O ESPINHO Q ENCOSTOU QND TOCAR
+                new Thread(() -> {
+                    try {
+                        Thread.sleep(300);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    l.setVisible(false);
+                }).start();
+
                 return true;
+            }
         }
         return false;
     }

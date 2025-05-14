@@ -26,7 +26,7 @@ public class Level05 extends Level {
             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 1, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 0, 0 },
             { 1, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 1 },
-            { 1, 0, 1, 1, 0, 0, 0, 11, 11, 11, 0, 0, 0, 0, 11, 1 },
+            { 1, 0, 1, 1, 0, 0, 0, 11, 11, 11, 0, 0, 0, 0, 112, 1 },
             { 1, 9, 7, 8, 2, 0, 0, 1, 2, 3, 0, 0, 0, 0, 0, 1 },
             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
             { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
@@ -45,6 +45,7 @@ public class Level05 extends Level {
         super(2);
         this.player = player;
         designTraps();
+        this.titulo = "05. NEM TODO DISCRETO É RUIM";
     }
 
     @Override
@@ -63,11 +64,11 @@ public class Level05 extends Level {
         EspinhosP spInv3 = (EspinhosP) mapaObjetos[5][9];
 
         EspinhosP spInv4 = (EspinhosP) mapaObjetos[5][14];
-        spInv4.setVisible(false);
 
         spInv1.setVisible(false);
         spInv2.setVisible(false);
         spInv3.setVisible(false);
+        spInv4.setVisible(false);
 
     }
 
