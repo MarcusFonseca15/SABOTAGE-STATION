@@ -16,12 +16,12 @@ public class Level04 extends Level {
 
     private static int[][] mapa = {
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 9, 7, 7, 7, 8, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3 },
+            { 0, 0, 0, 9, 7, 7, 7, 8, 0, 0, 0, 0, 0, 0, 0, 3 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -38,7 +38,8 @@ public class Level04 extends Level {
         super(1);
         this.player = player;
         designTraps();
-        this.titulo = "0.";
+        this.titulo = "04. Agora vai...";
+        this.setTitlePos(titleX, titleY - 10);
     }
 
     @Override
@@ -50,10 +51,11 @@ public class Level04 extends Level {
         // sobeDesce(p2, 150, 250, 2);
 
         Pistao pt1 = (Pistao) mapaObjetos[11][5];
-        pt1.forca = 1.5f;
+        pt1.forca = 2f;
         Pistao pt2 = (Pistao) mapaObjetos[11][7];
         pt2.forca = 1.5f;
-
+        Pistao pt3 = (Pistao) mapaObjetos[10][11];
+        pt3.forca = 1.53f;
         // normal
         player.g.setGravity(1.0);
         player.g.setPulo(-15);
