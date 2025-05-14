@@ -48,7 +48,7 @@ public class Level06 extends Level {
         designTraps();
         monitorarPulo();
 
-        this.titulo = "06. DON'T DO IT...";
+        this.titulo = "06. Eita, um bug?...";
     }
 
     @Override
@@ -105,7 +105,7 @@ public class Level06 extends Level {
                     if (g.getGravity() != 0) {
                         g.setGravity(0);
                         g.setPulo(-500);
-                        setTitulo("03. DON'T DO IT... VOCÊ QUEM PEDIU");
+                        setTitulo("06. Eita, um bug?... Não, é o jogo!");
                     }
                     player.velY = -15;
                     player.jumping = true;

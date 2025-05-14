@@ -31,7 +31,8 @@ public class Level01 extends Level {
         super(1);
         this.player = player;
         designTraps();
-        this.titulo = "0.";
+        this.titulo = "01. Traps, TRAPS, E MAIS TRAPS!";
+        this.setTitlePos(titleX, titleY - 15);
     }
 
     @Override

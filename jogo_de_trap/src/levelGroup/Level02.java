@@ -32,7 +32,8 @@ public class Level02 extends Level {
         super(3);
         this.player = player;
         designTraps();
-        this.titulo = "0.";
+        this.titulo = "02. Ah, você tava aí, safado?";
+        this.setTitlePos(titleX, titleY - 5);
     }
 
     @Override

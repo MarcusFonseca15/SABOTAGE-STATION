@@ -45,7 +45,7 @@ public class Level05 extends Level {
         super(2);
         this.player = player;
         designTraps();
-        this.titulo = "05. NEM TODO DISCRETO É RUIM";
+        this.titulo = "05. Nem todo discreto é ruim...";
     }
 
     @Override

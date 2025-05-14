@@ -130,15 +130,18 @@ public abstract class Level {
             if (l.checkCollision(player)) {
                 l.setVisible(true);
 
-                // VAI MOSTRAR O ESPINHO Q ENCOSTOU QND TOCAR
-                new Thread(() -> {
-                    try {
-                        Thread.sleep(300);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    l.setVisible(false);
-                }).start();
+                if (!l.isVisible()) {
+
+                    // VAI MOSTRAR O ESPINHO Q ENCOSTOU QND TOCAR
+                    new Thread(() -> {
+                        try {
+                            Thread.sleep(300);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        l.setVisible(false);
+                    }).start();
+                }
 
                 return true;
             }

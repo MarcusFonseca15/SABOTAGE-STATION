@@ -29,7 +29,7 @@ public class Level10 extends Level {
     public Level10(Player player) {
         super(3);
         // TODO Auto-generated constructor stub
-        this.titulo = "0.";
+        this.titulo = "10. VAI QUE É TUA!";
     }
 
     @Override
