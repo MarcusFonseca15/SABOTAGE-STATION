@@ -14,12 +14,12 @@ public class Level01 extends Level {
 
     private static int[][] mapa = {
             { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 11, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 3, 3, 11, 3, 0, 3, 1, 1, 1, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0 },
-            { 0, 6, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 4 },
+            { 111, 111, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 3, 3, 3, 3, 0, 3, 1, 1, 1, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 112, 4 },
+            { 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4 },
+            { 0, 0, 0, 3, 3, 3, 3, 3, 3, 0, 0, 0, 3, 0, 0, 4 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 4 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 4 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 4 },
@@ -45,8 +45,8 @@ public class Level01 extends Level {
 
         Pistao pt1 = (Pistao) mapaObjetos[10][14];
         pt1.forca = 1.7f;
-        Pistao pt2 = (Pistao) mapaObjetos[5][1];
-        pt2.forca = 3.0f;
+        //Pistao pt2 = (Pistao) mapaObjetos[5][1];
+        //pt2.forca = 3.0f;
         Pistao pt3 = (Pistao) mapaObjetos[10][0];
         pt3.forca = 3.0f;
 
@@ -58,7 +58,7 @@ public class Level01 extends Level {
         EspinhosP spInv2 = (EspinhosP) mapaObjetos[1][1];
         EspinhosP spInv3 = (EspinhosP) mapaObjetos[4][14];
         // EspinhosP spInv4 = (EspinhosP) mapaObjetos[0][8];
-        EspinhosP spInv5 = (EspinhosP) mapaObjetos[3][5];
+        EspinhosP spInv5 = (EspinhosP) mapaObjetos[2][5];
 
         spInv1.setVisible(false);
         spInv2.setVisible(false);
