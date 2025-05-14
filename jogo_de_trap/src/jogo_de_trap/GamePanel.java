@@ -3,6 +3,9 @@ package jogo_de_trap;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.font.TextLayout;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.AffineTransform;
 
 import levelGroup.Level01;
 import levelGroup.Level10;
@@ -25,7 +28,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private Level level;
     private Image backgroundImage;
 
-    private int currentLevel = 5;
+    private int currentLevel = 1;
     private final int maxLevels = 10;
 
     public GamePanel() {
@@ -89,10 +92,42 @@ public class GamePanel extends JPanel implements ActionListener {
         level.draw(g);
         player.draw(g);
 
-        // TITULO
-        g.setColor(level.getCorTitle());
-        g.setFont(new Font("Arial", Font.BOLD, level.getSizeTitle()));
-        g.drawString(level.getTitulo(), level.getTitleX(), level.getTitleY());
+        // TITULO COM CONTORNO
+        Graphics2D g2d = (Graphics2D) g.create();
+
+        String texto = level.getTitulo();
+        int x = level.getTitleX();
+        int y = level.getTitleY();
+        int size = level.getSizeTitle();
+        Color fillColor = level.getCorTitle();
+        Color outlineColor = Color.BLACK; // Cor do contorno (você pode colocar no Level também, se quiser)
+
+        Font font = new Font("Arial", Font.BOLD, size);
+        g2d.setFont(font);
+
+        FontMetrics fm = g2d.getFontMetrics();
+        int textWidth = fm.stringWidth(texto);
+        int textHeight = fm.getAscent();
+
+        // Criar forma do texto
+        FontRenderContext frc = g2d.getFontRenderContext();
+        TextLayout textLayout = new TextLayout(texto, font, frc);
+        Shape outline = textLayout.getOutline(null);
+
+        AffineTransform transform = g2d.getTransform();
+        transform.translate(x, y);
+        g2d.transform(transform);
+
+        // Contorno
+        g2d.setColor(outlineColor);
+        g2d.setStroke(new BasicStroke(2.0f)); // Espessura do contorno
+        g2d.draw(outline);
+
+        // Texto preenchido
+        g2d.setColor(fillColor);
+        g2d.fill(outline);
+
+        g2d.dispose();
     }
 
     @Override

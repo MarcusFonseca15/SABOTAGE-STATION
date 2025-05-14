@@ -44,6 +44,8 @@ public class Level03 extends Level {
         super(3);
         this.player = player;
         designTraps();
+        this.titulo = "03. EITA, UM BUG?";
+        this.setTitlePos(titleX, 70);
     }
 
     @Override
