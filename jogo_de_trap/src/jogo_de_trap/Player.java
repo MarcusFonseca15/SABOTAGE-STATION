@@ -12,6 +12,8 @@ public class Player {
     // public int GRAVITY = 1;
     public Gravity g;
 
+    public Level level;
+
     public int velX = 0;
     public int velY = 0;
     public boolean jumping = false;
@@ -96,12 +98,13 @@ public class Player {
 
         if (!onGround) {
             velY += g.getGravity();
-            // ColisionManager.checarColisoes(this, level.getMapaObjetos();
+            ColisionManager.checarColisoes(this, level.getMapaObjetos(), g.getDirection());
+
         }
 
         if (wantToJump) {
             if (onGround) {
-                velY = -15;
+                velY = g.getDirection() * -15;
                 jumping = true;
                 onGround = false;
                 wantToJump = false; // só reseta aqui
@@ -116,17 +119,42 @@ public class Player {
         if (x + width > 800)
             x = 800 - width;
 
-        if (g.valor == 0 && y + height >= 600) {
-            y = 600 - height;
-            velY = 0;
-            // ColisionManager.checarColisoes(this, level.getMapaObjetos();
-            onGround = true;
+        // DETECÇÃO DE CHAO/TETO de acordo com gravidade
+        // grav normal
+        if (g.getDirection() == 1) {
+            if (y + height >= 600) {
+                // System.out.println("g.getDirection(): " + g.getDirection());
+
+                y = 600 - height;
+                velY = 0;
+                onGround = true;
+            }
+            // grav invertida
+        } else if (g.getDirection() == -1) {
+            if (y > 0) {
+                y = 0;
+                if (velY < 0)
+                    velY = 0;
+                // System.out.println("Colidiu com teto, velY agora: " + velY + ", x: " + x);
+            }
+        } else if (g.getDirection() == 0) { // sem gravidade
+            //
+            //
         }
+        /*
+         * if (g.valor == 0 && y + height >= 600) {
+         * y = 600 - height;
+         * velY = 0;
+         * // ColisionManager.checarColisoes(this, level.getMapaObjetos();
+         * onGround = true;
+         * }
+         */
 
         // fiz isso aqui para atualizar o pulo
         jumping = !onGround;
 
         if (velX != 0) {
+            // System.out.println("Movendo lateralmente com velX = " + velX);
             ContDoFrame++;
             if (ContDoFrame >= IntervaloDoFrame) {
                 ControleDoIndex = (ControleDoIndex + 1) % PersoCorrendoD.length;
@@ -169,6 +197,15 @@ public class Player {
         this.velY = 0;
         this.jumping = false;
         this.onGround = true;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int setY(int y) {
+        this.y = y;
+        return this.y;
     }
 
 }

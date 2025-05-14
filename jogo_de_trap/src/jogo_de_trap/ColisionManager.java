@@ -1,11 +1,16 @@
 package jogo_de_trap;
 
+import jogo_de_trap.Platform;
+import jogo_de_trap.Player;
+import jogo_de_trap.Objeto;
+
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ColisionManager {
 
+    // Método para extrair os objetos do mapa
     public static List<Objeto> extrairObjetos(Objeto[][] mapa) {
         List<Objeto> objetos = new ArrayList<>();
         for (int i = 0; i < mapa.length; i++) {
@@ -18,36 +23,27 @@ public class ColisionManager {
         return objetos;
     }
 
-    public static void checarColisoes(Player player, Objeto[][] mapaObjetos) {
-        Rectangle jogador = new Rectangle(player.x, player.y, player.width, player.height);
+    // Método que checa as colisões do Player com objetos no mapa
+    public static void checarColisoes(Player player, Objeto[][] mapaObjetos, int direcaoGravidade) {
+        if (direcaoGravidade != -1)
+            return; // Só age se gravidade for -1 (gravidade invertida)
 
-        for (Objeto obj : extrairObjetos(mapaObjetos)) {
-            if (jogador.intersects(obj.getBounds())) {
-                Rectangle objRect = obj.getBounds();
+        // Extrair os objetos do mapa
+        List<Objeto> objetos = extrairObjetos(mapaObjetos);
 
-                // Colisão por baixo (player caindo)
-                if (player.velY > 0 && jogador.y + jogador.height <= objRect.y + player.velY) {
-                    player.y = objRect.y - player.height;
-                    player.velY = 0;
-                    player.onGround = true;
-                }
+        // Criar um retângulo representando o topo do player (colisão com o teto)
+        Rectangle topoDoPlayer = new Rectangle(player.x, player.y, player.width, 5);
 
-                // Colisão por cima (gravidade invertida)
-                else if (player.velY < 0 && jogador.y >= objRect.y + objRect.height - player.velY) {
-                    player.y = objRect.y + objRect.height;
-                    player.velY = 0;
-                    player.onGround = true;
-                }
-
-                // Colisão lateral esquerda
-                else if (player.velX > 0 && jogador.x + jogador.width <= objRect.x + player.velX) {
-                    player.x = objRect.x - player.width;
-                }
-
-                // Colisão lateral direita
-                else if (player.velX < 0 && jogador.x >= objRect.x + objRect.width - player.velX) {
-                    player.x = objRect.x + objRect.width;
-                }
+        // Verificar colisões
+        for (Objeto obj : objetos) {
+            // Se o player colidir com uma plataforma
+            if (topoDoPlayer.intersects(obj.getBounds())) {
+                // Ajustar a posição do player para estar "abaixo" da plataforma
+                player.y = obj.y + obj.height;
+                player.velY = 0; // Zerando a velocidade vertical (parando o movimento)
+                player.onGround = true; // Indica que o player está "no chão"
+                // System.out.println("Colidiu com teto (gravidade invertida)");
+                break; // Parar a verificação após a primeira colisão
             }
         }
     }

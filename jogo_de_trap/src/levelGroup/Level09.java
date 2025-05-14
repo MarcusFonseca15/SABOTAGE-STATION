@@ -1,5 +1,6 @@
 package levelGroup;
 
+import jogo_de_trap.Gravity;
 import jogo_de_trap.Laser;
 import jogo_de_trap.Level;
 import jogo_de_trap.Platform;
@@ -7,18 +8,21 @@ import jogo_de_trap.Player;
 
 public class Level09 extends Level {
 
+    Player player;
+    Gravity g;
+
     private static int[][] mapa = {
             { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
-            { 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 4 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 36, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 36, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 36, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 37, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 4, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0 },
             { 0, 1, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11 }
     };
 
@@ -29,8 +33,12 @@ public class Level09 extends Level {
 
     public Level09(Player player) {
         super(9);
+        this.player = player;
+        this.player.level = this;
+        this.g = new Gravity(1);
+        player.setY(player.getY() + 10);
         designTraps();
-        this.titulo = "09. Desafiar a Gravidade! ";
+        this.titulo = "09. Desafiar a Gravidade!";
     }
 
     @Override
@@ -46,6 +54,12 @@ public class Level09 extends Level {
         laserAnda(l3, 0, l3.getX(), 2);
         laserAnda(l4, 0, l1.getX(), 2);
         laserAnda(l5, 0, l1.getX(), 2);
+
+        player.g.setGravity(1);
+
+        if (player.wantToJump) {
+            player.g.setGravity(-1);
+        }
     }
 
     private void laserAnda(Laser laser, int posMin, int posMax, int vel) {
