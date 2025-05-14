@@ -30,6 +30,7 @@ public class Level01 extends Level {
     public Level01(Player player) {
         super(1);
         this.player = player;
+        this.player.level = this;
         designTraps();
         this.titulo = "01. Traps, TRAPS, E MAIS TRAPS!";
         this.setTitlePos(titleX, titleY - 15);
@@ -45,8 +46,8 @@ public class Level01 extends Level {
 
         Pistao pt1 = (Pistao) mapaObjetos[10][14];
         pt1.forca = 1.7f;
-        //Pistao pt2 = (Pistao) mapaObjetos[5][1];
-        //pt2.forca = 3.0f;
+        // Pistao pt2 = (Pistao) mapaObjetos[5][1];
+        // pt2.forca = 3.0f;
         Pistao pt3 = (Pistao) mapaObjetos[10][0];
         pt3.forca = 3.0f;
 

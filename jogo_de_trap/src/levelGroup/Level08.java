@@ -31,6 +31,7 @@ public class Level08 extends Level {
     public Level08(Player player) {
         super(3);
         this.player = player;
+        this.player.level = this;
         designTraps();
         this.titulo = "08. De olho no pixel!";
         this.setTitlePos(titleX, titleY - 10);
@@ -41,8 +42,8 @@ public class Level08 extends Level {
         Pistao pt1 = (Pistao) mapaObjetos[11][0];
         pt1.forca = 1.45f;
 
-//        Pistao pt2 = (Pistao) mapaObjetos[3][4];
-//        pt2.forca = 0.1f;
+        // Pistao pt2 = (Pistao) mapaObjetos[3][4];
+        // pt2.forca = 0.1f;
 
         Pistao pt3 = (Pistao) mapaObjetos[11][14];
         pt3.forca = 3f;
@@ -52,7 +53,7 @@ public class Level08 extends Level {
 
         Pistao pt5 = (Pistao) mapaObjetos[3][6];
         pt5.forca = 0.1f;
-        
+
         Pistao pt6 = (Pistao) mapaObjetos[11][4];
         pt6.forca = 1.05f;
     }

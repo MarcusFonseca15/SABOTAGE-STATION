@@ -43,6 +43,7 @@ public class Level06 extends Level {
     public Level06(Player player) {
         super(6);
         this.player = player;
+        this.player.level = this;
         this.g = player.g;
 
         designTraps();

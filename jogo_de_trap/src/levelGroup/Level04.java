@@ -37,6 +37,7 @@ public class Level04 extends Level {
     public Level04(Player player) {
         super(1);
         this.player = player;
+        this.player.level = this;
         designTraps();
         this.titulo = "04. Agora vai...";
         this.setTitlePos(titleX, titleY - 10);

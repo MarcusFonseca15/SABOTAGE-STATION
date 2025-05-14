@@ -44,6 +44,7 @@ public class Level05 extends Level {
     public Level05(Player player) {
         super(2);
         this.player = player;
+        this.player.level = this;
         designTraps();
         this.titulo = "05. Nem todo discreto é ruim...";
     }

@@ -12,8 +12,8 @@ public class Level07 extends Level {
     private EspinhosP espInv2;
     private EspinhosP espInv3;
     private Player player;
-	
-	private static int[][] mapa = {
+
+    private static int[][] mapa = {
             { 111, 111, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 7, 7, 7, 8 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 4, 3, 3, 3, 0, 0, 0, 0, 4 },
@@ -36,15 +36,16 @@ public class Level07 extends Level {
     public Level07(Player player) {
         super(3);
         this.player = player;
+        this.player.level = this;
         designTraps();// TODO Auto-generated constructor stub
         this.titulo = "0.";
-        
+
     }
 
     @Override
     protected void designTraps() {
 
-    	Pistao p1 = (Pistao) mapaObjetos[5][0];
+        Pistao p1 = (Pistao) mapaObjetos[5][0];
         p1.forca = 1.0f;
         Pistao p2 = (Pistao) mapaObjetos[11][12];
         p2.forca = 1.47f;
@@ -54,8 +55,7 @@ public class Level07 extends Level {
         espInv1 = (EspinhosP) mapaObjetos[10][14];
         espInv2 = (EspinhosP) mapaObjetos[7][10];
         espInv3 = (EspinhosP) mapaObjetos[3][7];
-        
-     
+
         espInv1.setVisible(false);
         espInv2.setVisible(false);
         espInv3.setVisible(false);
