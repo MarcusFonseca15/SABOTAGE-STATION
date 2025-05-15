@@ -32,7 +32,9 @@ public class ColisionManager {
         List<Objeto> objetos = extrairObjetos(mapaObjetos);
 
         // Criar um retângulo representando o topo do player (colisão com o teto)
-        Rectangle topoDoPlayer = new Rectangle(player.x, player.y, player.width, 5);
+        // Rectangle topoDoPlayer = new Rectangle(player.x, player.y, player.width, 5);
+        Rectangle topoDoPlayer = new Rectangle(player.x, player.y, player.width, player.height / 2);
+
         Rectangle baseDoPlayer = new Rectangle(player.x, player.y + player.height - 5, player.width, 5);
 
         // Verificar colisões
@@ -44,8 +46,15 @@ public class ColisionManager {
                 player.velY = 0; // Zerando a velocidade vertical (parando o movimento)
                 player.onGround = true; // Indica que o player está "no chão"
                 // System.out.println("Colidiu com teto (gravidade invertida)");
-                break; // Parar a verificação após a primeira colisão
+                // Parar a verificação após a primeira colisão
             }
+
+            if (topoDoPlayer.intersects(obj.getBounds())) {
+                player.y = obj.y + obj.height;
+                player.velY = 0;
+                player.onGround = true;
+            }
+
         }
     }
 }

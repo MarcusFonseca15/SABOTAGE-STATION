@@ -3,13 +3,13 @@ package jogo_de_trap;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.Rectangle;
 import jogo_de_trap.Gravity;
 
 public class Player {
     int x, y;
     int width = 50, height = 50;
 
-    // public int GRAVITY = 1;
     public Gravity g;
 
     public Level level;
@@ -97,8 +97,8 @@ public class Player {
         x += velX;
 
         if (!onGround) {
-            velY += g.getGravity();
             ColisionManager.checarColisoes(this, level.getMapaObjetos(), g.getDirection());
+            velY += g.getGravity();
 
         }
 
@@ -135,8 +135,9 @@ public class Player {
                 y = 0;
                 if (velY < 0)
                     velY = 0;
-                // System.out.println("Colidiu com teto, velY agora: " + velY + ", x: " + x);
+                System.out.println("Colidiu com teto, velY agora: " + velY + ", x: " + x);
             }
+
         } else if (g.getDirection() == 0) { // sem gravidade
             //
             //
@@ -197,6 +198,10 @@ public class Player {
         this.velY = 0;
         this.jumping = false;
         this.onGround = true;
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, width, height);
     }
 
     public int getY() {

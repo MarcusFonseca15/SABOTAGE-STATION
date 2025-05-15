@@ -3,6 +3,7 @@ package levelGroup;
 import jogo_de_trap.Gravity;
 import jogo_de_trap.Laser;
 import jogo_de_trap.Level;
+import jogo_de_trap.Pistao;
 import jogo_de_trap.Platform;
 import jogo_de_trap.Player;
 
@@ -15,17 +16,17 @@ public class Level09 extends Level {
 
     private static int[][] mapa = {
             { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
-            { 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 4 },
+            { 0, 4, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4, 111, 111, 111, 4 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 36, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 36, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 36, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 37, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 4, 1, 1, 1, 1, 4, 1, 1, 1, 4, 1, 1, 1, 4, 1, 1 },
-            { 0, 1, 1, 1, 1, 1, 1, 11, 11, 11, 11, 11, 11, 11, 11, 11 }
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 35 },
+            { 0, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 36, 36 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 36, 36 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 36, 36 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 37, 37 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11 },
+            { 5, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 6, 6, 1 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 0 },
+            { 1, 1, 1, 1, 1, 1, 1, 3, 6, 1, 1, 1, 1, 1, 1, 1 }
     };
 
     @Override
@@ -48,18 +49,37 @@ public class Level09 extends Level {
     @Override
     protected void designTraps() {
 
-        Laser l1 = (Laser) mapaObjetos[4][14];
-        Laser l2 = (Laser) mapaObjetos[5][14];
-        Laser l3 = (Laser) mapaObjetos[6][14];
-        Laser l4 = (Laser) mapaObjetos[7][14];
-        Laser l5 = (Laser) mapaObjetos[8][14];
+        Laser l1 = (Laser) mapaObjetos[3][14];
+        Laser l2 = (Laser) mapaObjetos[4][14];
+        Laser l3 = (Laser) mapaObjetos[5][14];
+        Laser l4 = (Laser) mapaObjetos[6][14];
+        Laser l5 = (Laser) mapaObjetos[7][14];
         laserAnda(l1, 0, l1.getX(), 2);
         laserAnda(l2, 0, l2.getX(), 2);
         laserAnda(l3, 0, l3.getX(), 2);
         laserAnda(l4, 0, l1.getX(), 2);
         laserAnda(l5, 0, l1.getX(), 2);
 
-        player.g.setGravity(-1);
+        Laser lTR1 = (Laser) mapaObjetos[3][15];
+        Laser lTR2 = (Laser) mapaObjetos[4][15];
+        Laser lTR3 = (Laser) mapaObjetos[5][15];
+        Laser LTR4 = (Laser) mapaObjetos[6][15];
+        Laser LTR5 = (Laser) mapaObjetos[7][15];
+
+        Pistao pistaoFin = (Pistao) mapaObjetos[9][13];
+        Pistao pistaoFin2 = (Pistao) mapaObjetos[9][14];
+
+        if (player.getBounds().intersects(pistaoFin.getBounds()) ||
+                player.getBounds().intersects(pistaoFin2.getBounds())) {
+
+            laserAnda(lTR1, 0, lTR1.getX(), 3);
+            laserAnda(lTR2, 0, lTR2.getX(), 3);
+            laserAnda(lTR3, 0, lTR3.getX(), 3);
+            laserAnda(LTR4, 0, lTR1.getX(), 3);
+            laserAnda(LTR5, 0, lTR1.getX(), 3);
+        }
+
+        player.g.setGravity(1);
         if (player.wantToJump) {
             player.g.setGravity(1);
         }
