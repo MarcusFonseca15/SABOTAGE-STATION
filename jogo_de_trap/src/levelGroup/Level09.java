@@ -36,7 +36,6 @@ public class Level09 extends Level {
         this.player = player;
         this.player.level = this;
         this.g = new Gravity(1);
-        player.setY(player.getY() + 10);
         designTraps();
         this.titulo = "09. Desafiar a Gravidade!";
     }

@@ -128,9 +128,9 @@ public abstract class Level {
 
         for (EspinhosP l : espinhosP) {
             if (l.checkCollision(player)) {
-                l.setVisible(true);
 
                 if (!l.isVisible()) {
+                    l.setVisible(true);
 
                     // VAI MOSTRAR O ESPINHO Q ENCOSTOU QND TOCAR
                     new Thread(() -> {
