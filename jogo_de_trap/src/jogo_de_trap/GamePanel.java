@@ -28,7 +28,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private Level level;
     private Image backgroundImage;
 
-    private int currentLevel = 1;
+    private int currentLevel = 9;
     private final int maxLevels = 10;
 
     public GamePanel() {
@@ -155,7 +155,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
         if (player.x + player.width >= LARGURA) {
             currentLevel++;
-            if (currentLevel > 6) {
+            if (currentLevel > 6 || (currentLevel > 9 && currentLevel != 9)) {
                 level.pararThread();
             }
             if (currentLevel <= maxLevels) {

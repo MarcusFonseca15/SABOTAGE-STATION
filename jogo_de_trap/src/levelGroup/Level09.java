@@ -11,6 +11,8 @@ public class Level09 extends Level {
     Player player;
     Gravity g;
 
+    private boolean ativo = true;
+
     private static int[][] mapa = {
             { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
             { 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 4 },
@@ -22,8 +24,8 @@ public class Level09 extends Level {
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 36, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 37, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 4, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0 },
-            { 0, 1, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11 }
+            { 4, 1, 1, 1, 1, 4, 1, 1, 1, 4, 1, 1, 1, 4, 1, 1 },
+            { 0, 1, 1, 1, 1, 1, 1, 11, 11, 11, 11, 11, 11, 11, 11, 11 }
     };
 
     @Override
@@ -35,9 +37,12 @@ public class Level09 extends Level {
         super(9);
         this.player = player;
         this.player.level = this;
-        this.g = new Gravity(1);
+        this.g = player.g;
+
         designTraps();
-        this.titulo = "09. Desafiar a Gravidade!";
+        monitorarPulo();
+
+        this.titulo = "09. Oops, fiz de novo rs";
     }
 
     @Override
@@ -54,12 +59,12 @@ public class Level09 extends Level {
         laserAnda(l4, 0, l1.getX(), 2);
         laserAnda(l5, 0, l1.getX(), 2);
 
-        player.g.setGravity(1);
-
+        player.g.setGravity(-1);
         if (player.wantToJump) {
-            player.g.setGravity(-1);
+            player.g.setGravity(1);
         }
-    }
+
+    }// ---------------
 
     private void laserAnda(Laser laser, int posMin, int posMax, int vel) {
         new Thread(() -> {
@@ -84,6 +89,46 @@ public class Level09 extends Level {
                 e.printStackTrace();
             }
         }).start();
+    }
+
+    private void monitorarPulo() {
+        new Thread(() -> {
+            while (ativo) {
+                if (player.wantToJump && player.onGround) {
+                    if (g.getGravity() != 0) {
+                        g.setGravity(0);
+                        g.setPulo(-500);
+                    }
+                    player.velY = -15;
+                    player.jumping = true;
+                    player.onGround = false;
+                    player.wantToJump = false;
+
+                    // RESET DE ESTADO
+                    new Thread(() -> {
+                        try {
+                            Thread.sleep(100);
+                            g.setGravity(1);
+                            player.onGround = true;
+                            player.jumping = false;
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }).start();
+                }
+
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    @Override
+    public void pararThread() {
+        ativo = false;
     }
 
 }

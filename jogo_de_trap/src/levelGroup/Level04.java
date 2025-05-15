@@ -58,8 +58,8 @@ public class Level04 extends Level {
         Pistao pt3 = (Pistao) mapaObjetos[10][11];
         pt3.forca = 1.53f;
         // normal
-        player.g.setGravity(1.0);
-        player.g.setPulo(-15);
+        // player.g.setGravity(1.0);
+        // player.g.setPulo(-15);
 
         // zero
         // player.g.setGravity(0);

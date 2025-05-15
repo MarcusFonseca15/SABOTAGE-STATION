@@ -119,11 +119,10 @@ public class Level06 extends Level {
                     // RESET DE ESTADO APÓS 2 SEGUNDOS
                     new Thread(() -> {
                         try {
-                            Thread.sleep(3500); // tempo suficiente para ele morrer
-                            g.setGravity(1); // volta gravidade ao normal
+                            Thread.sleep(3500);
+                            g.setGravity(1);
                             player.onGround = true;
                             player.jumping = false;
-                            // não é necessário resetar velY aqui, pois o motor de física deve tratar isso.
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }

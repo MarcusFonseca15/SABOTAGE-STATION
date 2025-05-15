@@ -33,6 +33,7 @@ public class ColisionManager {
 
         // Criar um retângulo representando o topo do player (colisão com o teto)
         Rectangle topoDoPlayer = new Rectangle(player.x, player.y, player.width, 5);
+        Rectangle baseDoPlayer = new Rectangle(player.x, player.y + player.height - 5, player.width, 5);
 
         // Verificar colisões
         for (Objeto obj : objetos) {
