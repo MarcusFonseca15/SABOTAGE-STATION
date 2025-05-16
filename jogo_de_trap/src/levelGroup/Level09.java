@@ -49,6 +49,8 @@ public class Level09 extends Level {
     @Override
     protected void designTraps() {
 
+        Platform p1 = (Platform) mapaObjetos[0][0];
+        p1.setVisible(false);
         Laser l1 = (Laser) mapaObjetos[3][14];
         Laser l2 = (Laser) mapaObjetos[4][14];
         Laser l3 = (Laser) mapaObjetos[5][14];

@@ -28,7 +28,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private Level level;
     private Image backgroundImage;
 
-    private int currentLevel = 3;
+    private int currentLevel = 9;
     private final int maxLevels = 10;
 
     public GamePanel() {

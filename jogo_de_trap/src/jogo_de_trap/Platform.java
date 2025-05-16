@@ -11,15 +11,18 @@ import javax.imageio.ImageIO;
 
 public class Platform extends Objeto {
     private BufferedImage sprite;
+    private boolean debug = false;
+    public boolean visible = true;
 
     // Mapeia números para sprites. Carrega apeans uma vez
     private static final Map<Integer, BufferedImage> sprites = new HashMap<>();
 
-    /* Nao coloquei o static aqui, porque ele só vai carregar os sprites uma vez, e
-    * não
-    * toda vez que criar uma plataforma. É mais eficiente assim
-    */
-    
+    /*
+     * Nao coloquei o static aqui, porque ele só vai carregar os sprites uma vez, e
+     * não
+     * toda vez que criar uma plataforma. É mais eficiente assim
+     */
+
     static {
         try {
             sprites.put(1, ImageIO.read(Platform.class.getResourceAsStream("/assets/metal_Tiles/metalTile1.png")));
@@ -38,10 +41,12 @@ public class Platform extends Objeto {
 
     @Override
     public void draw(Graphics g) {
-        if (sprite != null) {
-            g.drawImage(sprite, x, y, width, height, null);
-        } else {
-            g.setColor(Color.BLUE);
+        if (visible) {
+            if (sprite != null) {
+                g.drawImage(sprite, x, y, width, height, null);
+            }
+        } else if (debug) {
+            g.setColor(Color.RED);
             g.fillRect(x, y, width, height);
         }
     }
@@ -60,5 +65,9 @@ public class Platform extends Objeto {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 }
