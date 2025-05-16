@@ -72,17 +72,15 @@ public class Level09 extends Level {
         if (player.getBounds().intersects(pistaoFin.getBounds()) ||
                 player.getBounds().intersects(pistaoFin2.getBounds())) {
 
-            laserAnda(lTR1, 0, lTR1.getX(), 3);
-            laserAnda(lTR2, 0, lTR2.getX(), 3);
-            laserAnda(lTR3, 0, lTR3.getX(), 3);
+            laserAnda(lTR1, 0, lTR1.getX(), 2);
+            laserAnda(lTR2, 0, lTR1.getX(), 2);
+            laserAnda(lTR3, 0, lTR1.getX(), 3);
             laserAnda(LTR4, 0, lTR1.getX(), 3);
             laserAnda(LTR5, 0, lTR1.getX(), 3);
         }
 
-        player.g.setGravity(1);
-        if (player.wantToJump) {
-            player.g.setGravity(1);
-        }
+        // se player morrer (if (colision com laser ou espinho), reset os lasers para
+        // posição inicial
 
     }// ---------------
 
