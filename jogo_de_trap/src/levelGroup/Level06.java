@@ -71,7 +71,7 @@ public class Level06 extends Level {
         }
 
         for (Laser l : lasers) {
-            laserDesce(l, l.getY(), 500, 10);
+            laserDesce(l, l.getY(), 500, 2);
         }
 
     } // -----------------------------
