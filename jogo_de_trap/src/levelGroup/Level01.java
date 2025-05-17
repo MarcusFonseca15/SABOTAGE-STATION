@@ -68,8 +68,8 @@ public class Level01 extends Level {
         spInv5.setVisible(false);
     }
 
-    @Override
-    protected Objeto criarObjetoPorCodigo(int tipo, int x, int y) {
+    //@Override
+    /*protected Objeto criarObjetoPorCodigo(int tipo, int x, int y) {
         if (tipo == 11) {
             int row = y / 50;
             int col = x / 50;
@@ -79,5 +79,5 @@ public class Level01 extends Level {
         }
 
         return super.criarObjetoPorCodigo(tipo, x, y);
-    }
+    }*/
 }
