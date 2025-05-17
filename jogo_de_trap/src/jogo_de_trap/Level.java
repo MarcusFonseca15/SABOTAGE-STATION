@@ -18,6 +18,7 @@ public abstract class Level {
     ArrayList<Pistao> pistoes = new ArrayList<>();
     ArrayList<Espinhos> espinhos = new ArrayList<>();
     ArrayList<EspinhosP> espinhosP = new ArrayList<>();
+    ArrayList<FakeEspinho> fakeEspinho = new ArrayList<>();
 
     ////////////// TITULO
     protected String titulo = "";
@@ -55,6 +56,8 @@ public abstract class Level {
                         espinhos.add((Espinhos) obj);
                     } else if (obj instanceof EspinhosP) {
                         espinhosP.add((EspinhosP) obj);
+                    } else if (obj instanceof FakeEspinho) {
+                        fakeEspinho.add((FakeEspinho) obj);
                     }
                 }
 
@@ -77,6 +80,9 @@ public abstract class Level {
 
         for (EspinhosP espinhosP : espinhosP)
             espinhosP.draw(g);
+
+        for (FakeEspinho fakeEspinho : fakeEspinho)
+            fakeEspinho.draw(g);
     }
 
     public boolean checkLaserCollision(Player player) {
@@ -209,6 +215,10 @@ public abstract class Level {
                 return new EspinhosP(x, y - 10, TILE_SIZE, TILE_SIZE, tipo);
             case 112, 113: // espinhosP
                 return new EspinhosP(x, y, TILE_SIZE, TILE_SIZE, tipo);
+            case 999, 992, 993: // fakeEspinho
+                return new FakeEspinho(x, y + 30, TILE_SIZE, TILE_SIZE, tipo);
+            case 991: // fakeEspinho
+                return new FakeEspinho(x, y - 10, TILE_SIZE, TILE_SIZE, tipo);
             default:
                 return null;
         }
