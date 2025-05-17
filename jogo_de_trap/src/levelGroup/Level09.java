@@ -13,7 +13,7 @@ public class Level09 extends Level {
     Player player;
     Gravity g;
 
-    public final int vel = 5;
+    public final int vel = 3;
 
     private boolean ativo = true;
 
@@ -92,6 +92,10 @@ public class Level09 extends Level {
         // Pistao pistaoFin2 = (Pistao) mapaObjetos[9][14];
         // pistaoFin2.forca = 3;
 
+        EspinhosP espFinal1 = (EspinhosP) mapaObjetos[3][15];
+        espFinal1.visible = false;
+        EspinhosP espFinal2 = (EspinhosP) mapaObjetos[5][15];
+        espFinal2.visible = false;
     }// ---------------
 
     private void laserAnda(Laser laser, int posMin, int posMax, int vel) {
