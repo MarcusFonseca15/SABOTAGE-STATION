@@ -46,8 +46,6 @@ public class Level01 extends Level {
 
         Pistao pt1 = (Pistao) mapaObjetos[10][14];
         pt1.forca = 1.7f;
-        // Pistao pt2 = (Pistao) mapaObjetos[5][1];
-        // pt2.forca = 3.0f;
         Pistao pt3 = (Pistao) mapaObjetos[10][0];
         pt3.forca = 3.0f;
 
@@ -58,13 +56,11 @@ public class Level01 extends Level {
         EspinhosP spInv1 = (EspinhosP) mapaObjetos[1][0];
         EspinhosP spInv2 = (EspinhosP) mapaObjetos[1][1];
         EspinhosP spInv3 = (EspinhosP) mapaObjetos[4][14];
-        // EspinhosP spInv4 = (EspinhosP) mapaObjetos[0][8];
         EspinhosP spInv5 = (EspinhosP) mapaObjetos[2][5];
 
         spInv1.setVisible(false);
         spInv2.setVisible(false);
         spInv3.setVisible(false);
-        // spInv4.setVisible(false);
         spInv5.setVisible(false);
     }
 }

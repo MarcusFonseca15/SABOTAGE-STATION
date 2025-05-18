@@ -31,8 +31,6 @@ public abstract class Level {
 
     public Level(int number) {
         carregarMapa(getMapa());
-        // designTraps();
-
     }
 
     private void carregarMapa(int[][] mapa) {
@@ -111,7 +109,7 @@ public abstract class Level {
                     player.y = pistaoBounds.y + pistaoBounds.height;
                     player.velY = 0;
                 } else {
-                    // Colisão lateral (opcional: ajusta conforme necessário)
+                    // Colisão lateral
                     if (player.x + player.width - player.velX <= pistaoBounds.x) {
                         player.x = pistaoBounds.x - player.width;
                     } else if (player.x - player.velX >= pistaoBounds.x + pistaoBounds.width) {
@@ -138,7 +136,7 @@ public abstract class Level {
                 if (!l.isVisible()) {
                     l.setVisible(true);
 
-                    // VAI MOSTRAR O ESPINHO Q ENCOSTOU QND TOCAR
+                    // Mostra o espinho quando encostar nele
                     new Thread(() -> {
                         try {
                             Thread.sleep(300);

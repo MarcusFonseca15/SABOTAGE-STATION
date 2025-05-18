@@ -38,7 +38,7 @@ public class Level07 extends Level {
         this.player = player;
         this.player.level = this;
         designTraps();// TODO Auto-generated constructor stub
-        this.titulo = "0.";
+        this.titulo = "7. Tente de novo!";
 
     }
 

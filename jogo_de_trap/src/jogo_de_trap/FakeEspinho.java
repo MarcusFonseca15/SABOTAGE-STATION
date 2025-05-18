@@ -19,13 +19,6 @@ public class FakeEspinho extends Objeto {
     public FakeEspinho(int x, int y, int width, int height, int tipo) {
         super(x, y, width, height);
 
-        // try {
-        // sprite =
-        // ImageIO.read(getClass().getResource("/assets/espinhoSprite/espinho4.png"));
-        // } catch (IOException e) {
-        //
-        // }
-
         String path = switch (tipo) {
             case 999 -> "/assets/espinhoSprite/espinho4.png";
             case 991 -> "/assets/espinhoSprite/espinho-top.png";

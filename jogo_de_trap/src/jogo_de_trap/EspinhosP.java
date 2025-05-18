@@ -19,13 +19,6 @@ public class EspinhosP extends Objeto {
     public EspinhosP(int x, int y, int width, int height, int tipo) {
         super(x, y, width, height);
 
-        // try {
-        // sprite =
-        // ImageIO.read(getClass().getResource("/assets/espinhoSprite/espinho4.png"));
-        // } catch (IOException e) {
-        //
-        // }
-
         String path = switch (tipo) {
             case 11 -> "/assets/espinhoSprite/espinho4.png";
             case 111 -> "/assets/espinhoSprite/espinho-top.png";

@@ -29,7 +29,7 @@ public class ColisionManager {
 
         List<Objeto> objetos = extrairObjetos(mapaObjetos);
 
-        // Rectangle topoDoPlayer = new Rectangle(player.x, player.y, player.width, 5);
+        
         Rectangle topoDoPlayer = new Rectangle(player.x, player.y, player.width, player.height / 2);
 
         Rectangle baseDoPlayer = new Rectangle(player.x, player.y + player.height - 5, player.width, 5);

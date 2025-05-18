@@ -26,7 +26,6 @@ public class Espinhos extends Objeto {
                 new ImageIcon(getClass().getResource("/assets/espinhoSprite/espinho2.png")).getImage(),
                 new ImageIcon(getClass().getResource("/assets/espinhoSprite/espinho3.png")).getImage(),
                 new ImageIcon(getClass().getResource("/assets/espinhoSprite/espinho4.png")).getImage()
-
         };
     }
 

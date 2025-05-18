@@ -10,19 +10,14 @@ import java.awt.Rectangle;
 import javax.imageio.ImageIO;
 
 public class Laser extends Objeto {
-    // int x, y, width, height;
     boolean active = true;
-    boolean debug = false; // altere para true se quiser ver as armadilhas
+    boolean debug = false; // altera para true se quiser ver as armadilhas
     public boolean visible = true;
 
     private BufferedImage sprite;
 
-    // Laser possui 4 sprites (um no começo e no final, e um no meio, e as suas
-    // versões em azul)
-
     public Laser(int x, int y, int width, int height, int tipo) {
         super(x, y, width, height);
-        // this.height = height;
 
         String path = switch (tipo) {
             case 7 -> "/assets/laserSprites/laser1.png";

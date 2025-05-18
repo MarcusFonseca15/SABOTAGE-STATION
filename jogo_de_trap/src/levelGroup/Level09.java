@@ -65,7 +65,6 @@ public class Level09 extends Level {
         EspinhosP sp1 = (EspinhosP) mapaObjetos[2][3];
         sp1.visible = false;
 
-        // Espinhos de [1][6] a [1][14] devem ser visible = false
         for (int col = 6; col <= 14; col++) {
             if (mapaObjetos[1][col] instanceof EspinhosP) {
                 ((EspinhosP) mapaObjetos[1][col]).visible = false;
@@ -88,15 +87,12 @@ public class Level09 extends Level {
         pistaoMedio.forca = 1.25f;
 
         Pistao pistaoFin = (Pistao) mapaObjetos[9][13];
-        // pistaoFin.forca = 3;
-        // Pistao pistaoFin2 = (Pistao) mapaObjetos[9][14];
-        // pistaoFin2.forca = 3;
 
         EspinhosP espFinal1 = (EspinhosP) mapaObjetos[3][15];
         espFinal1.visible = false;
         EspinhosP espFinal2 = (EspinhosP) mapaObjetos[5][15];
         espFinal2.visible = false;
-    }// ---------------
+    }
 
     private void laserAnda(Laser laser, int posMin, int posMax, int vel) {
         new Thread(() -> {

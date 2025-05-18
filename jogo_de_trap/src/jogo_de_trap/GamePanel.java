@@ -28,8 +28,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private Level level;
     private Image backgroundImage;
 
-
-    private int currentLevel = 10;
+    private int currentLevel = 7;
 
     private final int maxLevels = 10;
 
@@ -37,7 +36,6 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setPreferredSize(new Dimension(LARGURA, ALTURA));
         this.setFocusable(true);
 
-        // Carregar imagem de fundo corretamente
         backgroundImage = new ImageIcon(getClass().getResource("/assets/background2.png")).getImage();
 
         Gravity gravityInit = new Gravity(1.0);
@@ -86,7 +84,6 @@ public class GamePanel extends JPanel implements ActionListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // Desenhar imagem de fundo
         if (backgroundImage != null) {
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
@@ -102,7 +99,7 @@ public class GamePanel extends JPanel implements ActionListener {
         int y = level.getTitleY();
         int size = level.getSizeTitle();
         Color fillColor = level.getCorTitle();
-        Color outlineColor = Color.BLACK; // Cor do contorno (você pode colocar no Level também, se quiser)
+        Color outlineColor = Color.BLACK; // Cor do contorno (pode colocar no Level também, se quiser)
 
         Font font = new Font("Arial", Font.BOLD, size);
         g2d.setFont(font);

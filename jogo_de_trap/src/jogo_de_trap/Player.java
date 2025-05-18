@@ -85,7 +85,7 @@ public class Player {
             Lado = TrocaTroca ? PersoParadoD[PControleDoIndex] : PersoParadoE[PControleDoIndex];
         }
 
-        // SE GRAVIDADE INVERTIDA, DE CABEÇA PRA BAIXO
+        // SE GRAVIDADE INVERTIDA, DE CABEÇA PARA BAIXO
         if (this.g.valor == -1) {
             gh.drawImage(Lado, x, y + height, x + width, y, 0, 0, Lado.getWidth(null), Lado.getHeight(null), null);
         } else {
@@ -123,8 +123,6 @@ public class Player {
         // grav normal
         if (g.getDirection() == 1) {
             if (y + height >= 600) {
-                // System.out.println("g.getDirection(): " + g.getDirection());
-
                 y = 600 - height;
                 velY = 0;
                 onGround = true;
@@ -142,20 +140,11 @@ public class Player {
             //
             //
         }
-        /*
-         * if (g.valor == 0 && y + height >= 600) {
-         * y = 600 - height;
-         * velY = 0;
-         * // ColisionManager.checarColisoes(this, level.getMapaObjetos();
-         * onGround = true;
-         * }
-         */
 
         // fiz isso aqui para atualizar o pulo
         jumping = !onGround;
 
         if (velX != 0) {
-            // System.out.println("Movendo lateralmente com velX = " + velX);
             ContDoFrame++;
             if (ContDoFrame >= IntervaloDoFrame) {
                 ControleDoIndex = (ControleDoIndex + 1) % PersoCorrendoD.length;

@@ -66,9 +66,6 @@ public class Level03 extends Level {
         espInv1.setVisible(false);
         espInv2.setVisible(false);
 
-        // espInv1.setVisible(false);
-        // espInv2.setVisible(false);
-
         player.g.setPulo(-90);
     } // -----------------------------
 

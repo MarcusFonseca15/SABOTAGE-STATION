@@ -25,8 +25,6 @@ public class Pistao extends Objeto {
         this.forca = forca;
         this.camufla = camufla;
 
-        // carregarSprites();
-
         // Mostra frames de acordo com nivel de força
         int totalFrames = forca == 1 ? 3 : (forca == 2 ? 5 : 7);
         sprites = new BufferedImage[totalFrames];
@@ -115,7 +113,7 @@ public class Pistao extends Objeto {
 
         // Redimensiona SÓ a largura pra caber no TILE_SIZE (50), mantém altura real da
         // imagem
-        // MUDAR DEPOIS PRA TILE_SIZE
+        // MUDAR DEPOIS PARA TITLE_SIZE
         int novaLargura = 50;
         int novaAltura = alturaImg * novaLargura / larguraImg; // preserva proporção original
 
@@ -138,23 +136,11 @@ public class Pistao extends Objeto {
         return camufla;
     }
 
-    private final int baseAltura = 30; // ajuste com base na sua imagem
+    private final int baseAltura = 30; // Ajusta com base na imagem
 
     public Rectangle getBaseBounds() {
         // Considera apenas a parte inferior (base azul)
         return new Rectangle(x, y + height - baseAltura, width, baseAltura);
     }
 
-    /*
-     * @Override
-     * public Rectangle getBounds() {
-     * BufferedImage img = sprites[frameAtual];
-     * int alturaImg = img.getHeight();
-     * int yBaseCelula = y + height;
-     * int yVisual = yBaseCelula - alturaImg;
-     * 
-     * return new Rectangle(x, yVisual, img.getWidth(), alturaImg);
-     * 
-     * }
-     */
 }
