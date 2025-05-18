@@ -67,17 +67,4 @@ public class Level01 extends Level {
         // spInv4.setVisible(false);
         spInv5.setVisible(false);
     }
-
-    //@Override
-    /*protected Objeto criarObjetoPorCodigo(int tipo, int x, int y) {
-        if (tipo == 11) {
-            int row = y / 50;
-            int col = x / 50;
-
-            int yFinal = (row == 3 && col == 5) ? y : y + 30;
-            return new EspinhosP(x, yFinal - 3, 50, 50, tipo);
-        }
-
-        return super.criarObjetoPorCodigo(tipo, x, y);
-    }*/
 }
