@@ -27,7 +27,7 @@ public class Level05 extends Level {
             { 1, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 0, 0 },
             { 1, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 1 },
             { 1, 0, 1, 1, 0, 0, 0, 11, 11, 11, 0, 0, 0, 0, 112, 1 },
-            { 1, 9, 7, 8, 2, 0, 0, 1, 2, 3, 0, 0, 0, 0, 0, 1 },
+            { 1, 9, 7, 8, 2, 0, 0, 1, 0, 3, 0, 0, 0, 0, 0, 1 },
             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
             { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
@@ -46,7 +46,7 @@ public class Level05 extends Level {
         this.player = player;
         this.player.level = this;
         designTraps();
-        this.titulo = "05. Nem todo discreto é ruim...";
+        this.titulo = "05. Nem tudo se vê";
     }
 
     @Override
