@@ -55,7 +55,7 @@ public class GamePanel extends JPanel implements ActionListener {
             }
         });
 
-        timer = new Timer(16, this);
+        timer = new Timer(25, this);
         setLayout(null);
         timer.start();
     }
