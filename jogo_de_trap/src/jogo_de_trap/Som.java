@@ -17,7 +17,7 @@ public class Som {
             FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             volume.setValue(volumeDb);
 
-            clip.loop(Clip.LOOP_CONTINUOUSLY); // Loop 
+            clip.loop(Clip.LOOP_CONTINUOUSLY); // Loop
             clip.start();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
