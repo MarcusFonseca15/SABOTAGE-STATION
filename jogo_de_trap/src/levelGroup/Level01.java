@@ -58,9 +58,9 @@ public class Level01 extends Level {
         EspinhosP spInv3 = (EspinhosP) mapaObjetos[4][14];
         EspinhosP spInv5 = (EspinhosP) mapaObjetos[2][5];
 
-        spInv1.setVisible(false);
-        spInv2.setVisible(false);
+        // spInv1.setVisible(false);
+        // spInv2.setVisible(false);
         spInv3.setVisible(false);
-        spInv5.setVisible(false);
+        // spInv5.setVisible(false);
     }
 }

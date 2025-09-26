@@ -13,6 +13,7 @@ import jogo_de_trap.EspinhosP;
 import jogo_de_trap.Gravity;
 import jogo_de_trap.Laser;
 import jogo_de_trap.Player;
+import jogo_de_trap.LaserGrande;
 
 public class Level06 extends Level {
 
@@ -22,7 +23,7 @@ public class Level06 extends Level {
 
     private static int[][] mapa = {
             { 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4 },
-            { 4, 9, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 0, 0, 11 },
+            { 4, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11 },
             { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4 },
             { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4 },
             { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4 },
@@ -64,19 +65,12 @@ public class Level06 extends Level {
         EspinhosP esp2 = (EspinhosP) mapaObjetos[1][15];
         esp2.visible = false;
 
-        ArrayList<Laser> lasers = new ArrayList<>();
-
-        for (int i = 1; i <= 12; i++) {
-            lasers.add((Laser) mapaObjetos[1][i]);
-        }
-
-        for (Laser l : lasers) {
-            laserDesce(l, l.getY(), 500, 2);
-        }
+        LaserGrande lg1 = (LaserGrande) mapaObjetos[1][1];
+        laserDesce(lg1, 20, 450, 2);
 
     } // -----------------------------
 
-    private void laserDesce(Laser laser, int altuMin, int altMax, int vel) {
+    private void laserDesce(LaserGrande laser, int altuMin, int altMax, int vel) {
         new Thread(() -> {
             try {
                 boolean subindo = true;
@@ -119,7 +113,7 @@ public class Level06 extends Level {
                     // RESET DE ESTADO APÓS 2 SEGUNDOS
                     new Thread(() -> {
                         try {
-                            Thread.sleep(3500);
+                            Thread.sleep(4500);
                             g.setGravity(1);
                             player.onGround = true;
                             player.jumping = false;
