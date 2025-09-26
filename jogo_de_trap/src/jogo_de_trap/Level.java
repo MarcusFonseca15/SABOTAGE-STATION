@@ -19,6 +19,7 @@ public abstract class Level {
     ArrayList<Espinhos> espinhos = new ArrayList<>();
     ArrayList<EspinhosP> espinhosP = new ArrayList<>();
     ArrayList<FakeEspinho> fakeEspinho = new ArrayList<>();
+    ArrayList<LaserGrande> laserG = new ArrayList<>();
 
     ////////////// TITULO
     protected String titulo = "";
@@ -56,6 +57,8 @@ public abstract class Level {
                         espinhosP.add((EspinhosP) obj);
                     } else if (obj instanceof FakeEspinho) {
                         fakeEspinho.add((FakeEspinho) obj);
+                    } else if (obj instanceof LaserGrande) {
+                        laserG.add((LaserGrande) obj);
                     }
                 }
 
@@ -81,6 +84,9 @@ public abstract class Level {
 
         for (FakeEspinho fakeEspinho : fakeEspinho)
             fakeEspinho.draw(g);
+
+        for (LaserGrande laserG : laserG)
+            laserG.draw(g);
     }
 
     public boolean checkLaserCollision(Player player) {
@@ -88,6 +94,12 @@ public abstract class Level {
             if (l.checkCollision(player))
                 return true;
         }
+
+        for (LaserGrande lg : laserG) {
+            if (lg.checkCollision(player))
+                return true;
+        }
+
         return false;
     }
 
@@ -217,6 +229,10 @@ public abstract class Level {
                 return new FakeEspinho(x, y + 30, TILE_SIZE, TILE_SIZE, tipo);
             case 991: // fakeEspinho
                 return new FakeEspinho(x, y - 10, TILE_SIZE, TILE_SIZE, tipo);
+            case 15: // laser grande vertical
+                return new LaserGrande(x, y, 530, 40, tipo);
+            case 16: // laser grande horizontal
+                return new LaserGrande(x, y, 40, 270, tipo);
             default:
                 return null;
         }

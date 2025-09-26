@@ -7,9 +7,9 @@ import jogo_de_trap.Pistao;
 import jogo_de_trap.EspinhosP;
 import jogo_de_trap.Platform;
 import jogo_de_trap.Player;
+import jogo_de_trap.LaserGrande;
 
 public class Level09 extends Level {
-
     Player player;
     Gravity g;
 
@@ -21,11 +21,11 @@ public class Level09 extends Level {
             { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
             { 0, 0, 0, 991, 991, 991, 111, 111, 111, 111, 111, 111, 111, 111, 111, 4 },
             { 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 4, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 11 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 36, 4 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 36, 111 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 36, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 37, 0 },
+            { 0, 4, 0, 4, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11 }, // laser em 16
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 111 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 11, 0, 0, 0, 11 },
             { 5, 2, 3, 1, 0, 1, 6, 0, 0, 2, 6, 3, 0, 5, 0, 1 },
             { 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 11, 11, 999, 999 },
@@ -51,16 +51,22 @@ public class Level09 extends Level {
     @Override
     protected void designTraps() {
 
-        Laser l1 = (Laser) mapaObjetos[3][14];
-        Laser l2 = (Laser) mapaObjetos[4][14];
-        Laser l3 = (Laser) mapaObjetos[5][14];
-        Laser l4 = (Laser) mapaObjetos[6][14];
-        Laser l5 = (Laser) mapaObjetos[7][14];
-        laserAnda(l1, 0, l1.getX(), vel);
-        laserAnda(l2, 0, l2.getX(), vel);
-        laserAnda(l3, 0, l3.getX(), vel);
-        laserAnda(l4, 0, l4.getX(), vel);
-        laserAnda(l5, 0, l5.getX(), vel);
+        /*
+         * Laser l1 = (Laser) mapaObjetos[3][14];
+         * Laser l2 = (Laser) mapaObjetos[4][14];
+         * Laser l3 = (Laser) mapaObjetos[5][14];
+         * Laser l4 = (Laser) mapaObjetos[6][14];
+         * Laser l5 = (Laser) mapaObjetos[7][14];
+         * laserAnda(l1, 0, l1.getX(), vel);
+         * laserAnda(l2, 0, l2.getX(), vel);
+         * laserAnda(l3, 0, l3.getX(), vel);
+         * laserAnda(l4, 0, l4.getX(), vel);
+         * laserAnda(l5, 0, l5.getX(), vel);
+         */
+
+        LaserGrande l1 = (LaserGrande) mapaObjetos[3][4];
+        laserAnda(l1, l1.getX() - 100, l1.getX() + 500, vel);
+        // (LaserGrande laser, int posMin, int posMax, int vel)
 
         EspinhosP sp1 = (EspinhosP) mapaObjetos[2][3];
         sp1.visible = false;
@@ -94,7 +100,7 @@ public class Level09 extends Level {
         espFinal2.visible = false;
     }
 
-    private void laserAnda(Laser laser, int posMin, int posMax, int vel) {
+    private void laserAnda(LaserGrande laser, int posMin, int posMax, int vel) {
         new Thread(() -> {
             try {
                 boolean indo = true;
