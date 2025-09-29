@@ -32,6 +32,10 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private final int maxLevels = 10;
 
+    private int vida = 5;
+
+    private boolean modoVida = false;
+
     public GamePanel() {
         this.setPreferredSize(new Dimension(LARGURA, ALTURA));
         this.setFocusable(true);
@@ -139,16 +143,25 @@ public class GamePanel extends JPanel implements ActionListener {
 
         if (level.checkLaserCollision(player)) {
             System.out.println("Você caiu em uma armadilha! Resetando...");
+            // diminuindo vida pós o dano
+            vida--;
+            verifyVida();
             player.reset();
         }
 
         if (level.checkEspinhosCollision(player)) {
             System.out.println("Você caiu em uma armadilha! Resetando...");
+            // diminuindo vida pós o dano
+            vida--;
+            verifyVida();
             player.reset();
         }
 
         if (level.checkEspinhosPCollision(player)) {
             System.out.println("Voce perdeu pelo espinhoP hehehe");
+            // diminuindo vida pós o dano
+            vida--;
+            verifyVida();
             player.reset();
         }
 
@@ -169,5 +182,14 @@ public class GamePanel extends JPanel implements ActionListener {
         }
 
         repaint();
+    }
+
+    void verifyVida() {
+        if (vida <= 0 && !modoVida) {
+            System.out.println("Você perdeu todas as vidas! Reiniciando o nível...");
+            vida = 5;
+            currentLevel = 1;
+            loadLevel(currentLevel);
+        }
     }
 }
