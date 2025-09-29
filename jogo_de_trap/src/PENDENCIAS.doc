@@ -1,5 +1,125 @@
-PISTÃO:
-A lógica do pistão é: Quanto maior a força (1 a 3) mais frames ele mostra (1 a 7).
-Quando instanciado em Level, a mudança da força consegue mostrar a qnt de frames corretamente, mas quando alterado em designTrap não.
-Ou seja, se na intancia de Level, o pistão tem força 1, independente da força que voce coloque em designTraps, a qnt de frames continua sendo só 1 a 3 (Força 1), mesmo que na prática a intensidade da força tenha mudado.
-Como se designTraps não estivesse sobrescrevendo a variável de força.
+
+4. Diminuir colisão SOMENTE de espinhos . Diminuir para dentro, aumentando a tolerancia.
+Ou seja, ao inves de simplesmente tocar na borda da imagem já colide, há uma margem de 3px de tolerancia
+
+5. Modo para ativar 5 Vidas. Se perder, volta da fase 1
+6. Animação de morte
+7. Animação de Super Morte (perde as 5 vidas)
+
+Estrutura de Planejamento Proposta
+1. Sistema de Vidas no GamePanel
+Adicionar variável int vidas = 5 e boolean modoVidas = false no GamePanel
+Modificar a lógica de morte para decrementar vidas ao invés de resetar imediatamente
+Quando vidas == 0, resetar para o nível 1 (currentLevel = 1)
+2. Estados de Animação no Player
+Adicionar enum EstadoPlayer { VIVO, MORRENDO, SUPER_MORTE }
+Adicionar sprites de morte: Image[] animacaoMorte e Image[] animacaoSuperMorte no construtor do Player Player.java:24-30
+Modificar o método draw() para renderizar animações baseadas no estado Player.java:76-94
+3. Controle de Animações
+Adicionar variáveis de controle: int frameAnimacaoMorte, int tempoAnimacao, boolean animacaoCompleta
+Implementar timer para duração das animações (similar ao sistema existente de frames) Player.java:147-159
+4. Modificação da Lógica de Colisão
+Alterar os métodos de verificação de colisão no Level para retornar tipo de morte ao invés de boolean Level.java:86-92
+No GamePanel.actionPerformed(), substituir chamadas diretas de player.reset() por iniciarAnimacaoMorte() GamePanel.java:133-153
+
+Colisão detectada -> Vida > 1?
+Se sim -> Animação de morte normal -> vida-- -> player.rest() 
+Se não -> Animação Super Morte -> currentLevel = 1, vidas = 5 -> player.rest()
+
+#NOTAS: O sistema atual usa player.reset() que redefine posição para (70, 500) e zera velocidades. Player.java:183-190 As animações devem ser implementadas antes de chamar este método, pausando temporariamente o timer do GamePanel durante a reprodução. GamePanel.java:58-60
+
+
+SISTEMA DE SELEÇÃO DE FASES
+1. Sistema de Estados do Jogo no GamePanel
+Adicionar enum EstadoJogo { JOGANDO, SELECIONANDO_FASE } no GamePanel GamePanel.java:21
+Modificar o actionPerformed() para processar diferentes estados GamePanel.java:132-133
+Adicionar variável EstadoJogo estadoAtual = EstadoJogo.JOGANDO
+2. Tela de Seleção de Fases
+Criar método drawLevelSelector(Graphics g) para renderizar a tela de seleção
+Usar o sistema de níveis existente (maxLevels = 10) para criar botões de 1 a 10 GamePanel.java:33
+Implementar detecção de clique do mouse para seleção de fase
+Adicionar MouseListener ao GamePanel (similar ao KeyAdapter existente) GamePanel.java:46-56
+3. Botão de Acesso Durante o Jogo
+Adicionar tecla ESC no keyPressed() do Player para alternar para seleção de fases Player.java:163-175
+Pausar o timer quando em modo seleção: timer.stop() e timer.start() GamePanel.java:58-60
+
+
+MODO INVENCIVEL (DEBUG)
+4. Modo Invencibilidade para Debug
+Adicionar variável boolean modoInvencibilidade = false no GamePanel
+Adicionar tecla de toggle (ex: F1) no keyPressed()
+Modificar todas as verificações de colisão no actionPerformed() para verificar o modo: GamePanel.java:140-153
+if (!modoInvencibilidade && level.checkLaserCollision(player)) {  
+    // lógica de morte  
+}
+5. Modificações no Sistema de Carregamento
+O método loadLevel() existente já suporta carregar qualquer nível de 1 a 10 GamePanel.java:63-81
+Adicionar parâmetro opcional para não resetar o player quando vindo da seleção de fases
+Jogando -> ESC -> Selecionando_Fase -> Click em Fase -> Jogando
+Jogando -> Tecla F1 -> Toggle Invencibilidade
+
+#Notas
+O sistema atual de progressão de fases funciona automaticamente quando o player atinge a borda direita da tela (player.x + player.width >= LARGURA). GamePanel.java:155-169 A tela de seleção permitirá pular diretamente para qualquer fase. O modo invencibilidade desabilitará todas as verificações de colisão que causam morte, mas manterá as colisões de plataforma para permitir movimento normal.
+
+
+TRANSIÇÃO DE TELA ENTRE AS FASES (FADE)
+1. Sistema de Estados de Transição no GamePanel
+Adicionar enum EstadoTransicao { NORMAL, FADE_OUT, FADE_IN } no GamePanel GamePanel.java:21
+Adicionar variáveis de controle: float alphaFade = 0.0f, EstadoTransicao estadoTransicao = EstadoTransicao.NORMAL
+Adicionar int proximoLevel = -1 para armazenar qual fase carregar após o fade
+2. Modificação da Progressão Automática
+No método actionPerformed(), substituir o carregamento direto de nível por início de transição: GamePanel.java:155-169
+if (player.x + player.width >= LARGURA) {  
+    proximoLevel = currentLevel + 1;  
+    estadoTransicao = EstadoTransicao.FADE_OUT;  
+    alphaFade = 0.0f;  
+}
+3. Sistema de Animação de Fade
+Criar método updateTransition() para controlar a animação:
+private void updateTransition() {  
+    if (estadoTransicao == EstadoTransicao.FADE_OUT) {  
+        alphaFade += 0.05f;  
+        if (alphaFade >= 1.0f) {  
+            alphaFade = 1.0f;  
+            loadLevel(proximoLevel);  
+            estadoTransicao = EstadoTransicao.FADE_IN;  
+        }  
+    } else if (estadoTransicao == EstadoTransicao.FADE_IN) {  
+        alphaFade -= 0.05f;  
+        if (alphaFade <= 0.0f) {  
+            alphaFade = 0.0f;  
+            estadoTransicao = EstadoTransicao.NORMAL;  
+        }  
+    }  
+}
+4. Renderização do Overlay de Fade
+Modificar o método paintComponent() para desenhar o overlay preto: GamePanel.java:83-130
+// Após desenhar level e player  
+if (estadoTransicao != EstadoTransicao.NORMAL) {  
+    Graphics2D g2d = (Graphics2D) g.create();  
+    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaFade));  
+    g2d.setColor(Color.BLACK);  
+    g2d.fillRect(0, 0, getWidth(), getHeight());  
+    g2d.dispose();  
+}
+5. Integração com Seleção de Fases
+Modificar o sistema de seleção de fases para usar transições:
+Quando uma fase for selecionada, definir proximoLevel e iniciar FADE_OUT
+6. Controle do Game Loop Durante Transições
+Pausar atualizações do player e colisões durante transições: GamePanel.java:133-172
+public void actionPerformed(ActionEvent e) {  
+    updateTransition();  
+      
+    if (estadoTransicao == EstadoTransicao.NORMAL) {  
+        player.update();  
+        level.checkPlatformCollision(player);  
+        // ... outras verificações de colisão  
+    }  
+      
+    repaint();  
+}
+
+FLUXO: NORMAL -> Progressão/Seleção -> FadeOut -> loadLevel() -> FadeIn -> NORMAL
+#Notas
+O sistema atual usa Timer com intervalo de 25ms para o game loop, proporcionando 40 FPS. GamePanel.java:58-61 Com incremento de 0.05f por frame no alpha, a transição completa (fade out + fade in) levará aproximadamente 1 segundo. O método loadLevel() existente já suporta carregar qualquer nível de 1 a 10 e chama player.reset() automaticamente. GamePanel.java:63-81
+

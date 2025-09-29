@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.awt.Rectangle;
+
 import javax.imageio.ImageIO;
 
 public class EspinhosP extends Objeto {
@@ -42,8 +42,14 @@ public class EspinhosP extends Objeto {
         return getBounds().intersects(playerBounds);
     }
 
+    /*
+     * public Rectangle getBounds() {
+     * return new Rectangle(x, y, width, height);
+     * } METOOD ABAIXO AUMENTA TOLERANCIA EM 3PX
+     */
+
     public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
+        return new Rectangle(x + 10, y + 10, width - 20, height - 20);
     }
 
     @Override
