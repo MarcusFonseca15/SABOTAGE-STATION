@@ -1,9 +1,16 @@
 package jogo_de_trap;
 
 import javax.swing.*;
+
+//import org.w3c.dom.events.MouseEvent;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import java.awt.Cursor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class StartPanel extends JPanel {
     private JFrame frame;
@@ -25,14 +32,30 @@ public class StartPanel extends JPanel {
 
         startButton.setBounds(300, 450, 180, 70);
 
+        // 1. ActionListener pra iniciar o jogo
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 iniciarJogo();
             }
         });
+
+        // 2. MouseAdapter pra mudar o cursor
+        startButton.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                startButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                startButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            }
+        });
+
         this.add(startButton);
-    }
+    } // <--- Fechamento do construtor
 
     private void iniciarJogo() {
         frame.getContentPane().removeAll();
@@ -56,7 +79,7 @@ public class StartPanel extends JPanel {
 
         int panelWidth = this.getWidth();
 
-        // fiz pa fixar o topo da img no topo do painel
+        // fixar o topo da img no topo do painel
         double scaleFactor = (double) panelWidth / imgWidth;
         int scaleAltura = (int) (imgHeight * scaleFactor) - 110;
 
