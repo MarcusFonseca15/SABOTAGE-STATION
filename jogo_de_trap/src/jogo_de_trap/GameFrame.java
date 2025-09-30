@@ -51,7 +51,7 @@ public class GameFrame extends JFrame {
                     int offsetY = random.nextInt(intensidade * 2) - intensidade;
 
                     this.setLocation(posicaoOriginal.x + offsetX, posicaoOriginal.y + offsetY);
-                    Thread.sleep(50); // 20 FPS para a vibração
+                    Thread.sleep(50); // 20 FPS vibraçao
                 }
 
                 // volta pro posicao original

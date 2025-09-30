@@ -22,6 +22,16 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private GameFrame gameFrame;
 
+    // VARIAVEIS DE TRANSIÇÃO DE TELA ESMAECER
+    private enum EstadoTrans {
+        NORMAL, FADEOUT, FADEIN
+    }
+
+    float alphaFade = 0.0f;
+    EstadoTrans estadoTrans = EstadoTrans.NORMAL;
+    int proximoLevel = 0; // apenas de inicialização
+
+    // DIMENSÕES FIXAS
     private final int LARGURA = 800;
     private final int ALTURA = 600;
 
@@ -30,7 +40,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private Level level;
     private Image backgroundImage;
 
-    private int currentLevel = 1;
+    private int currentLevel = 5;
 
     private final int maxLevels = 10;
 
@@ -78,6 +88,12 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     private void loadLevel(int number) {
+        player.g.setGravity(1.0);
+        player.g.setPulo(-15);
+        player.onGround = true;
+        player.jumping = false;
+        player.velY = 0;
+
         switch (number) {
             case 1 -> level = new Level01(player);
             case 2 -> level = new Level02(player);
@@ -107,6 +123,9 @@ public class GamePanel extends JPanel implements ActionListener {
 
         level.draw(g);
         player.draw(g);
+
+        // ---------------- ELEMENTOS DA FASE
+
         // BARRA DE VIDA
         if (barraVidaImages[vida] != null) {
             g.drawImage(barraVidaImages[vida], 10, 550, 192, 48, this); // indica x, y, largura, altura
@@ -147,9 +166,19 @@ public class GamePanel extends JPanel implements ActionListener {
         g2d.fill(outline);
 
         g2d.dispose();
+
+        // TRANSIÇÃO
+        if (estadoTrans != EstadoTrans.NORMAL) {
+            Graphics2D g2dTrans = (Graphics2D) g.create();
+            g2dTrans.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaFade));
+            g2dTrans.setColor(Color.BLACK);
+            g2dTrans.fillRect(0, 0, getWidth(), getHeight());
+            g2dTrans.dispose();
+        }
+        updateTransition();
     }
 
-    // COLISOES E DANOS
+    // COLISOES E PASSAR FASE
     @Override
     public void actionPerformed(ActionEvent e) {
         player.update();
@@ -180,20 +209,29 @@ public class GamePanel extends JPanel implements ActionListener {
         }
 
         if (player.x + player.width >= LARGURA) {
-            currentLevel++;
-            if (currentLevel > 6 || (currentLevel > 9 && currentLevel != 9)) {
-                level.pararThread();
+
+            if (estadoTrans == EstadoTrans.NORMAL) {
+                proximoLevel = currentLevel + 1;
+                estadoTrans = EstadoTrans.FADEOUT;
+                alphaFade = 0.0f;
             }
-            if (currentLevel <= maxLevels) {
-                loadLevel(currentLevel);
-                System.out.println("Avançando para o nível " + currentLevel);
-                vida = MAX_VIDAS;
-            } else {
-                System.out.println("Parabéns! Você terminou o jogo!");
-                timer.stop();
-                JOptionPane.showMessageDialog(this, "Você venceu todos os níveis!");
-                System.exit(0);
+
+            if (currentLevel > 6 || (currentLevel > 6) && (currentLevel != 6)
+                    || (currentLevel > 9 && currentLevel != 9)) {
+                // level.pararThread();
             }
+            /*
+             * MOVIDO PARA UPGRADETRANSITION()
+             * if (currentLevel <= maxLevels) {
+             * System.out.println("Avançando para o nível " + proximoLevel);
+             * vida = MAX_VIDAS;
+             * } else {
+             * System.out.println("Parabéns! Você terminou o jogo!");
+             * timer.stop();
+             * JOptionPane.showMessageDialog(this, "Você venceu todos os níveis!");
+             * System.exit(0);
+             * }
+             */
         }
 
         repaint();
@@ -237,5 +275,43 @@ public class GamePanel extends JPanel implements ActionListener {
                 Thread.currentThread().interrupt(); // re-interromper
             }
         }).start();
+    }//
+
+    private void updateTransition() {
+        if (estadoTrans == EstadoTrans.FADEOUT) {
+            alphaFade += 0.05f;
+            if (alphaFade >= 1.0f) {
+                alphaFade = 1.0f;
+
+                if (level != null) {
+                    level.pararThread();
+                }
+
+                // === LÓGICA DE AVANÇO DE NÍVEL AGORA AQUI ===
+                if (proximoLevel <= maxLevels) {
+                    currentLevel = proximoLevel;
+                    loadLevel(currentLevel);
+                    System.out.println("Avançando para o nível " + currentLevel);
+                    vida = MAX_VIDAS;
+                    estadoTrans = EstadoTrans.FADEIN; // INICIA O ESMAECER PARA FORA
+                } else {
+                    // Fim do jogo
+                    System.out.println("Parabéns! Você terminou o jogo!");
+                    estadoTrans = EstadoTrans.NORMAL; // Volta ao normal para não tentar FADEIN
+                    timer.stop();
+                    JOptionPane.showMessageDialog(this, "Você venceu todos os níveis!");
+                    System.exit(0);
+                }
+                // ===========================================
+
+            }
+        } else if (estadoTrans == EstadoTrans.FADEIN) {
+            alphaFade -= 0.05f;
+            if (alphaFade <= 0.0f) {
+                alphaFade = 0.0f;
+                estadoTrans = EstadoTrans.NORMAL;
+            }
+        }
     }
+
 }
