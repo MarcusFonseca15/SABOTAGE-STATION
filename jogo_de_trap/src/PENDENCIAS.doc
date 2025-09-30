@@ -53,7 +53,7 @@ Jogando -> Tecla F1 -> Toggle Invencibilidade
 O sistema atual de progressão de fases funciona automaticamente quando o player atinge a borda direita da tela (player.x + player.width >= LARGURA). GamePanel.java:155-169 A tela de seleção permitirá pular diretamente para qualquer fase. O modo invencibilidade desabilitará todas as verificações de colisão que causam morte, mas manterá as colisões de plataforma para permitir movimento normal.
 
 
-TRANSIÇÃO DE TELA ENTRE AS FASES (FADE)
+TRANSIÇÃO DE TELA ENTRE AS FASES (FADE) {
 1. Sistema de Estados de Transição no GamePanel
 Adicionar enum EstadoTransicao { NORMAL, FADE_OUT, FADE_IN } no GamePanel GamePanel.java:21
 Adicionar variáveis de controle: float alphaFade = 0.0f, EstadoTransicao estadoTransicao = EstadoTransicao.NORMAL
@@ -98,4 +98,4 @@ if (estadoTransicao != EstadoTransicao.NORMAL) {
 FLUXO: NORMAL -> Progressão -> FadeOut -> loadLevel() -> FadeIn -> NORMAL
 #Notas
 O sistema atual usa Timer com intervalo de 25ms para o game loop, proporcionando 40 FPS. GamePanel.java:58-61 Com incremento de 0.05f por frame no alpha, a transição completa (fade out + fade in) levará aproximadamente 1 segundo. O método loadLevel() existente já suporta carregar qualquer nível de 1 a 10 e chama player.reset() automaticamente. GamePanel.java:63-81
-
+}

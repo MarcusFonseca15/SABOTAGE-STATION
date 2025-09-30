@@ -172,6 +172,11 @@ public class Player {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             wantToJump = true;
         }
+        /*
+         * if (e.getKeyCode() == KeyEvent.F1) {
+         * godMode = true;
+         * }
+         */
     }
 
     public void keyReleased(KeyEvent e) {

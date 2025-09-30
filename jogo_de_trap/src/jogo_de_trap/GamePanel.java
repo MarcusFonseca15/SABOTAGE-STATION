@@ -20,6 +20,9 @@ import levelGroup.Level04;
 
 public class GamePanel extends JPanel implements ActionListener {
 
+    private int currentLevel = 1;
+
+    private boolean godMode = false;
     private GameFrame gameFrame;
 
     // VARIAVEIS DE TRANSIÇÃO DE TELA ESMAECER
@@ -39,8 +42,6 @@ public class GamePanel extends JPanel implements ActionListener {
     private Player player;
     private Level level;
     private Image backgroundImage;
-
-    private int currentLevel = 5;
 
     private final int maxLevels = 10;
 
@@ -73,6 +74,15 @@ public class GamePanel extends JPanel implements ActionListener {
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
+
+                // GOD MODE =====================
+                if (e.getKeyCode() == KeyEvent.VK_F1) {
+                    godMode = !godMode;
+                    String status = godMode ? "ATIVADO" : "DESATIVADO";
+                    System.out.println(">>> GOD MODE " + status + " <<<");
+                }
+                // ===============================
+
                 player.keyPressed(e);
             }
 
@@ -80,6 +90,7 @@ public class GamePanel extends JPanel implements ActionListener {
             public void keyReleased(KeyEvent e) {
                 player.keyReleased(e);
             }
+
         });
 
         timer = new Timer(25, this);
@@ -187,21 +198,21 @@ public class GamePanel extends JPanel implements ActionListener {
         level.updatePistaos(player);
         level.updateEspinhos();
 
-        if (level.checkLaserCollision(player)) {
+        if (!godMode && level.checkLaserCollision(player)) {
             System.out.println("Você caiu em uma armadilha! Resetando...");
             // diminuindo vida pós o dano
             perderVida();
             player.reset();
         }
 
-        if (level.checkEspinhosCollision(player)) {
+        if (!godMode && level.checkEspinhosCollision(player)) {
             System.out.println("Você caiu em uma armadilha! Resetando...");
             // diminuindo vida pós o dano
             perderVida();
             player.reset();
         }
 
-        if (level.checkEspinhosPCollision(player)) {
+        if (!godMode && level.checkEspinhosPCollision(player)) {
             System.out.println("Voce perdeu pelo espinhoP hehehe");
             // diminuindo vida pós o dano
             perderVida();
