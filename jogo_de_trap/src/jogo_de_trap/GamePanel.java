@@ -33,6 +33,8 @@ public class GamePanel extends JPanel implements ActionListener {
     private final int maxLevels = 10;
 
     private int vida = 5;
+    private int MAX_VIDAS = 5;
+    private Image[] barraVidaImages = new Image[6];
 
     private boolean modoVida = false;
 
@@ -46,6 +48,12 @@ public class GamePanel extends JPanel implements ActionListener {
         player = new Player(100, 500, gravityInit);
 
         loadLevel(currentLevel);
+
+        // IMGS DA BARRA DE VIDA
+        for (int i = 0; i <= MAX_VIDAS; i++) {
+            barraVidaImages[i] = new ImageIcon(getClass().getResource("/assets/LifeBar/lfb" + i + ".png"))
+                    .getImage();
+        }
 
         this.addKeyListener(new KeyAdapter() {
             @Override
@@ -94,7 +102,10 @@ public class GamePanel extends JPanel implements ActionListener {
 
         level.draw(g);
         player.draw(g);
-
+        // BARRA DE VIDA
+        if (barraVidaImages[vida] != null) {
+            g.drawImage(barraVidaImages[vida], 10, 550, 192, 48, this); // indica x, y, largura, altura
+        }
         // TITULO COM CONTORNO
         Graphics2D g2d = (Graphics2D) g.create();
 
@@ -133,6 +144,7 @@ public class GamePanel extends JPanel implements ActionListener {
         g2d.dispose();
     }
 
+    // COLISOES E DANOS
     @Override
     public void actionPerformed(ActionEvent e) {
         player.update();
@@ -144,24 +156,21 @@ public class GamePanel extends JPanel implements ActionListener {
         if (level.checkLaserCollision(player)) {
             System.out.println("Você caiu em uma armadilha! Resetando...");
             // diminuindo vida pós o dano
-            vida--;
-            verifyVida();
+            perderVida();
             player.reset();
         }
 
         if (level.checkEspinhosCollision(player)) {
             System.out.println("Você caiu em uma armadilha! Resetando...");
             // diminuindo vida pós o dano
-            vida--;
-            verifyVida();
+            perderVida();
             player.reset();
         }
 
         if (level.checkEspinhosPCollision(player)) {
             System.out.println("Voce perdeu pelo espinhoP hehehe");
             // diminuindo vida pós o dano
-            vida--;
-            verifyVida();
+            perderVida();
             player.reset();
         }
 
@@ -173,6 +182,7 @@ public class GamePanel extends JPanel implements ActionListener {
             if (currentLevel <= maxLevels) {
                 loadLevel(currentLevel);
                 System.out.println("Avançando para o nível " + currentLevel);
+                vida = MAX_VIDAS;
             } else {
                 System.out.println("Parabéns! Você terminou o jogo!");
                 timer.stop();
@@ -184,12 +194,16 @@ public class GamePanel extends JPanel implements ActionListener {
         repaint();
     }
 
-    void verifyVida() {
+    private void perderVida() {
+        vida--;
         if (vida <= 0 && !modoVida) {
-            System.out.println("Você perdeu todas as vidas! Reiniciando o nível...");
-            vida = 5;
+            // Volta para fase 1
+            System.out.println("Você perdeu todas as vidas! Reiniciando o jogo...");
             currentLevel = 1;
+            vida = MAX_VIDAS;
             loadLevel(currentLevel);
+        } else {
+            player.reset(); // Reset normal da posição
         }
     }
 }

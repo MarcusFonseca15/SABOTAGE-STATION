@@ -1,16 +1,7 @@
 
-4. Diminuir colisão SOMENTE de espinhos . Diminuir para dentro, aumentando a tolerancia.
-Ou seja, ao inves de simplesmente tocar na borda da imagem já colide, há uma margem de 3px de tolerancia
-
-5. Modo para ativar 5 Vidas. Se perder, volta da fase 1
 6. Animação de morte
 7. Animação de Super Morte (perde as 5 vidas)
 
-Estrutura de Planejamento Proposta
-1. Sistema de Vidas no GamePanel
-Adicionar variável int vidas = 5 e boolean modoVidas = false no GamePanel
-Modificar a lógica de morte para decrementar vidas ao invés de resetar imediatamente
-Quando vidas == 0, resetar para o nível 1 (currentLevel = 1)
 2. Estados de Animação no Player
 Adicionar enum EstadoPlayer { VIVO, MORRENDO, SUPER_MORTE }
 Adicionar sprites de morte: Image[] animacaoMorte e Image[] animacaoSuperMorte no construtor do Player Player.java:24-30
