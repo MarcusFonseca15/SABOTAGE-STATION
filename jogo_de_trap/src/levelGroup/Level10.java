@@ -20,7 +20,7 @@ public class Level10 extends Level {
             { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 4, 4, 0, 4 },
             { 111, 4, 11, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 11, 4 },
             { 0, 4, 4, 4, 4, 0, 0, 4, 4, 4, 4, 4, 111, 111, 4, 4 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 4 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0 },
             { 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
     };
 
@@ -43,7 +43,7 @@ public class Level10 extends Level {
         for (int linha = 0; linha < mapaObjetos.length - 1; linha++) {
             for (int coluna = 0; coluna < mapaObjetos[linha].length; coluna++) {
                 if (mapaObjetos[linha][coluna] instanceof Platform) {
-                    ((Platform) mapaObjetos[linha][coluna]).setVisible(false);
+                    ((Platform) mapaObjetos[linha][coluna]).setVisible(true);
                 }
             }
         }

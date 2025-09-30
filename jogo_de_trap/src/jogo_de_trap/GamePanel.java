@@ -20,7 +20,7 @@ import levelGroup.Level04;
 
 public class GamePanel extends JPanel implements ActionListener {
 
-    private int currentLevel = 1;
+    public int currentLevel = 1;
 
     private boolean godMode = false;
     private GameFrame gameFrame;
@@ -227,10 +227,13 @@ public class GamePanel extends JPanel implements ActionListener {
                 alphaFade = 0.0f;
             }
 
-            if (currentLevel > 6 || (currentLevel > 6) && (currentLevel != 6)
-                    || (currentLevel > 9 && currentLevel != 9)) {
-                // level.pararThread();
-            }
+            /*
+             * CONDIÇÃO EM DESUSO
+             * if (currentLevel > 6 || (currentLevel > 6) && (currentLevel != 6)
+             * || (currentLevel > 9 && currentLevel != 9)) {
+             * // level.pararThread();
+             * }
+             */
             /*
              * MOVIDO PARA UPGRADETRANSITION()
              * if (currentLevel <= maxLevels) {
@@ -256,7 +259,8 @@ public class GamePanel extends JPanel implements ActionListener {
             System.out.println("Você perdeu todas as vidas! Reiniciando o jogo...");
             currentLevel = 1;
             vida = MAX_VIDAS;
-            loadLevel(currentLevel);
+            toFinalPanel(false);
+            // loadLevel(currentLevel);
         } else {
             player.reset(); // Reset normal da posição
         }
@@ -310,8 +314,7 @@ public class GamePanel extends JPanel implements ActionListener {
                     System.out.println("Parabéns! Você terminou o jogo!");
                     estadoTrans = EstadoTrans.NORMAL; // Volta ao normal para não tentar FADEIN
                     timer.stop();
-                    JOptionPane.showMessageDialog(this, "Você venceu todos os níveis!");
-                    System.exit(0);
+                    toFinalPanel(true);
                 }
                 // ===========================================
 
@@ -323,6 +326,14 @@ public class GamePanel extends JPanel implements ActionListener {
                 estadoTrans = EstadoTrans.NORMAL;
             }
         }
+    }
+
+    private void toFinalPanel(boolean win) {
+        gameFrame.getContentPane().removeAll();
+        FinalPanel finalPanel = new FinalPanel(gameFrame, win);
+        gameFrame.add(finalPanel);
+        gameFrame.revalidate();
+        gameFrame.repaint();
     }
 
 }

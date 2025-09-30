@@ -2,7 +2,7 @@
 6. Animação de morte
 7. Animação de Super Morte (perde as 5 vidas)
 
-2. Estados de Animação no Player
+2. Estados de Animação no Player{
 Adicionar enum EstadoPlayer { VIVO, MORRENDO, SUPER_MORTE }
 Adicionar sprites de morte: Image[] animacaoMorte e Image[] animacaoSuperMorte no construtor do Player Player.java:24-30
 Modificar o método draw() para renderizar animações baseadas no estado Player.java:76-94
@@ -18,7 +18,7 @@ Se sim -> Animação de morte normal -> vida-- -> player.rest()
 Se não -> Animação Super Morte -> currentLevel = 1, vidas = 5 -> player.rest()
 
 #NOTAS: O sistema atual usa player.reset() que redefine posição para (70, 500) e zera velocidades. Player.java:183-190 As animações devem ser implementadas antes de chamar este método, pausando temporariamente o timer do GamePanel durante a reprodução. GamePanel.java:58-60
-
+}
 
 SISTEMA DE SELEÇÃO DE FASES
 1. Sistema de Estados do Jogo no GamePanel
@@ -99,3 +99,8 @@ FLUXO: NORMAL -> Progressão -> FadeOut -> loadLevel() -> FadeIn -> NORMAL
 #Notas
 O sistema atual usa Timer com intervalo de 25ms para o game loop, proporcionando 40 FPS. GamePanel.java:58-61 Com incremento de 0.05f por frame no alpha, a transição completa (fade out + fade in) levará aproximadamente 1 segundo. O método loadLevel() existente já suporta carregar qualquer nível de 1 a 10 e chama player.reset() automaticamente. GamePanel.java:63-81
 }
+
+FINAL PANEL:
+Quando player passar todas as fases, ele irá passar uma variável win = true para uma classe chamada FinalPanel(frame, win).
+Se for Win, irá mostrar uma imagem de fundo + um botão de Jogar de Novo que leva para o StartPanel
+Se o player perdeu as 5 vidas (em qualquer fase), irá passar a variável win = false para FinalPanel, e este irá add outra imagem, e o botão "Tente Novamente", que volta para a fase 1.
