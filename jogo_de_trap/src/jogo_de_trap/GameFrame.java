@@ -25,6 +25,10 @@ public class GameFrame extends JFrame {
 
     private void tocarMusica() {
         musicBG = new Som();
-        musicBG.tocar("jogo_de_trap/src/assets/musica/musica.wav", -1.0f); // volume em dB
+        musicBG.tocar("assets/musica/musica.wav", -1.0f); // volume em dB
+    }
+
+    public static void main(String[] args) {
+        new GameFrame();
     }
 }
