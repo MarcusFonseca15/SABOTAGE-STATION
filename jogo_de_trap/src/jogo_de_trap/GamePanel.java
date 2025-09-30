@@ -20,6 +20,8 @@ import levelGroup.Level04;
 
 public class GamePanel extends JPanel implements ActionListener {
 
+    private GameFrame gameFrame;
+
     private final int LARGURA = 800;
     private final int ALTURA = 600;
 
@@ -38,7 +40,10 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private boolean modoVida = false;
 
-    public GamePanel() {
+    public GamePanel(GameFrame frame) {
+
+        this.gameFrame = frame;
+
         this.setPreferredSize(new Dimension(LARGURA, ALTURA));
         this.setFocusable(true);
 
@@ -196,6 +201,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void perderVida() {
         vida--;
+        gameFrame.vibrarTela(300, 5);
         if (vida <= 0 && !modoVida) {
             // Volta para fase 1
             System.out.println("Você perdeu todas as vidas! Reiniciando o jogo...");
@@ -205,5 +211,31 @@ public class GamePanel extends JPanel implements ActionListener {
         } else {
             player.reset(); // Reset normal da posição
         }
+    }
+
+    private void vibrarTela() {
+        if (gameFrame == null)
+            return; // Proteção, caso algo dê errado
+
+        final int originalX = gameFrame.getLocation().x;
+        final int originalY = gameFrame.getLocation().y;
+        final int shakeDistance = 10;
+        final int shakeDuration = 50;
+        final int shakeCount = 5;
+
+        new Thread(() -> {
+            try {
+                for (int i = 0; i < shakeCount; i++) {
+                    int offsetX = (int) (Math.random() * shakeDistance * 2) - shakeDistance;
+                    int offsetY = (int) (Math.random() * shakeDistance * 2) - shakeDistance;
+                    gameFrame.setLocation(originalX + offsetX, originalY + offsetY);
+                    Thread.sleep(shakeDuration);
+                }
+                // volta pra posiçao original
+                gameFrame.setLocation(originalX, originalY);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); // re-interromper
+            }
+        }).start();
     }
 }

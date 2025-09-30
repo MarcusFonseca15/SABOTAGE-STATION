@@ -59,7 +59,7 @@ public class StartPanel extends JPanel {
 
     private void iniciarJogo() {
         frame.getContentPane().removeAll();
-        GamePanel gamePanel = new GamePanel();
+        GamePanel gamePanel = new GamePanel((GameFrame) frame);
         frame.add(gamePanel);
         frame.revalidate();
         frame.repaint();
