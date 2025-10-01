@@ -40,6 +40,8 @@ public class Level07 extends Level {
         designTraps();// TODO Auto-generated constructor stub
         this.titulo = "7. Tente de novo!";
 
+        setShowExit(false);
+
     }
 
     @Override

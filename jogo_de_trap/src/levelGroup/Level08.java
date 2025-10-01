@@ -35,6 +35,8 @@ public class Level08 extends Level {
         designTraps();
         this.titulo = "08. De olho no pixel!";
         this.setTitlePos(titleX, titleY - 10);
+
+        setShowExit(false);
     }
 
     @Override

@@ -3,9 +3,9 @@ package jogo_de_trap;
 import java.awt.*;
 import java.util.ArrayList;
 
-import levelGroup.Level03;
+import javax.swing.ImageIcon;
 
-import java.awt.Rectangle;
+import levelGroup.Level03;
 
 public abstract class Level {
     private static final int TILE_SIZE = 50;
@@ -28,10 +28,19 @@ public abstract class Level {
     protected int titleX = 60;
     protected int titleY = 43;
 
+    /////////////// IMAGEM DE EXIT
+    protected Image exitImage;
+    protected int exitX = 670;
+    protected int exitY = 100;
+    protected int exitWidth = 60;
+    protected int exitHeight = 40;
+    protected boolean showExit = true;
+
     private boolean ativo = true;
 
     public Level(int number) {
         carregarMapa(getMapa());
+        exitImage = new ImageIcon(getClass().getResource("/assets/Exit.png")).getImage();
     }
 
     private void carregarMapa(int[][] mapa) {
@@ -299,6 +308,46 @@ public abstract class Level {
 
     public int getTitleY() {
         return titleY;
+    }
+
+    // SETTERS PARA EXIT
+    public void setExitPos(int x, int y) {
+        this.exitX = x;
+        this.exitY = y;
+    }
+
+    public void setExitSize(int width, int height) {
+        this.exitWidth = width;
+        this.exitHeight = height;
+    }
+
+    public void setShowExit(boolean show) {
+        this.showExit = show;
+    }
+
+    // Getters para EXIT
+    public int getExitX() {
+        return exitX;
+    }
+
+    public int getExitY() {
+        return exitY;
+    }
+
+    public int getExitWidth() {
+        return exitWidth;
+    }
+
+    public int getExitHeight() {
+        return exitHeight;
+    }
+
+    public boolean isShowExit() {
+        return showExit;
+    }
+
+    public Image getExitImage() {
+        return exitImage;
     }
 
 }

@@ -46,23 +46,11 @@ public class Level09 extends Level {
         designTraps();
 
         this.titulo = "09. Não acredite nos seus olhos";
+        setShowExit(false);
     }
 
     @Override
     protected void designTraps() {
-
-        /*
-         * Laser l1 = (Laser) mapaObjetos[3][14];
-         * Laser l2 = (Laser) mapaObjetos[4][14];
-         * Laser l3 = (Laser) mapaObjetos[5][14];
-         * Laser l4 = (Laser) mapaObjetos[6][14];
-         * Laser l5 = (Laser) mapaObjetos[7][14];
-         * laserAnda(l1, 0, l1.getX(), vel);
-         * laserAnda(l2, 0, l2.getX(), vel);
-         * laserAnda(l3, 0, l3.getX(), vel);
-         * laserAnda(l4, 0, l4.getX(), vel);
-         * laserAnda(l5, 0, l5.getX(), vel);
-         */
 
         LaserGrande l1 = (LaserGrande) mapaObjetos[3][4];
         laserAnda(l1, l1.getX() - 100, l1.getX() + 500, vel);

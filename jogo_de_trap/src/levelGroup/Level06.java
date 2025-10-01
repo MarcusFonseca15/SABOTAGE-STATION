@@ -51,6 +51,7 @@ public class Level06 extends Level {
         monitorarPulo();
 
         this.titulo = "06. Eita, um bug?...";
+        setShowExit(false);
     }
 
     @Override

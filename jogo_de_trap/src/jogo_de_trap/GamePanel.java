@@ -20,7 +20,7 @@ import levelGroup.Level04;
 
 public class GamePanel extends JPanel implements ActionListener {
 
-    public int currentLevel = 1;
+    public int currentLevel = 10;
 
     private boolean godMode = false;
     private GameFrame gameFrame;
@@ -133,7 +133,6 @@ public class GamePanel extends JPanel implements ActionListener {
         }
 
         level.draw(g);
-        player.draw(g);
 
         // ---------------- ELEMENTOS DA FASE
 
@@ -141,7 +140,21 @@ public class GamePanel extends JPanel implements ActionListener {
         if (barraVidaImages[vida] != null) {
             g.drawImage(barraVidaImages[vida], 10, 550, 192, 48, this); // indica x, y, largura, altura
         }
-        // TITULO COM CONTORNO
+
+        // IMAGEM DE EXIT
+        if (level.isShowExit() && level.getExitImage() != null) {
+            g.drawImage(level.getExitImage(),
+                    level.getExitX(),
+                    level.getExitY(),
+                    level.getExitWidth(),
+                    level.getExitHeight(),
+                    this);
+        }
+
+        ///////// PLAYER /////////////
+        player.draw(g);
+
+        // ------------ TITULO COM CONTORNO
         Graphics2D g2d = (Graphics2D) g.create();
 
         String texto = level.getTitulo();

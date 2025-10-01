@@ -47,6 +47,8 @@ public class Level03 extends Level {
         designTraps();
         this.titulo = "03. Um pouco mais pra direita";
         this.setTitlePos(titleX, 70);
+
+        setShowExit(false);
     }
 
     @Override

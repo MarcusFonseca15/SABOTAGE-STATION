@@ -35,6 +35,9 @@ public class Level10 extends Level {
         this.player.level = this;
         designTraps();
         this.titulo = "10. Simples assim ;)";
+
+        this.setExitPos(650, 350);
+        this.setExitSize(83, 48);
     }
 
     @Override
