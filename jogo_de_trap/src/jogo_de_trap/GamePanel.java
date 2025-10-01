@@ -200,6 +200,10 @@ public class GamePanel extends JPanel implements ActionListener {
             g2dTrans.dispose();
         }
         updateTransition();
+
+        if (currentLevel == 1 && level instanceof Level01) {
+            ((Level01) level).drawInstructions(g);
+        }
     }
 
     // COLISOES E PASSAR FASE
@@ -210,6 +214,10 @@ public class GamePanel extends JPanel implements ActionListener {
         level.checkPistaoCollision(player);
         level.updatePistaos(player);
         level.updateEspinhos();
+
+        if (currentLevel == 1 && level instanceof Level01) {
+            ((Level01) level).updateInstructions();
+        }
 
         if (!godMode && level.checkLaserCollision(player)) {
             System.out.println("Você caiu em uma armadilha! Resetando...");
