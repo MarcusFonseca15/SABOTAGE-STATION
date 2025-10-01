@@ -20,7 +20,7 @@ import levelGroup.Level04;
 
 public class GamePanel extends JPanel implements ActionListener {
 
-    public int currentLevel = 10;
+    public int currentLevel = 1;
 
     private boolean godMode = false;
     private GameFrame gameFrame;
