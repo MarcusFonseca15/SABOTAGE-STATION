@@ -7,13 +7,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class StartPanel extends JPanel {
     private JFrame frame;
+    boolean isHover = false;
 
     public StartPanel(JFrame frame) {
         this.frame = frame;
@@ -46,11 +45,15 @@ public class StartPanel extends JPanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 startButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                isHover = true;
+                repaint();
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 startButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                isHover = false;
+                repaint();
             }
         });
 
@@ -84,5 +87,18 @@ public class StartPanel extends JPanel {
         int scaleAltura = (int) (imgHeight * scaleFactor) - 110;
 
         g.drawImage(bg, 0, 0, panelWidth, scaleAltura, null);
+
+        // outline do botão
+        // Outline de botão
+        if (isHover) {
+            Graphics2D g2d = (Graphics2D) g.create();
+            g2d.setColor(Color.WHITE);
+            g2d.setStroke(new BasicStroke(3));
+            // botão é (300, 450, 180, 70)
+            int m = 1; // margem
+            g2d.drawRect(300 - m, 450 - m, 180 + (2 * m), 70 + (2 * m)); // 4px de margem
+            g2d.dispose();
+        }
     }
+
 }

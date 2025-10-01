@@ -1,8 +1,8 @@
 package jogo_de_trap;
 
 import javax.swing.*;
-
 import java.awt.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -12,63 +12,55 @@ public class FinalPanel extends JPanel {
 
     private JFrame frame;
     boolean win;
+    boolean isHover = false;
+    JButton actionButton;
 
     FinalPanel(JFrame frame, boolean win) {
         this.frame = frame;
         this.win = win;
         this.setLayout(null);
 
-        /*
-         * ImageIcon resizedIcon = new ImageIcon(
-         * new ImageIcon(getClass().getResource("/assets/btnStart.png"))
-         * .getImage().getScaledInstance(180, 70, Image.SCALE_SMOOTH));
-         * 
-         * JButton startButton = new JButton(resizedIcon);
-         * 
-         * startButton.setOpaque(false);
-         * startButton.setContentAreaFilled(false);
-         * startButton.setBorderPainted(false);
-         * startButton.setFocusPainted(false);
-         * 
-         * startButton.setBounds(300, 450, 180, 70);
-         * 
-         * // 1. ActionListener pra iniciar o jogo
-         * startButton.addActionListener(new ActionListener() {
-         * 
-         * @Override
-         * public void actionPerformed(ActionEvent e) {
-         * iniciarJogo();
-         * }
-         * });
-         * 
-         * // 2. MouseAdapter pra mudar o cursor
-         * startButton.addMouseListener(new MouseAdapter() {
-         * 
-         * @Override
-         * public void mouseEntered(MouseEvent e) {
-         * startButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-         * }
-         * 
-         * @Override
-         * public void mouseExited(MouseEvent e) {
-         * startButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-         * }
-         * });
-         * 
-         * this.add(startButton);
-         */
-
-        setupButton();
-    } // <--- Fechamento do construtor
-
-    private void setupButton() {
-        String buttonText = win ? "Jogar de Novo" : "Tente Novamente";
+        // background
         String backgroundPath = win ? "/assets/VictoryBG.jpg" : "/assets/GameOverBG.jpg";
         ImageIcon icon = new ImageIcon(getClass().getResource(backgroundPath));
         Image bg = icon.getImage();
 
-        JButton actionButton = new JButton(buttonText);
-        actionButton.setBounds(300, 500, 180, 70); // x, y, largura, altura
+        // botão
+        ImageIcon resizedIcon = new ImageIcon(
+                new ImageIcon(getClass().getResource(win ? "/assets/btnPlayAgain.png" : "/assets/btnTryAgain.png"))
+                        .getImage().getScaledInstance(180, 70, Image.SCALE_SMOOTH));
+        this.actionButton = new JButton(resizedIcon);
+        actionButton.setOpaque(false);
+        actionButton.setContentAreaFilled(false);
+        actionButton.setBorderPainted(false);
+        actionButton.setFocusPainted(false);
+        actionButton.setBounds(300, 500, 180, 70);
+
+        setupButton(actionButton);
+        setupHoverEffect();
+    } // <-- fim do construtor
+
+    private void setupHoverEffect() {
+
+        actionButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                actionButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                isHover = true;
+                repaint();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                actionButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                isHover = false;
+                repaint();
+            }
+        });
+    } // setupHoverEffect
+
+    private void setupButton(JButton actionButton) {
+        // x, y, largura, altura
 
         actionButton.addActionListener(e -> {
             if (win) {
@@ -90,12 +82,13 @@ public class FinalPanel extends JPanel {
         });
 
         this.add(actionButton);
-    }
+    } // setupbutton
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        // background
         String backgroundPath = win ? "/assets/VictoryBG.jpg" : "/assets/GameOverBG.jpg";
         ImageIcon icon = new ImageIcon(getClass().getResource(backgroundPath));
         Image bg = icon.getImage();
@@ -110,5 +103,17 @@ public class FinalPanel extends JPanel {
         int scaleAltura = (int) (imgHeight * scaleFactor) - 110;
 
         g.drawImage(bg, 0, 0, panelWidth, scaleAltura, null);
-    }
+
+        // Outline de botão
+        if (isHover) {
+            Graphics2D g2d = (Graphics2D) g.create();
+            g2d.setColor(Color.WHITE);
+            g2d.setStroke(new BasicStroke(3));
+            // botão é (300, 500, 180, 70);
+            int m = 1; // margem
+            g2d.drawRect(300 - m, 500 - m, 180 + (2 * m), 70 + (2 * m)); // 4px de margem
+            g2d.dispose();
+        }
+    } // fim paint component
+
 }
