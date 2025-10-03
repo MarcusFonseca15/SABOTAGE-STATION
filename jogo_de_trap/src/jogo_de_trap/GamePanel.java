@@ -20,7 +20,7 @@ import levelGroup.Level04;
 
 public class GamePanel extends JPanel implements ActionListener {
 
-    public int currentLevel = 4;
+    public int currentLevel = 1;
 
     private boolean godMode = false;
     private GameFrame gameFrame;
@@ -45,9 +45,9 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private final int maxLevels = 10;
 
-    private int vida = 5;
-    private int MAX_VIDAS = 5;
-    private Image[] barraVidaImages = new Image[6];
+    private int vida = 10;
+    private int MAX_VIDAS = 10;
+    private Image[] barraVidaImages = new Image[11];
 
     private boolean modoVida = false;
 
@@ -67,7 +67,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
         // IMGS DA BARRA DE VIDA
         for (int i = 0; i <= MAX_VIDAS; i++) {
-            barraVidaImages[i] = new ImageIcon(getClass().getResource("/assets/LifeBar/lfb" + i + ".png"))
+            barraVidaImages[i] = new ImageIcon(getClass().getResource("/assets/LifeBar/lifebar" + i + ".png"))
                     .getImage();
         }
 
@@ -138,7 +138,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
         // BARRA DE VIDA
         if (barraVidaImages[vida] != null) {
-            g.drawImage(barraVidaImages[vida], 10, 550, 192, 48, this); // indica x, y, largura, altura
+            g.drawImage(barraVidaImages[vida], 10, 550, 200, 48, this); // x, y, largura, altura
         }
 
         // IMAGEM DE EXIT
