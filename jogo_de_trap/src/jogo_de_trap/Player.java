@@ -183,6 +183,10 @@ public class Player {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_LEFT) {
             velX = 0;
         }
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            wantToJump = false;
+        }
+
     }
 
     public void reset() {
