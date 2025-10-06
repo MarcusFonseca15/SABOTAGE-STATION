@@ -51,10 +51,10 @@ public class Level08 extends Level {
         pt4.forca = 3f;
 
         Pistao pt5 = (Pistao) mapaObjetos[3][6];
-        pt5.forca = 0.1f;
+        pt5.forca = 0.01f;
 
         Pistao pt6 = (Pistao) mapaObjetos[11][4];
-        pt6.forca = 1.05f;
+        pt6.forca = 0.01f;
     }
 
 }
