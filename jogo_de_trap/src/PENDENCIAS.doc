@@ -1,0 +1,4 @@
+Corrigir o erro de musica:
+No VsCode ele roda normal se o path for jogo_de_trap/src/assets/musica/musica.wav
+Mas em outras IDEs ou pcs o caminho só pode ser "/assets/musica/musica.wav"
+para resolver isso, adicionarei um try catch e um if alternativo

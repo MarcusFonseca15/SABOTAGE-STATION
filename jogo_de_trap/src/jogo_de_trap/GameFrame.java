@@ -1,6 +1,9 @@
 package jogo_de_trap;
 
+import java.awt.Image;
 import java.awt.Point;
+import java.awt.Toolkit;
+import java.net.URL;
 import java.util.Random;
 
 import javax.swing.*;
@@ -26,12 +29,21 @@ public class GameFrame extends JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
+        // Icone na barra de título
+        URL path = this.getClass().getResource("/assets/icone_Janela.png");
+        Image icone = Toolkit.getDefaultToolkit().getImage(path);
+        this.setIconImage(icone);
+
         tocarMusica();
     }
 
     private void tocarMusica() {
+
         musicBG = new Som();
         musicBG.tocar("jogo_de_trap/src/assets/musica/musica.wav", -1.0f); // volume em dB
+        // em outras IDEs ou pcs o caminho só pode ser "/assets/musica/musica.wav"
+        // para resolver isso, adicionarei um try catch assim:
+
     }
 
     public void vibrarTela(int duracao, int intensidade) {
