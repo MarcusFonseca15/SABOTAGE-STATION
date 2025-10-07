@@ -40,9 +40,7 @@ public class GameFrame extends JFrame {
     private void tocarMusica() {
 
         musicBG = new Som();
-        musicBG.tocar("jogo_de_trap/src/assets/musica/musica.wav", -1.0f); // volume em dB
-        // em outras IDEs ou pcs o caminho só pode ser "/assets/musica/musica.wav"
-        // para resolver isso, adicionarei um try catch assim:
+        musicBG.tocar("/assets/musica/musica.wav", -1.0f); // volume em dB
 
     }
 

@@ -1,15 +1,21 @@
 package jogo_de_trap;
 
 import javax.sound.sampled.*;
+
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class Som {
     private Clip clip;
 
     public void tocar(String path, float volumeDb) {
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(path));
+            InputStream inputStream = getClass().getResourceAsStream(path);
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(bufferedInputStream);
+
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
 
