@@ -38,7 +38,7 @@ public class GameFrame extends JFrame {
     }
 
     private void tocarMusica() {
-
+//
         musicBG = new Som();
         musicBG.tocar("/assets/musica/musica.wav", -1.0f); // volume em dB
 
