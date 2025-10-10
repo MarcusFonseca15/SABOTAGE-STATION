@@ -1,0 +1,44 @@
+StartPanel: Selecionar Modos
+- Modo FÁCIL: 20 Vidas por fase
+- Modo DIFÍCIL: 10 Vidas por fase
+StartPanel: INICIAR COM ESPAÇO
+Instruções: "Aperte qualquer tecla para continuar"
+
+Controles:
+- Andar com WASD e setas
+- Pular com Espaço e setas
+- Input para controles
+
+Titulo:
+- Titulo com background preto opacidade (pra melhor visualização)
+
+
+Morte:
+- Sprite de sangue (ou outra coisa) aparece no lugar onde morreu (e esmaece por 2 segs)
+- Travar movimento por 1seg dps q carrega a fase (evitar movimento e morte desnecessario)
+
+Transição e Tela Final(gameover|win):
+- Travar movimento ao transicionar (evitar bug de levar dano qnd passa)
+- Mostrar número da fase no centro: "FASE 2: 'titulo'" e esmaece -> titulo animação pro lugar dele
+- Morreu: Travar movimento por 1seg para Tela Final de GameOver (para ver onde morreu)
+- Travar movimento por 1seg dps q carrega a fase (evitar movimento e morte desnecessario por segurar tecla)
+
+Bugs e glitchs:
+- Pistão com colisão inconstante (player entra)
+- Fix Fase2: Colocar plataforma do tamanho do LifeBar (para nao confundir)
+- Fase2 -> Colocar no final
+- Fix Fase4: Terminar de preencher a lateral direita superior com plataforma
+- Fix Fase6: Repensar sobre a antigravidade -> Fix AntiG nem sempre ativa
+// sacrifique-se e ganhe asas (3 vidas extras) coraçao dourado
+- Fix Fase8:  Pistao[11x4] mudar força para 1f e o outro pistao de cima está bugado (entrar)
+ // colocar platafrma na area do lifebar
+
+ADIÇÕES:
+- Aleatorização das fases a partir da 2° -> 2,3,4,5 
+- Objeto COLA: Prende personagem no chão (tipo pistão da fase8, ou com impulso negativo)
+- Animação de Morte
+- Animação de Lasers
+
+
+
+
