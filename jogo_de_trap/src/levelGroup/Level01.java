@@ -9,6 +9,7 @@ import jogo_de_trap.Objeto;
 
 import javax.swing.ImageIcon;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.AlphaComposite;
@@ -25,6 +26,8 @@ public class Level01 extends Level {
     private long imageTime;
     private float instructionAlpha = 1.0f;
     private static final int INSTRUCTION_DURATION = 4000;
+    private boolean skip = false;
+    private int skipDUR = 500;
 
     private static int[][] mapa = {
             { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -91,7 +94,7 @@ public class Level01 extends Level {
             long elapsed = System.currentTimeMillis() - imageTime;
             if (elapsed >= INSTRUCTION_DURATION) {
                 showInstructs = false;
-            } else if (elapsed >= INSTRUCTION_DURATION - 1000) { // último segundo
+            } else if (elapsed >= INSTRUCTION_DURATION - 500) { // último segundo
                 instructionAlpha = (INSTRUCTION_DURATION - elapsed) / 1000.0f;
             }
         }
@@ -103,6 +106,17 @@ public class Level01 extends Level {
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, instructionAlpha));
             g2d.drawImage(InstruIMG, 0, 0, 800, 600, null);
             g2d.dispose();
+        }
+    }
+
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            if (showInstructs && skip) {
+                imageTime = System.currentTimeMillis() - (INSTRUCTION_DURATION - 1000);
+                player.wantToJump = false; // Evitar pulo ao pular instruções
+            } else {
+                player.wantToJump = true;
+            }
         }
     }
 }

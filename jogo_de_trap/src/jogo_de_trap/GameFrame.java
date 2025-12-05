@@ -8,7 +8,6 @@ import java.util.Random;
 
 import javax.swing.*;
 
-//Aqui onde tudo inicia
 public class GameFrame extends JFrame {
 
     Som musicBG;

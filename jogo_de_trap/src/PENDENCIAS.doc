@@ -1,7 +1,7 @@
 StartPanel: Selecionar Modos
 - Modo FÁCIL: 20 Vidas por fase
 - Modo DIFÍCIL: 10 Vidas por fase
-StartPanel: INICIAR COM ESPAÇO
+###StartPanel: INICIAR COM ESPAÇO
 Instruções: "Aperte qualquer tecla para continuar"
 
 Controles:
@@ -37,7 +37,7 @@ ADIÇÕES:
 - Aleatorização das fases a partir da 2° -> 2,3,4,5 
 - Objeto COLA: Prende personagem no chão (tipo pistão da fase8, ou com impulso negativo)
 - Animação de Morte
-- Animação de Lasers
+- Animação de Lasers (particulas)
 
 
 

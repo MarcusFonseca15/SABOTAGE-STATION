@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -22,6 +23,16 @@ public class StartPanel extends JPanel {
                 new ImageIcon(getClass().getResource("/assets/btnStart.png"))
                         .getImage().getScaledInstance(180, 70, Image.SCALE_SMOOTH));
 
+        // Apertar espaço também para inciar
+        this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent e) {
+                if (e.getKeyCode() == java.awt.event.KeyEvent.VK_SPACE) {
+                    iniciarJogo();
+                }
+            }
+        });
+        // Apertar no botão também pra iniciar
         JButton startButton = new JButton(resizedIcon);
 
         startButton.setOpaque(false);
