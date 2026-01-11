@@ -6,6 +6,7 @@ import java.awt.event.*;
 import java.awt.font.TextLayout;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 
 import levelGroup.Level01;
 import levelGroup.Level10;
@@ -155,42 +156,46 @@ public class GamePanel extends JPanel implements ActionListener {
         player.draw(g);
 
         // ------------ TITULO COM CONTORNO
-        Graphics2D g2d = (Graphics2D) g.create();
+        {
+            Graphics2D g2d = (Graphics2D) g.create();
 
-        String texto = level.getTitulo();
-        int x = level.getTitleX();
-        int y = level.getTitleY();
-        int size = level.getSizeTitle();
-        Color fillColor = level.getCorTitle();
-        Color outlineColor = Color.BLACK; // Cor do contorno (pode colocar no Level também, se quiser)
+            String texto = level.getTitulo();
+            int x = level.getTitleX();
+            int y = level.getTitleY();
+            int size = level.getSizeTitle();
+            Color fillColor = level.getCorTitle();
 
-        Font font = new Font("Arial", Font.BOLD, size);
-        g2d.setFont(font);
+            Font font = new Font("Arial", Font.BOLD, size);
+            // g2d.setFont(font);
 
-        FontMetrics fm = g2d.getFontMetrics();
-        int textWidth = fm.stringWidth(texto);
-        int textHeight = fm.getAscent();
+            // Preparação da forma do texto
+            FontRenderContext frc = g2d.getFontRenderContext();
+            TextLayout textLayout = new TextLayout(texto, font, frc);
+            Shape outline = textLayout.getOutline(null);
+            Rectangle2D bounds = textLayout.getBounds();
 
-        // Criar forma do texto
-        FontRenderContext frc = g2d.getFontRenderContext();
-        TextLayout textLayout = new TextLayout(texto, font, frc);
-        Shape outline = textLayout.getOutline(null);
+            g2d.translate(x, y);
 
-        AffineTransform transform = g2d.getTransform();
-        transform.translate(x, y);
-        g2d.transform(transform);
+            // Fundo do texto
+            int padding = 10;
+            g2d.setColor(new Color(0, 0, 0, 100));
+            g2d.fillRect(
+                    (int) bounds.getX() - padding,
+                    (int) bounds.getY() - padding,
+                    (int) bounds.getWidth() + (padding * 2),
+                    (int) bounds.getHeight() + (padding * 2));
 
-        // Contorno
-        g2d.setColor(outlineColor);
-        g2d.setStroke(new BasicStroke(2.0f)); // Espessura do contorno
-        g2d.draw(outline);
+            // Contorno
+            g2d.setStroke(new BasicStroke(2.0f)); // Espessura do contorno
+            g2d.setColor(Color.BLACK);
+            g2d.draw(outline);
 
-        // Texto preenchido
-        g2d.setColor(fillColor);
-        g2d.fill(outline);
+            // Texto preenchido
+            g2d.setColor(fillColor);
+            g2d.fill(outline);
 
-        g2d.dispose();
-
+            g2d.dispose();
+        }
         // TRANSIÇÃO
         if (estadoTrans != EstadoTrans.NORMAL) {
             Graphics2D g2dTrans = (Graphics2D) g.create();
