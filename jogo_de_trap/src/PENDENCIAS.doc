@@ -47,21 +47,24 @@ XXX Instruções do StartPanel: Mudar texto para "Aperte qualquer tecla para con
 XXX Titulo: Adicionar background preto com opacidade atrás do título (para melhor visualização).
 
 -----------Ajustes de Fase (Valores e posicionamento)
-Fase 8 - Pistão: Mudar força do Pistão[11x4] para 1f e corrigir bug do pistão de cima (player entrando).
+XXX Fase 8 - Pistão: Mudar força do Pistão[11x4] para 1f
 
-Fase 8 - Plataforma: Colocar plataforma na área do lifebar.
+XXX Fase 8 - Plataforma: Colocar plataforma na área do lifebar.
 
-Fase 2 - Plataforma: Colocar plataforma do tamanho do LifeBar para não confundir.
-Fase 2: colocar ela no final
+XXX Fase 2 - Plataforma: Colocar plataforma do tamanho do LifeBar para não confundir.
 
-Fase 4 - Completar mapa: Terminar de preencher a lateral direita superior com plataforma.
+XXX Fase 4 - Completar mapa: Terminar de preencher a lateral direita superior com plataforma.
 
+COLISÃO - Pistão: as laterais não possuem colisão. Player entra se chegar na altura certa.
+exemplo: Fase 2 - Pistão: o mais a direita (ultimo) 
 
 -----------⚡ Médios (Requerem lógica adicional)
 Controle de Movimento
 Travar movimento em transições e pós-carregamento: Implementar delay de 1 segundo após carregar a fase para evitar movimento e morte desnecessária por segurar tecla.
 
 Travar movimento no Game Over: Morreu? Travar movimento por 1 segundo antes da Tela Final para o jogador ver onde morreu.
+
+Fase 2: colocar ela no final
 
 -----------🚀 Complexos (Novas Funcionalidades)
 

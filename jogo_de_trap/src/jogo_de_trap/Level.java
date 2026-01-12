@@ -118,6 +118,8 @@ public abstract class Level {
         for (Pistao pistao : pistoes) {
             Rectangle pistaoBounds = pistao.getBaseBounds();
 
+            Rectangle pistaoEstendidoBounds = pistao.getBounds();
+
             if (playerBounds.intersects(pistaoBounds)) {
                 // Colisão por cima
                 if (player.y + player.height - player.velY <= pistaoBounds.y) {
@@ -129,12 +131,26 @@ public abstract class Level {
                     // Colisão por baixo
                     player.y = pistaoBounds.y + pistaoBounds.height;
                     player.velY = 0;
-                } else {
-                    // Colisão lateral
-                    if (player.x + player.width - player.velX <= pistaoBounds.x) {
-                        player.x = pistaoBounds.x - player.width;
-                    } else if (player.x - player.velX >= pistaoBounds.x + pistaoBounds.width) {
-                        player.x = pistaoBounds.x + pistaoBounds.width;
+                } else if (playerBounds.intersects(pistaoEstendidoBounds)) {
+                    // Nova lógica para colisão lateral quando estendido
+                    if (player.x + player.width - player.velX <= pistaoEstendidoBounds.x) {
+                        player.x = pistaoEstendidoBounds.x - player.width;
+                    } else if (player.x - player.velX >= pistaoEstendidoBounds.x + pistaoEstendidoBounds.width) {
+                        player.x = pistaoEstendidoBounds.x + pistaoEstendidoBounds.width;
+                    }
+                }
+
+                else {
+                    // Verificar colisão horizontal
+                    if (player.x + player.width >= pistaoBounds.x && player.x <= pistaoBounds.x + pistaoBounds.width) {
+                        // Colisão pela esquerda
+                        if (player.x + player.width - player.velX <= pistaoBounds.x) {
+                            player.x = pistaoBounds.x - player.width;
+                        }
+                        // Colisão pela direita
+                        else if (player.x - player.velX >= pistaoBounds.x + pistaoBounds.width) {
+                            player.x = pistaoBounds.x + pistaoBounds.width;
+                        }
                     }
                 }
             }

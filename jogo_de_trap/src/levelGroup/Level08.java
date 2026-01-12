@@ -20,7 +20,7 @@ public class Level08 extends Level {
             { 0, 0, 0, 0, 0, 0, 0, 0, 112, 3, 3, 3, 0, 3, 0, 112 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 6, 11, 1, 1, 6, 11, 1, 11, 1, 11, 1, 11, 1, 11, 6, 6 }
+            { 6, 1, 1, 1, 6, 11, 1, 11, 1, 11, 1, 11, 1, 11, 6, 6 }
     };
 
     @Override
@@ -54,7 +54,7 @@ public class Level08 extends Level {
         pt5.forca = 0.00f;
 
         Pistao pt6 = (Pistao) mapaObjetos[11][4];
-        pt6.forca = 1.00f;
+        pt6.forca = 1f;
     }
 
 }
