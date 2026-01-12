@@ -13,6 +13,8 @@ import java.awt.event.KeyEvent;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Font;
 
 import jogo_de_trap.EspinhosP;
 
@@ -28,6 +30,10 @@ public class Level01 extends Level {
     private static final int INSTRUCTION_DURATION = 4000;
     private boolean skip = false;
     private int skipDUR = 500;
+
+    private boolean showText = true;
+    private long textPiscaTime = 0;
+    private static final long TEXT_PISCA_DURATION = 500;
 
     private static int[][] mapa = {
             { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -91,32 +97,52 @@ public class Level01 extends Level {
 
     public void updateInstructions() {
         if (showInstructs) {
-            long elapsed = System.currentTimeMillis() - imageTime;
-            if (elapsed >= INSTRUCTION_DURATION) {
-                showInstructs = false;
-            } else if (elapsed >= INSTRUCTION_DURATION - 500) { // último segundo
-                instructionAlpha = (INSTRUCTION_DURATION - elapsed) / 1000.0f;
+            long elapsed = System.currentTimeMillis() - textPiscaTime;
+            if (elapsed >= TEXT_PISCA_DURATION) {
+                showText = !showText;
+                textPiscaTime = System.currentTimeMillis();
             }
         }
     }
 
     public void drawInstructions(Graphics g) {
+
         if (showInstructs && InstruIMG != null) {
+            // Imagem
             Graphics2D g2d = (Graphics2D) g.create();
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, instructionAlpha));
             g2d.drawImage(InstruIMG, 0, 0, 800, 600, null);
+
+            // Texto piscando
+            if (showText) {
+                g2d.setColor(Color.WHITE);
+                try {
+                    // Nota: O createFont cria a fonte com tamanho 1, o deriveFont define o tamanho
+                    // real (24f)
+                    java.io.InputStream is = getClass()
+                            .getResourceAsStream("/assets/fontes/retro_computer_personal_use.ttf");
+                    Font retroFont = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(22f);
+                    g2d.setFont(retroFont);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    g2d.setFont(new Font("Arial", Font.BOLD, 24));// usar Arial se der erro
+                }
+                String text = "Pressione qualquer teclar para continuar";
+                int textWidth = g2d.getFontMetrics().stringWidth(text);
+                g2d.drawString(text, (800 - textWidth) / 2, 550);
+            }
+
             g2d.dispose();
         }
     }
 
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            if (showInstructs && skip) {
-                imageTime = System.currentTimeMillis() - (INSTRUCTION_DURATION - 1000);
-                player.wantToJump = false; // Evitar pulo ao pular instruções
-            } else {
-                player.wantToJump = true;
-            }
+
+        if (showInstructs) {
+            showInstructs = false;
+            player.wantToJump = false;
+            return;
         }
     }
+
 }

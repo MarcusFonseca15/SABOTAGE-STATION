@@ -75,7 +75,9 @@ public class GamePanel extends JPanel implements ActionListener {
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-
+                if (currentLevel == 1 && level instanceof Level01) {
+                    ((Level01) level).keyPressed(e);
+                }
                 // GOD MODE =====================
                 if (e.getKeyCode() == KeyEvent.VK_F1) {
                     godMode = !godMode;
