@@ -59,6 +59,9 @@ COLISÃO - Pistão: as laterais não possuem colisão. Player entra se chegar na
 exemplo: Fase 2 - Pistão: o mais a direita (ultimo) 
 
 -----------⚡ Médios (Requerem lógica adicional)
+XXX Aleatorização de fases: Randomizar a ordem das fases a partir da 2° (fases 3, 4, 5, 6 e 7).
+
+
 Controle de Movimento
 Travar movimento em transições e pós-carregamento: Implementar delay de 1 segundo após carregar a fase para evitar movimento e morte desnecessária por segurar tecla.
 
@@ -72,7 +75,6 @@ Modos de jogo (StartPanel): Implementar seleção de Modo FÁCIL (20 Vidas por f
 
 Input personalizável: Implementar sistema para configurar controles (WASD, setas e Espaço).
 
-Aleatorização de fases: Randomizar a ordem das fases a partir da 2° (fases 2, 3, 4 e 5).
 
 -----------Efeitos Visuais
 Sprite de marcar morte: Sprite de sangue (ou outra coisa) aparece no lugar onde morreu e esmaece por 2 segundos.

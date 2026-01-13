@@ -7,6 +7,9 @@ import java.awt.font.TextLayout;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
 
 import levelGroup.Level01;
 import levelGroup.Level10;
@@ -22,18 +25,13 @@ import levelGroup.Level04;
 public class GamePanel extends JPanel implements ActionListener {
 
     public int currentLevel = 1;
+    int proximoLevel = 0; // apenas de inicialização
+    private final int maxLevels = 10;
 
     private boolean godMode = false;
+    private boolean modoVida = false;
+
     private GameFrame gameFrame;
-
-    // VARIAVEIS DE TRANSIÇÃO DE TELA ESMAECER
-    private enum EstadoTrans {
-        NORMAL, FADEOUT, FADEIN
-    }
-
-    float alphaFade = 0.0f;
-    EstadoTrans estadoTrans = EstadoTrans.NORMAL;
-    int proximoLevel = 0; // apenas de inicialização
 
     // DIMENSÕES FIXAS
     private final int LARGURA = 800;
@@ -44,13 +42,19 @@ public class GamePanel extends JPanel implements ActionListener {
     private Level level;
     private Image backgroundImage;
 
-    private final int maxLevels = 10;
+    private List<Integer> filaFases;
 
     private int vida = 10;
     private int MAX_VIDAS = 10;
     private Image[] barraVidaImages = new Image[11];
 
-    private boolean modoVida = false;
+    // VARIAVEIS DE TRANSIÇÃO DE TELA ESMAECER
+    private enum EstadoTrans {
+        NORMAL, FADEOUT, FADEIN
+    }
+
+    float alphaFade = 0.0f;
+    EstadoTrans estadoTrans = EstadoTrans.NORMAL;
 
     public GamePanel(GameFrame frame) {
 
@@ -64,6 +68,7 @@ public class GamePanel extends JPanel implements ActionListener {
         Gravity gravityInit = new Gravity(1.0);
         player = new Player(100, 500, gravityInit);
 
+        initRandomFases();
         loadLevel(currentLevel);
 
         // IMGS DA BARRA DE VIDA
@@ -213,6 +218,15 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
+    private void initRandomFases() {
+        // Inicializa a fila de fases aleatórias (3 a 7)
+        filaFases = new ArrayList<>();
+        for (int i = 3; i <= 7; i++) {
+            filaFases.add(i);
+        }
+        Collections.shuffle(filaFases);
+    }
+
     // COLISOES E PASSAR FASE
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -250,30 +264,24 @@ public class GamePanel extends JPanel implements ActionListener {
         if (player.x + player.width >= LARGURA) {
 
             if (estadoTrans == EstadoTrans.NORMAL) {
-                proximoLevel = currentLevel + 1;
+
+                // Aleatorização de fases da 3 a 7
+                if (currentLevel == 2) {
+                    proximoLevel = filaFases.remove(0);
+                } else if (currentLevel >= 3 && currentLevel <= 7) {
+                    // Se ainda houver fases na fila, continua sorteando
+                    if (!filaFases.isEmpty()) {
+                        proximoLevel = filaFases.remove(0);
+                    } else {
+                        proximoLevel = 8;
+                    }
+                } else {
+                    proximoLevel = currentLevel + 1;
+                }
+
                 estadoTrans = EstadoTrans.FADEOUT;
                 alphaFade = 0.0f;
             }
-
-            /*
-             * CONDIÇÃO EM DESUSO
-             * if (currentLevel > 6 || (currentLevel > 6) && (currentLevel != 6)
-             * || (currentLevel > 9 && currentLevel != 9)) {
-             * // level.pararThread();
-             * }
-             */
-            /*
-             * MOVIDO PARA UPGRADETRANSITION()
-             * if (currentLevel <= maxLevels) {
-             * System.out.println("Avançando para o nível " + proximoLevel);
-             * vida = MAX_VIDAS;
-             * } else {
-             * System.out.println("Parabéns! Você terminou o jogo!");
-             * timer.stop();
-             * JOptionPane.showMessageDialog(this, "Você venceu todos os níveis!");
-             * System.exit(0);
-             * }
-             */
         }
 
         repaint();
@@ -294,32 +302,6 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
-    private void vibrarTela() {
-        if (gameFrame == null)
-            return; // Proteção, caso algo dê errado
-
-        final int originalX = gameFrame.getLocation().x;
-        final int originalY = gameFrame.getLocation().y;
-        final int shakeDistance = 10;
-        final int shakeDuration = 50;
-        final int shakeCount = 5;
-
-        new Thread(() -> {
-            try {
-                for (int i = 0; i < shakeCount; i++) {
-                    int offsetX = (int) (Math.random() * shakeDistance * 2) - shakeDistance;
-                    int offsetY = (int) (Math.random() * shakeDistance * 2) - shakeDistance;
-                    gameFrame.setLocation(originalX + offsetX, originalY + offsetY);
-                    Thread.sleep(shakeDuration);
-                }
-                // volta pra posiçao original
-                gameFrame.setLocation(originalX, originalY);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt(); // re-interromper
-            }
-        }).start();
-    }//
-
     private void updateTransition() {
         if (estadoTrans == EstadoTrans.FADEOUT) {
             alphaFade += 0.05f;
@@ -330,7 +312,7 @@ public class GamePanel extends JPanel implements ActionListener {
                     level.pararThread();
                 }
 
-                // === LÓGICA DE AVANÇO DE NÍVEL AGORA AQUI ===
+                // === LÓGICA DE AVANÇO DE NÍVEL ===
                 if (proximoLevel <= maxLevels) {
                     currentLevel = proximoLevel;
                     loadLevel(currentLevel);
