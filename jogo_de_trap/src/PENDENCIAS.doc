@@ -42,32 +42,8 @@ ADIÇÕES:
 
 
 
-------------UI/UX Simples
-XXX Instruções do StartPanel: Mudar texto para "Aperte qualquer tecla para continuar" (Substituir o atual "INICIAR COM ESPAÇO").
-XXX Titulo: Adicionar background preto com opacidade atrás do título (para melhor visualização).
 
------------Ajustes de Fase (Valores e posicionamento)
-XXX Fase 8 - Pistão: Mudar força do Pistão[11x4] para 1f
 
-XXX Fase 8 - Plataforma: Colocar plataforma na área do lifebar.
-
-XXX Fase 2 - Plataforma: Colocar plataforma do tamanho do LifeBar para não confundir.
-
-XXX Fase 4 - Completar mapa: Terminar de preencher a lateral direita superior com plataforma.
-
-COLISÃO - Pistão: as laterais não possuem colisão. Player entra se chegar na altura certa.
-exemplo: Fase 2 - Pistão: o mais a direita (ultimo) 
-
------------⚡ Médios (Requerem lógica adicional)
-XXX Aleatorização de fases: Randomizar a ordem das fases a partir da 2° (fases 3, 4, 5, 6 e 7).
-XXX Titulos devem mudar em ordem tambem (estão com numero estático (2,3,6,4,5,7...), mas devem ser dinamicos)
-
-=======> LEVEL 6: Ao pular e morrer no laser, a gravidade -1 fica ativada pra sempre na fase, e nao desativa. O titulo não muda "Um bug? Não é só o jogo"
-
-XXX Travar movimento no Game Over: Morreu? Travar movimento por 1 segundo antes da Tela Final para o jogador ver onde morreu.
-
-/////Travar movimento em transições e pós-carregamento: Implementar delay de 1 segundo após carregar a fase para evitar movimento e morte desnecessária por segurar tecla.
-//^ nn vejo mais necessidade nessa ^
 
 -----------🚀 Complexos (Novas Funcionalidades)
 
@@ -76,7 +52,6 @@ Modos de jogo (StartPanel): Implementar seleção de Modo FÁCIL (20 Vidas por f
 Input personalizável (StartPanel): Implementar configurações no sistema para configurar controles (WASD, setas e Espaço).
 
 -----------Efeitos Visuais
-XXX Sprite de marcar morte: Sprite de sangue (ou outra coisa) aparece no lugar onde morreu e esmaece por 2 segundos.
 
 Animação de fase: Mostrar número da fase no centro "FASE X: 'titulo'", aplicar efeito de esmaecer e mover o título para o lugar definitivo.
 
@@ -85,11 +60,38 @@ Animação de morte
 Adicionar animação de lasers
 
 -----------Bugs Críticos
+
 Colisão do pistão: Resolver colisão inconstante onde o player entra dentro do objeto.
 
 Antigravidade da Fase 6: Repensar o funcionamento e corrigir o bug onde a AntiG nem sempre ativa.
+
+COLISÃO - Pistão: as laterais não possuem colisão. Player entra se chegar na altura certa.
+exemplo: Fase 2 - Pistão: o mais a direita (ultimo) 
+
+=======> LEVEL 6: Ao pular e morrer no laser, a gravidade -1 fica ativada pra sempre na fase, e nao desativa. O titulo não muda "Um bug? Não é só o jogo"
+
 
 -----------Novas Mecânicas
 Objeto COLA: Criar novo objeto que prende o personagem no chão (similar ao pistão da fase 8 ou com impulso negativo).
 
 Sistema de sacrifício: Mecânica de sacrificar 3 vidas para ganhar "asas" (coração dourado).
+
+
+------------UI/UX Simples
+XXX Instruções do StartPanel: Mudar texto para "Aperte qualquer tecla para continuar" (Substituir o atual "INICIAR COM ESPAÇO").
+XXX Titulo: Adicionar background preto com opacidade atrás do título (para melhor visualização).
+
+XXX Fase 8 - Pistão: Mudar força do Pistão[11x4] para 1f
+
+XXX Fase 8 - Plataforma: Colocar plataforma na área do lifebar.
+
+XXX Fase 2 - Plataforma: Colocar plataforma do tamanho do LifeBar para não confundir.
+
+XXX Fase 4 - Completar mapa: Terminar de preencher a lateral direita superior com plataforma.
+
+XXX Travar movimento no Game Over: Morreu? Travar movimento por 1 segundo antes da Tela Final para o jogador ver onde morreu.
+
+XXX Aleatorização de fases: Randomizar a ordem das fases a partir da 2° (fases 3, 4, 5, 6 e 7).
+XXX Titulos devem mudar em ordem tambem (estão com numero estático (2,3,6,4,5,7...), mas devem ser dinamicos)
+
+XXX Sprite de marcar morte: Sprite de sangue (ou outra coisa) aparece no lugar onde morreu e esmaece por 2 segundos.
