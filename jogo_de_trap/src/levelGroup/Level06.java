@@ -48,6 +48,7 @@ public class Level06 extends Level {
         this.player = player;
         this.player.level = this;
         this.g = player.g;
+        this.gamePanel = gamePanel;
 
         designTraps();
         monitorarPulo();

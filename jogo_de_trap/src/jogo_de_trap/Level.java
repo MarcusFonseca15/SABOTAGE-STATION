@@ -52,7 +52,7 @@ public abstract class Level {
 
     public Level(int number) {
         carregarMapa(getMapa());
-        exitImage = new ImageIcon(getClass().getResource("/assets/Exit.png")).getImage();
+        exitImage = new ImageIcon(getClass().getResource("/assets/telas_e_botoes/Exit.png")).getImage();
     }
 
     private void carregarMapa(int[][] mapa) {

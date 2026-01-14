@@ -68,8 +68,6 @@ Antigravidade da Fase 6: Repensar o funcionamento e corrigir o bug onde a AntiG 
 COLISÃO - Pistão: as laterais não possuem colisão. Player entra se chegar na altura certa.
 exemplo: Fase 2 - Pistão: o mais a direita (ultimo) 
 
-=======> LEVEL 6: Ao pular e morrer no laser, a gravidade -1 fica ativada pra sempre na fase, e nao desativa. O titulo não muda "Um bug? Não é só o jogo"
-
 
 -----------Novas Mecânicas
 Objeto COLA: Criar novo objeto que prende o personagem no chão (similar ao pistão da fase 8 ou com impulso negativo).

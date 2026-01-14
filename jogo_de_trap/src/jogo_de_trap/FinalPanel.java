@@ -21,13 +21,14 @@ public class FinalPanel extends JPanel {
         this.setLayout(null);
 
         // background
-        String backgroundPath = win ? "/assets/VictoryBG.jpg" : "/assets/GameOverBG.jpg";
+        String backgroundPath = win ? "/assets/telas_e_botoes/VictoryBG.jpg" : "/assets/telas_e_botoes/GameOverBG.jpg";
         ImageIcon icon = new ImageIcon(getClass().getResource(backgroundPath));
         Image bg = icon.getImage();
 
         // botão
         ImageIcon resizedIcon = new ImageIcon(
-                new ImageIcon(getClass().getResource(win ? "/assets/btnPlayAgain.png" : "/assets/btnTryAgain.png"))
+                new ImageIcon(getClass().getResource(
+                        win ? "/assets/telas_e_botoes/btnPlayAgain.png" : "/assets/telas_e_botoes/btnTryAgain.png"))
                         .getImage().getScaledInstance(180, 70, Image.SCALE_SMOOTH));
         this.actionButton = new JButton(resizedIcon);
         actionButton.setOpaque(false);
@@ -89,7 +90,7 @@ public class FinalPanel extends JPanel {
         super.paintComponent(g);
 
         // background
-        String backgroundPath = win ? "/assets/VictoryBG.jpg" : "/assets/GameOverBG.jpg";
+        String backgroundPath = win ? "/assets/telas_e_botoes/VictoryBG.jpg" : "/assets/telas_e_botoes/GameOverBG.jpg";
         ImageIcon icon = new ImageIcon(getClass().getResource(backgroundPath));
         Image bg = icon.getImage();
 

@@ -58,7 +58,7 @@ public class Level01 extends Level {
         this.player.level = this;
         designTraps();
 
-        InstruIMG = new ImageIcon(getClass().getResource("/assets/imgInstrucoes.png")).getImage();
+        InstruIMG = new ImageIcon(getClass().getResource("/assets/telas_e_botoes/imgInstrucoes.png")).getImage();
         imageTime = System.currentTimeMillis();
         // drawInstructions();
 

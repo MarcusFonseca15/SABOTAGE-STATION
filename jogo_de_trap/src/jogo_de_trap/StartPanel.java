@@ -20,7 +20,7 @@ public class StartPanel extends JPanel {
         this.setLayout(null);
 
         ImageIcon resizedIcon = new ImageIcon(
-                new ImageIcon(getClass().getResource("/assets/btnStart.png"))
+                new ImageIcon(getClass().getResource("/assets/telas_e_botoes/btnStart.png"))
                         .getImage().getScaledInstance(180, 70, Image.SCALE_SMOOTH));
 
         // Apertar espaço também para inciar
@@ -85,7 +85,7 @@ public class StartPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        ImageIcon icon = new ImageIcon(getClass().getResource("/assets/StartBG.jpg"));
+        ImageIcon icon = new ImageIcon(getClass().getResource("/assets/telas_e_botoes/StartBG.jpg"));
         Image bg = icon.getImage();
 
         int imgWidth = bg.getWidth(null);
