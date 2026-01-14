@@ -2,6 +2,7 @@ package jogo_de_trap;
 
 import javax.swing.*;
 
+import jogo_de_trap.objetos.DeathSprite;
 import jogo_de_trap.objetos.Player;
 
 import java.awt.*;
@@ -52,6 +53,13 @@ public class GamePanel extends JPanel implements ActionListener {
     private int MAX_VIDAS = 10;
     private Image[] barraVidaImages = new Image[11];
 
+    // VARIÁVEIS PARA DELAY PÓS MORTE
+    private long morteTime = 0;
+    private boolean waitMorte = false;
+    private static final long MORTE_DELAY = 1000;
+
+    private java.util.ArrayList<DeathSprite> blood = new ArrayList<>();
+
     // VARIAVEIS DE TRANSIÇÃO DE TELA ESMAECER
     private enum EstadoTrans {
         NORMAL, FADEOUT, FADEIN
@@ -59,11 +67,6 @@ public class GamePanel extends JPanel implements ActionListener {
 
     float alphaFade = 0.0f;
     EstadoTrans estadoTrans = EstadoTrans.NORMAL;
-
-    // VARIÁVEIS PARA DELAY PÓS MORTE
-    private long morteTime = 0;
-    private boolean waitMorte = false;
-    private static final long MORTE_DELAY = 5000;
 
     public GamePanel(GameFrame frame) {
 
@@ -150,6 +153,12 @@ public class GamePanel extends JPanel implements ActionListener {
         }
 
         level.draw(g);
+
+        // SPRITE DE PÓS MORTE (SANGUE)
+        for (DeathSprite ds : blood) {
+            ds.update();
+            ds.draw((Graphics2D) g);
+        }
 
         // ---------------- ELEMENTOS DA FASE
 
@@ -309,6 +318,8 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     private void perderVida() {
+        blood.add(new DeathSprite(player.getX(), player.getY(), null));
+
         vida--;
         gameFrame.vibrarTela(300, 5);
 

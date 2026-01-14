@@ -64,9 +64,10 @@ XXX Titulos devem mudar em ordem tambem (estão com numero estático (2,3,6,4,5,
 
 =======> LEVEL 6: Ao pular e morrer no laser, a gravidade -1 fica ativada pra sempre na fase, e nao desativa. O titulo não muda "Um bug? Não é só o jogo"
 
-Travar movimento no Game Over: Morreu? Travar movimento por 1 segundo antes da Tela Final para o jogador ver onde morreu.
+XXX Travar movimento no Game Over: Morreu? Travar movimento por 1 segundo antes da Tela Final para o jogador ver onde morreu.
 
-Travar movimento em transições e pós-carregamento: Implementar delay de 1 segundo após carregar a fase para evitar movimento e morte desnecessária por segurar tecla.
+/////Travar movimento em transições e pós-carregamento: Implementar delay de 1 segundo após carregar a fase para evitar movimento e morte desnecessária por segurar tecla.
+//^ nn vejo mais necessidade nessa ^
 
 -----------🚀 Complexos (Novas Funcionalidades)
 
@@ -75,7 +76,7 @@ Modos de jogo (StartPanel): Implementar seleção de Modo FÁCIL (20 Vidas por f
 Input personalizável (StartPanel): Implementar configurações no sistema para configurar controles (WASD, setas e Espaço).
 
 -----------Efeitos Visuais
-Sprite de marcar morte: Sprite de sangue (ou outra coisa) aparece no lugar onde morreu e esmaece por 2 segundos.
+XXX Sprite de marcar morte: Sprite de sangue (ou outra coisa) aparece no lugar onde morreu e esmaece por 2 segundos.
 
 Animação de fase: Mostrar número da fase no centro "FASE X: 'titulo'", aplicar efeito de esmaecer e mover o título para o lugar definitivo.
 
