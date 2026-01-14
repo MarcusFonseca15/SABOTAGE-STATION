@@ -62,19 +62,15 @@ exemplo: Fase 2 - Pistão: o mais a direita (ultimo)
 XXX Aleatorização de fases: Randomizar a ordem das fases a partir da 2° (fases 3, 4, 5, 6 e 7).
 XXX Titulos devem mudar em ordem tambem (estão com numero estático (2,3,6,4,5,7...), mas devem ser dinamicos)
 
-Controle de Movimento
-Travar movimento em transições e pós-carregamento: Implementar delay de 1 segundo após carregar a fase para evitar movimento e morte desnecessária por segurar tecla.
-
 Travar movimento no Game Over: Morreu? Travar movimento por 1 segundo antes da Tela Final para o jogador ver onde morreu.
 
-Fase 2: colocar ela no final
+Travar movimento em transições e pós-carregamento: Implementar delay de 1 segundo após carregar a fase para evitar movimento e morte desnecessária por segurar tecla.
 
 -----------🚀 Complexos (Novas Funcionalidades)
 
 Modos de jogo (StartPanel): Implementar seleção de Modo FÁCIL (20 Vidas por fase) e Modo DIFÍCIL (10 Vidas por fase).
 
-Input personalizável: Implementar sistema para configurar controles (WASD, setas e Espaço).
-
+Input personalizável (StartPanel): Implementar configurações no sistema para configurar controles (WASD, setas e Espaço).
 
 -----------Efeitos Visuais
 Sprite de marcar morte: Sprite de sangue (ou outra coisa) aparece no lugar onde morreu e esmaece por 2 segundos.
