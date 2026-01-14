@@ -63,7 +63,7 @@ public class GamePanel extends JPanel implements ActionListener {
     // VARIÁVEIS PARA DELAY PÓS MORTE
     private long morteTime = 0;
     private boolean waitMorte = false;
-    private static final long MORTE_DELAY = 1000;
+    private static final long MORTE_DELAY = 5000;
 
     public GamePanel(GameFrame frame) {
 
@@ -240,6 +240,21 @@ public class GamePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         player.update();
+
+        // Delay pós morte
+        if (waitMorte) {
+            long elapsed = System.currentTimeMillis() - morteTime;
+            if (elapsed >= MORTE_DELAY) {
+                waitMorte = false;
+
+                // só executa gameover dps do delay
+                currentLevel = 1;
+                vida = MAX_VIDAS;
+                toFinalPanel(false);
+            }
+            return; // Pula o restante do update enquanto espera
+        }
+
         level.checkPlatformCollision(player);
         level.checkPistaoCollision(player);
         level.updatePistaos(player);
@@ -253,21 +268,18 @@ public class GamePanel extends JPanel implements ActionListener {
             System.out.println("Você caiu em uma armadilha! Resetando...");
             // diminuindo vida pós o dano
             perderVida();
-            player.reset();
         }
 
         if (!godMode && level.checkEspinhosCollision(player)) {
             System.out.println("Você caiu em uma armadilha! Resetando...");
             // diminuindo vida pós o dano
             perderVida();
-            player.reset();
         }
 
         if (!godMode && level.checkEspinhosPCollision(player)) {
             System.out.println("Voce perdeu pelo espinhoP hehehe");
             // diminuindo vida pós o dano
             perderVida();
-            player.reset();
         }
 
         if (player.getX() + player.getWidth() >= LARGURA) {
@@ -301,14 +313,16 @@ public class GamePanel extends JPanel implements ActionListener {
         gameFrame.vibrarTela(300, 5);
 
         if (vida <= 0 && !modoVida) {
+
+            // espera antes de mostrar GameOver
+            waitMorte = true;
+            morteTime = System.currentTimeMillis();
+
             // Volta para fase 1
             System.out.println("Você perdeu todas as vidas! Reiniciando o jogo...");
-            currentLevel = 1;
-            vida = MAX_VIDAS;
-            toFinalPanel(false);
-            // loadLevel(currentLevel);
         } else {
-            player.reset(); // Reset normal da posição
+            // ainda tem vida: reset da posição
+            player.reset();
         }
     }
 
