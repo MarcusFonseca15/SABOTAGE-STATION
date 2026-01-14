@@ -1,17 +1,16 @@
 package levelGroup;
 
 import jogo_de_trap.Level;
-import jogo_de_trap.Pistao;
-import jogo_de_trap.Platform;
-import jogo_de_trap.Player;
-import jogo_de_trap.Pistao;
+import jogo_de_trap.objetos.Espinhos;
+import jogo_de_trap.objetos.EspinhosP;
+import jogo_de_trap.objetos.Pistao;
+import jogo_de_trap.objetos.Platform;
+import jogo_de_trap.objetos.Player;
 
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 
-import jogo_de_trap.Espinhos;
-import jogo_de_trap.EspinhosP;
 import jogo_de_trap.GamePanel;
 
 public class Level05 extends Level {

@@ -1,20 +1,20 @@
 package levelGroup;
 
 import jogo_de_trap.Level;
-import jogo_de_trap.Objeto;
-import jogo_de_trap.Platform;
-import jogo_de_trap.Pistao;
+import jogo_de_trap.objetos.Espinhos;
+import jogo_de_trap.objetos.EspinhosP;
+import jogo_de_trap.objetos.Laser;
+import jogo_de_trap.objetos.LaserGrande;
+import jogo_de_trap.objetos.Objeto;
+import jogo_de_trap.objetos.Pistao;
+import jogo_de_trap.objetos.Platform;
+import jogo_de_trap.objetos.Player;
 
 import java.awt.Color;
 import java.util.ArrayList;
 
-import jogo_de_trap.Espinhos;
-import jogo_de_trap.EspinhosP;
 import jogo_de_trap.GamePanel;
 import jogo_de_trap.Gravity;
-import jogo_de_trap.Laser;
-import jogo_de_trap.Player;
-import jogo_de_trap.LaserGrande;
 
 public class Level06 extends Level {
 

@@ -62,6 +62,8 @@ exemplo: Fase 2 - Pistão: o mais a direita (ultimo)
 XXX Aleatorização de fases: Randomizar a ordem das fases a partir da 2° (fases 3, 4, 5, 6 e 7).
 XXX Titulos devem mudar em ordem tambem (estão com numero estático (2,3,6,4,5,7...), mas devem ser dinamicos)
 
+=======> LEVEL 6: Ao pular e morrer no laser, a gravidade -1 fica ativada pra sempre na fase, e nao desativa. O titulo não muda "Um bug? Não é só o jogo"
+
 Travar movimento no Game Over: Morreu? Travar movimento por 1 segundo antes da Tela Final para o jogador ver onde morreu.
 
 Travar movimento em transições e pós-carregamento: Implementar delay de 1 segundo após carregar a fase para evitar movimento e morte desnecessária por segurar tecla.

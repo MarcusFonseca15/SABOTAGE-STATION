@@ -5,6 +5,16 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
+import jogo_de_trap.objetos.Espinhos;
+import jogo_de_trap.objetos.EspinhosP;
+import jogo_de_trap.objetos.FakeEspinho;
+import jogo_de_trap.objetos.Laser;
+import jogo_de_trap.objetos.LaserGrande;
+import jogo_de_trap.objetos.Objeto;
+import jogo_de_trap.objetos.Pistao;
+import jogo_de_trap.objetos.Platform;
+import jogo_de_trap.objetos.Player;
+
 public abstract class Level {
     private static final int TILE_SIZE = 50;
     private static final int LIN = 600 / TILE_SIZE; // 12
@@ -115,7 +125,7 @@ public abstract class Level {
     }
 
     public void checkPistaoCollision(Player player) {
-        Rectangle playerBounds = new Rectangle(player.x, player.y, player.width, player.height);
+        Rectangle playerBounds = new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight());
 
         for (Pistao pistao : pistoes) {
             Rectangle pistaoBounds = pistao.getBaseBounds();
@@ -124,34 +134,35 @@ public abstract class Level {
 
             if (playerBounds.intersects(pistaoBounds)) {
                 // Colisão por cima
-                if (player.y + player.height - player.velY <= pistaoBounds.y) {
-                    player.y = pistaoBounds.y - player.height;
+                if (player.getY() + player.getHeight() - player.velY <= pistaoBounds.y) {
+                    player.setY(pistaoBounds.y - player.getHeight());
                     player.velY = 0;
                     player.jumping = false;
                     player.onGround = true;
-                } else if (player.y - player.velY >= pistaoBounds.y + pistaoBounds.height) {
+                } else if (player.getY() - player.velY >= pistaoBounds.y + pistaoBounds.height) {
                     // Colisão por baixo
-                    player.y = pistaoBounds.y + pistaoBounds.height;
+                    player.setY(pistaoBounds.y + pistaoBounds.height);
                     player.velY = 0;
                 } else if (playerBounds.intersects(pistaoEstendidoBounds)) {
                     // Nova lógica para colisão lateral quando estendido
-                    if (player.x + player.width - player.velX <= pistaoEstendidoBounds.x) {
-                        player.x = pistaoEstendidoBounds.x - player.width;
-                    } else if (player.x - player.velX >= pistaoEstendidoBounds.x + pistaoEstendidoBounds.width) {
-                        player.x = pistaoEstendidoBounds.x + pistaoEstendidoBounds.width;
+                    if (player.getX() + player.getWidth() - player.velX <= pistaoEstendidoBounds.x) {
+                        player.setX(pistaoEstendidoBounds.x - player.getWidth());
+                    } else if (player.getX() - player.velX >= pistaoEstendidoBounds.x + pistaoEstendidoBounds.width) {
+                        player.setX(pistaoEstendidoBounds.x + pistaoEstendidoBounds.width);
                     }
                 }
 
                 else {
                     // Verificar colisão horizontal
-                    if (player.x + player.width >= pistaoBounds.x && player.x <= pistaoBounds.x + pistaoBounds.width) {
+                    if (player.getX() + player.getWidth() >= pistaoBounds.x
+                            && player.getX() <= pistaoBounds.x + pistaoBounds.width) {
                         // Colisão pela esquerda
-                        if (player.x + player.width - player.velX <= pistaoBounds.x) {
-                            player.x = pistaoBounds.x - player.width;
+                        if (player.getX() + player.getWidth() - player.velX <= pistaoBounds.x) {
+                            player.setX(pistaoBounds.x - player.getWidth());
                         }
                         // Colisão pela direita
-                        else if (player.x - player.velX >= pistaoBounds.x + pistaoBounds.width) {
-                            player.x = pistaoBounds.x + pistaoBounds.width;
+                        else if (player.getX() - player.velX >= pistaoBounds.x + pistaoBounds.width) {
+                            player.setX(pistaoBounds.x + pistaoBounds.width);
                         }
                     }
                 }
@@ -193,34 +204,34 @@ public abstract class Level {
     }
 
     public void checkPlatformCollision(Player player) {
-        Rectangle playerBounds = new Rectangle(player.x, player.y, player.width, player.height);
+        Rectangle playerBounds = new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight());
         player.onGround = false;
 
         for (Platform p : platforms) {
             Rectangle platformBounds = p.getBounds();
 
             if (playerBounds.intersects(platformBounds)) {
-                if (player.y + player.height - player.velY <= p.y) {
+                if (player.getY() + player.getHeight() - player.velY <= p.getY()) {
                     // colisão por cima
-                    player.y = p.y - player.height;
+                    player.setY(p.getY() - player.getHeight());
                     player.velY = 0;
                     player.jumping = false;
                     player.onGround = true;
-                } else if (player.y - player.velY >= p.y + p.height) {
+                } else if (player.getY() - player.velY >= p.getY() + p.getHeight()) {
                     // colisão por baixo
-                    player.y = p.y + p.height;
+                    player.setY(p.getY() + p.getHeight());
                     player.velY = 0;
                 }
 
                 // Verificar colisão horizontal
-                if (player.x + player.width >= p.x && player.x <= p.x + p.width) {
+                if (player.getX() + player.getWidth() >= p.getX() && player.getX() <= p.getX() + p.getWidth()) {
                     // Colisão pela esquerda
-                    if (player.x + player.width - player.velX <= p.x) {
-                        player.x = p.x - player.width;
+                    if (player.getX() + player.getWidth() - player.velX <= p.getX()) {
+                        player.setX(p.getX() - player.getWidth());
                     }
                     // Colisão pela direita
-                    else if (player.x - player.velX >= p.x + p.width) {
-                        player.x = p.x + p.width;
+                    else if (player.getX() - player.velX >= p.getX() + p.getWidth()) {
+                        player.setX(p.getX() + p.getWidth());
                     }
                 }
             }

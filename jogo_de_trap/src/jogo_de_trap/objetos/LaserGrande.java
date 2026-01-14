@@ -1,4 +1,4 @@
-package jogo_de_trap;
+package jogo_de_trap.objetos;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -56,12 +56,10 @@ public class LaserGrande extends Objeto {
         return new Rectangle(x, y, width, height);
     }
 
-
     public boolean checkCollision(Player player) {
         Rectangle playerBounds = new Rectangle(player.x, player.y, player.width, player.height);
         return getBounds().intersects(playerBounds);
     }
-
 
     @Override
     public void draw(Graphics g) {

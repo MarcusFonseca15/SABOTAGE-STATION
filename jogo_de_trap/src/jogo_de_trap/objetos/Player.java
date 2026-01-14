@@ -1,10 +1,13 @@
-package jogo_de_trap;
+package jogo_de_trap.objetos;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.Rectangle;
+
+import jogo_de_trap.ColisionManager;
 import jogo_de_trap.Gravity;
+import jogo_de_trap.Level;
 
 public class Player {
     int x, y;
@@ -204,6 +207,23 @@ public class Player {
     public int setY(int y) {
         this.y = y;
         return this.y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int setX(int x) {
+        this.x = x;
+        return this.x;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
 }

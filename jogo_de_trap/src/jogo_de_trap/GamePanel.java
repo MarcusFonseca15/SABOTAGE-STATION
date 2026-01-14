@@ -1,6 +1,9 @@
 package jogo_de_trap;
 
 import javax.swing.*;
+
+import jogo_de_trap.objetos.Player;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.font.TextLayout;
@@ -56,6 +59,11 @@ public class GamePanel extends JPanel implements ActionListener {
 
     float alphaFade = 0.0f;
     EstadoTrans estadoTrans = EstadoTrans.NORMAL;
+
+    // VARIÁVEIS PARA DELAY PÓS MORTE
+    private long morteTime = 0;
+    private boolean waitMorte = false;
+    private static final long MORTE_DELAY = 1000;
 
     public GamePanel(GameFrame frame) {
 
@@ -262,7 +270,7 @@ public class GamePanel extends JPanel implements ActionListener {
             player.reset();
         }
 
-        if (player.x + player.width >= LARGURA) {
+        if (player.getX() + player.getWidth() >= LARGURA) {
 
             if (estadoTrans == EstadoTrans.NORMAL) {
 
@@ -291,6 +299,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private void perderVida() {
         vida--;
         gameFrame.vibrarTela(300, 5);
+
         if (vida <= 0 && !modoVida) {
             // Volta para fase 1
             System.out.println("Você perdeu todas as vidas! Reiniciando o jogo...");

@@ -1,4 +1,4 @@
-package jogo_de_trap;
+package jogo_de_trap.objetos;
 
 import java.awt.*;
 import javax.swing.ImageIcon;

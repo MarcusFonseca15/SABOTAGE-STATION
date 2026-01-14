@@ -2,10 +2,11 @@ package levelGroup;
 
 import jogo_de_trap.Gravity;
 import jogo_de_trap.Level;
-import jogo_de_trap.Platform;
-import jogo_de_trap.Pistao;
-import jogo_de_trap.Player;
-import jogo_de_trap.Objeto;
+import jogo_de_trap.objetos.EspinhosP;
+import jogo_de_trap.objetos.Objeto;
+import jogo_de_trap.objetos.Pistao;
+import jogo_de_trap.objetos.Platform;
+import jogo_de_trap.objetos.Player;
 
 import javax.swing.ImageIcon;
 import java.awt.Image;
@@ -16,7 +17,6 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 
-import jogo_de_trap.EspinhosP;
 import jogo_de_trap.GamePanel;
 
 public class Level01 extends Level {

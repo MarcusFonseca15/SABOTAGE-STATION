@@ -2,9 +2,9 @@ package levelGroup;
 
 import jogo_de_trap.GamePanel;
 import jogo_de_trap.Level;
-import jogo_de_trap.Pistao;
-import jogo_de_trap.Platform;
-import jogo_de_trap.Player;
+import jogo_de_trap.objetos.Pistao;
+import jogo_de_trap.objetos.Platform;
+import jogo_de_trap.objetos.Player;
 
 public class Level08 extends Level {
     private Player player;
