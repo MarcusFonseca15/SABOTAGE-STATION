@@ -4,14 +4,14 @@ import jogo_de_trap.Gravity;
 import jogo_de_trap.Level;
 import jogo_de_trap.Platform;
 import jogo_de_trap.Pistao;
-
+import jogo_de_trap.GamePanel;
 import jogo_de_trap.Player;
 import jogo_de_trap.Gravity;
 
 public class Level04 extends Level {
 
     private Player player;
-
+    private GamePanel gamePanel;
     public Gravity g;
 
     private static int[][] mapa = {
@@ -34,12 +34,12 @@ public class Level04 extends Level {
         return mapa;
     }
 
-    public Level04(Player player) {
+    public Level04(Player player, GamePanel gamePanel) {
         super(1);
         this.player = player;
         this.player.level = this;
         designTraps();
-        this.titulo = "04. Agora vai...";
+        this.titulo = formatarTitulo("Agora vai...", gamePanel.getNumFase());
         this.setTitlePos(titleX, titleY - 10);
 
         this.setExitPos(710, 430);

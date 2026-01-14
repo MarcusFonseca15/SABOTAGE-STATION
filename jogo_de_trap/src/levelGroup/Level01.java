@@ -17,10 +17,12 @@ import java.awt.Color;
 import java.awt.Font;
 
 import jogo_de_trap.EspinhosP;
+import jogo_de_trap.GamePanel;
 
 public class Level01 extends Level {
 
     private Player player;
+    private GamePanel gamePanel;
 
     // Imagem de instruções
     private Image InstruIMG;
@@ -50,7 +52,7 @@ public class Level01 extends Level {
             { 1, 2, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
     };
 
-    public Level01(Player player) {
+    public Level01(Player player, GamePanel gamePanel) {
         super(1);
         this.player = player;
         this.player.level = this;
@@ -60,7 +62,7 @@ public class Level01 extends Level {
         imageTime = System.currentTimeMillis();
         // drawInstructions();
 
-        this.titulo = "01. Traps, TRAPS, E MAIS TRAPS!";
+        this.titulo = formatarTitulo("Traps, TRAPS, E MAIS TRAPS!", gamePanel.getNumFase());
         this.setTitlePos(titleX, titleY - 15);
 
         this.setExitPos(710, 130);

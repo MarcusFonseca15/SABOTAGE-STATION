@@ -60,7 +60,7 @@ exemplo: Fase 2 - Pistão: o mais a direita (ultimo)
 
 -----------⚡ Médios (Requerem lógica adicional)
 XXX Aleatorização de fases: Randomizar a ordem das fases a partir da 2° (fases 3, 4, 5, 6 e 7).
-Titulos devem mudar em ordem tambem (estão com numero estático (2,3,6,4,5,7...), mas devem ser dinamicos)
+XXX Titulos devem mudar em ordem tambem (estão com numero estático (2,3,6,4,5,7...), mas devem ser dinamicos)
 
 Controle de Movimento
 Travar movimento em transições e pós-carregamento: Implementar delay de 1 segundo após carregar a fase para evitar movimento e morte desnecessária por segurar tecla.

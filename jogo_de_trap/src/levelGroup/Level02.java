@@ -1,5 +1,6 @@
 package levelGroup;
 
+import jogo_de_trap.GamePanel;
 import jogo_de_trap.Level;
 import jogo_de_trap.Pistao;
 import jogo_de_trap.Platform;
@@ -7,6 +8,7 @@ import jogo_de_trap.Player;
 
 public class Level02 extends Level {
     private Player player;
+    private GamePanel gamePanel;
 
     private static int[][] mapa = {
             { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -28,12 +30,12 @@ public class Level02 extends Level {
         return mapa;
     }
 
-    public Level02(Player player) {
+    public Level02(Player player, GamePanel gamePanel) {
         super(3);
         this.player = player;
         this.player.level = this;
         designTraps();
-        this.titulo = "02. Ah, você tava aí, safado?";
+        this.titulo = formatarTitulo("Ah, você tava aí, safado?", gamePanel.getNumFase());
         this.setTitlePos(titleX, titleY - 5);
     }
 

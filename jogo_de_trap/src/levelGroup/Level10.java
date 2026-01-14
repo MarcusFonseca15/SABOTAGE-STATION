@@ -1,6 +1,7 @@
 package levelGroup;
 
 import jogo_de_trap.EspinhosP;
+import jogo_de_trap.GamePanel;
 import jogo_de_trap.Level;
 import jogo_de_trap.Platform;
 import jogo_de_trap.Player;
@@ -8,6 +9,7 @@ import jogo_de_trap.Player;
 public class Level10 extends Level {
 
     Player player;
+    private GamePanel gamePanel;
 
     private static int[][] mapa = {
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -29,12 +31,12 @@ public class Level10 extends Level {
         return mapa;
     }
 
-    public Level10(Player player) {
+    public Level10(Player player, GamePanel gamePanel) {
         super(3);
         this.player = player;
         this.player.level = this;
         designTraps();
-        this.titulo = "10. Simples assim ;)";
+        this.titulo = formatarTitulo("Simples assim :)", gamePanel.getNumFase());
 
         this.setExitPos(650, 350);
         this.setExitSize(83, 48);

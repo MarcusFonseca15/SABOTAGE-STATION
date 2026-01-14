@@ -5,12 +5,14 @@ import jogo_de_trap.Laser;
 import jogo_de_trap.Level;
 import jogo_de_trap.Pistao;
 import jogo_de_trap.EspinhosP;
+import jogo_de_trap.GamePanel;
 import jogo_de_trap.Platform;
 import jogo_de_trap.Player;
 import jogo_de_trap.LaserGrande;
 
 public class Level09 extends Level {
     Player player;
+    private GamePanel gamePanel;
     Gravity g;
 
     public final int vel = 3;
@@ -37,7 +39,7 @@ public class Level09 extends Level {
         return mapa;
     }
 
-    public Level09(Player player) {
+    public Level09(Player player, GamePanel gamePanel) {
         super(9);
         this.player = player;
         this.player.level = this;
@@ -45,7 +47,7 @@ public class Level09 extends Level {
 
         designTraps();
 
-        this.titulo = "09. Não acredite nos seus olhos";
+        this.titulo = formatarTitulo("Não acredite nos seus olhos", gamePanel.getNumFase());
         setShowExit(false);
     }
 

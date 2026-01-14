@@ -27,6 +27,7 @@ public class GamePanel extends JPanel implements ActionListener {
     public int currentLevel = 1;
     int proximoLevel = 0; // apenas de inicialização
     private final int maxLevels = 10;
+    int numFase = 1;
 
     private boolean godMode = false;
     private boolean modoVida = false;
@@ -114,16 +115,16 @@ public class GamePanel extends JPanel implements ActionListener {
         player.velY = 0;
 
         switch (number) {
-            case 1 -> level = new Level01(player);
-            case 2 -> level = new Level02(player);
-            case 3 -> level = new Level03(player);
-            case 4 -> level = new Level04(player);
-            case 5 -> level = new Level05(player);
-            case 6 -> level = new Level06(player);
-            case 7 -> level = new Level07(player);
-            case 8 -> level = new Level08(player);
-            case 9 -> level = new Level09(player);
-            case 10 -> level = new Level10(player);
+            case 1 -> level = new Level01(player, this);
+            case 2 -> level = new Level02(player, this);
+            case 3 -> level = new Level03(player, this);
+            case 4 -> level = new Level04(player, this);
+            case 5 -> level = new Level05(player, this);
+            case 6 -> level = new Level06(player, this);
+            case 7 -> level = new Level07(player, this);
+            case 8 -> level = new Level08(player, this);
+            case 9 -> level = new Level09(player, this);
+            case 10 -> level = new Level10(player, this);
             default -> {
                 System.out.println("Level inválido!");
                 System.exit(0);
@@ -315,6 +316,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 // === LÓGICA DE AVANÇO DE NÍVEL ===
                 if (proximoLevel <= maxLevels) {
                     currentLevel = proximoLevel;
+                    numFase++;
                     loadLevel(currentLevel);
                     System.out.println("Avançando para o nível " + currentLevel);
                     vida = MAX_VIDAS;
@@ -344,6 +346,10 @@ public class GamePanel extends JPanel implements ActionListener {
         gameFrame.add(finalPanel);
         gameFrame.revalidate();
         gameFrame.repaint();
+    }
+
+    public int getNumFase() {
+        return numFase;
     }
 
 }

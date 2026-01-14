@@ -12,11 +12,12 @@ import java.awt.event.ActionEvent;
 
 import jogo_de_trap.Espinhos;
 import jogo_de_trap.EspinhosP;
+import jogo_de_trap.GamePanel;
 
 public class Level05 extends Level {
 
     private Player player;
-
+    private GamePanel gamePanel;
     private Level level;
 
     private static int[][] mapa = {
@@ -41,12 +42,12 @@ public class Level05 extends Level {
         return mapa;
     }
 
-    public Level05(Player player) {
+    public Level05(Player player, GamePanel gamePanel) {
         super(2);
         this.player = player;
         this.player.level = this;
         designTraps();
-        this.titulo = "05. Nem tudo se vê";
+        this.titulo = formatarTitulo("Nem tudo se vê", gamePanel.getNumFase());
     }
 
     @Override

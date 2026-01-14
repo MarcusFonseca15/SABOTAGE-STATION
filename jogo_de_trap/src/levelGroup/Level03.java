@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import jogo_de_trap.Espinhos;
 import jogo_de_trap.EspinhosP;
+import jogo_de_trap.GamePanel;
 import jogo_de_trap.Gravity;
 import jogo_de_trap.Laser;
 import jogo_de_trap.Player;
@@ -15,6 +16,7 @@ import jogo_de_trap.Player;
 public class Level03 extends Level {
 
     Player player;
+    private GamePanel gamePanel;
     Gravity g;
 
     private EspinhosP espInv1;
@@ -40,12 +42,12 @@ public class Level03 extends Level {
         return mapa;
     }
 
-    public Level03(Player player) {
+    public Level03(Player player, GamePanel gamePanel) {
         super(3);
         this.player = player;
         this.player.level = this;
         designTraps();
-        this.titulo = "03. Um pouco mais pra direita";
+        this.titulo = formatarTitulo("Um pouco mais pra direita", gamePanel.getNumFase());
         this.setTitlePos(titleX, 70);
 
         setShowExit(false);

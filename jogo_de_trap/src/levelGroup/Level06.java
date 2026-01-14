@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import jogo_de_trap.Espinhos;
 import jogo_de_trap.EspinhosP;
+import jogo_de_trap.GamePanel;
 import jogo_de_trap.Gravity;
 import jogo_de_trap.Laser;
 import jogo_de_trap.Player;
@@ -18,6 +19,7 @@ import jogo_de_trap.LaserGrande;
 public class Level06 extends Level {
 
     Player player;
+    private GamePanel gamePanel;
     Gravity g;
     private boolean ativo = true;
 
@@ -41,7 +43,7 @@ public class Level06 extends Level {
         return mapa;
     }
 
-    public Level06(Player player) {
+    public Level06(Player player, GamePanel gamePanel) {
         super(6);
         this.player = player;
         this.player.level = this;
@@ -50,7 +52,7 @@ public class Level06 extends Level {
         designTraps();
         monitorarPulo();
 
-        this.titulo = "06. Eita, um bug?...";
+        this.titulo = formatarTitulo("Eita, um bug?...", gamePanel.getNumFase());
         setShowExit(false);
     }
 
@@ -104,7 +106,7 @@ public class Level06 extends Level {
                     if (g.getGravity() != 0) {
                         g.setGravity(0);
                         g.setPulo(-500);
-                        setTitulo("06. Eita, um bug?... Não, é o jogo!");
+                        setTitulo(gamePanel.getNumFase() + "." + " Eita, um bug?... Não, é o jogo!");
                     }
                     player.velY = -15;
                     player.jumping = true;

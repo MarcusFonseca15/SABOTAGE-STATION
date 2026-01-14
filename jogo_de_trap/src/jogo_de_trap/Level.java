@@ -5,8 +5,6 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
-import levelGroup.Level03;
-
 public abstract class Level {
     private static final int TILE_SIZE = 50;
     private static final int LIN = 600 / TILE_SIZE; // 12
@@ -35,6 +33,10 @@ public abstract class Level {
     protected int exitWidth = 60;
     protected int exitHeight = 40;
     protected boolean showExit = true;
+
+    protected String formatarTitulo(String titulo, int numFase) {
+        return String.format("%02d. %s", numFase, titulo);
+    }
 
     private boolean ativo = true;
 
