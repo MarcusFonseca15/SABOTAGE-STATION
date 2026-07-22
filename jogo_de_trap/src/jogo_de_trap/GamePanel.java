@@ -96,7 +96,7 @@ public class GamePanel extends JPanel implements ActionListener {
                     ((Level01) level).keyPressed(e);
                 }
                 // GOD MODE =====================
-                if (e.getKeyCode() == KeyEvent.VK_F1) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     godMode = !godMode;
                     String status = godMode ? "ATIVADO" : "DESATIVADO";
                     System.out.println(">>> GOD MODE " + status + " <<<");
