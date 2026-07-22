@@ -1,4 +1,4 @@
-﻿package levelGroup;
+package levelGroup;
 
 import game.Level;
 import game.objetos.Espinhos;

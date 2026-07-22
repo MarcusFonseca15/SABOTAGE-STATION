@@ -1,4 +1,4 @@
-﻿package game.objetos;
+package game.objetos;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-﻿package levelGroup;
+package levelGroup;
 
 import game.Gravity;
 import game.Level;

@@ -1,4 +1,4 @@
-﻿package game;
+package game;
 
 /**
  * Enum representando os modos de dificuldade do jogo.

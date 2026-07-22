@@ -1,4 +1,4 @@
-﻿package game;
+package game;
 
 import java.awt.Image;
 import java.awt.Point;

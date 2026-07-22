@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "GameFrame",
+      "request": "launch",
+      "mainClass": "sabotage_station/game.GameFrame",
+      "projectName": "sabotage_station"
+    },
+    {
+      "name": "GameFrame",
+      "type": "java",
+      "request": "launch",
+      "mainClass": "game.GameFrame",
+      "projectName": "sabotage_station",
+      "cwd": "${workspaceFolder}/sabotage_station",
+      "modulePaths": [
+        "${workspaceFolder}/sabotage_station/bin"
+      ],
+      "classPaths": [
+        "${workspaceFolder}/sabotage_station/bin"
+      ],
+      "preLaunchTask": "Build and sync assets"
+    }
+  ]
+}

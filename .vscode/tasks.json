@@ -1,0 +1,18 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build and sync assets",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        "Set-Location '${workspaceFolder}'; if (!(Test-Path '.\\sabotage_station\\bin\\assets')) { New-Item -ItemType Directory -Path '.\\sabotage_station\\bin\\assets' -Force | Out-Null }; Copy-Item -Recurse -Force '.\\sabotage_station\\src\\assets\\*' '.\\sabotage_station\\bin\\assets\\'"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}

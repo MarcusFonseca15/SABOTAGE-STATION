@@ -1,4 +1,4 @@
-﻿package game.objetos;
+package game.objetos;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

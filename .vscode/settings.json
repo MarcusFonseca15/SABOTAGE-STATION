@@ -1,0 +1,7 @@
+{
+  "java.project.sourcePaths": [
+    "sabotage_station/src"
+  ],
+  "java.project.outputPath": "sabotage_station/bin",
+  "java.configuration.updateBuildConfiguration": "automatic"
+}
