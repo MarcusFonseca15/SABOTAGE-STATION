@@ -2,6 +2,8 @@ package game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -9,40 +11,44 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 public class FinalPanel extends JPanel {
 
     private static final String RECORD_FILE = "record.txt";
+    private static final String DEFAULT_RECORD = "99:99:99"; // Sentinela para quando ainda não há recorde registrado
 
     private JFrame frame;
-    boolean win;
-    boolean isHover = false;
-    JButton actionButton;
+    private boolean win;
+    private boolean isHover = false;
+    private JButton actionButton;
     private String scoreTexto;
     private String recordTexto;
+    private Image bgImage;
 
     FinalPanel(JFrame frame, boolean win, String scoreTexto) {
         this.frame = frame;
         this.win = win;
         this.scoreTexto = scoreTexto;
-        this.recordTexto = carregarRecord();
         this.setLayout(null);
 
-        // background
+        // 1. Carregar o recorde de vitória existente do arquivo
+        this.recordTexto = carregarRecord();
+
+        // 2. Salvar/Atualizar recorde APENAS SE FOR VITÓRIA
+        if (this.win) {
+            salvarRecordSeNecessario();
+        }
+
+        // 3. Pré-carregar imagem de fundo
         String backgroundPath = win ? "/assets/telas_e_botoes/VictoryBG.jpg" : "/assets/telas_e_botoes/GameOverBG.jpg";
         ImageIcon icon = new ImageIcon(getClass().getResource(backgroundPath));
-        Image bg = icon.getImage();
+        this.bgImage = icon.getImage();
 
-        // botão
-        ImageIcon resizedIcon = new ImageIcon(
-                new ImageIcon(getClass().getResource(
-                        win ? "/assets/telas_e_botoes/btnPlayAgain.png" : "/assets/telas_e_botoes/btnTryAgain.png"))
-                        .getImage().getScaledInstance(180, 70, Image.SCALE_SMOOTH));
-        this.actionButton = new JButton(resizedIcon);
+        // 4. Configurar o botão da tela
+        String buttonPath = win ? "/assets/telas_e_botoes/btnPlayAgain.png" : "/assets/telas_e_botoes/btnTryAgain.png";
+        ImageIcon buttonIcon = new ImageIcon(getClass().getResource(buttonPath));
+        Image scaledBtnImg = buttonIcon.getImage().getScaledInstance(180, 70, Image.SCALE_SMOOTH);
+        
+        this.actionButton = new JButton(new ImageIcon(scaledBtnImg));
         actionButton.setOpaque(false);
         actionButton.setContentAreaFilled(false);
         actionButton.setBorderPainted(false);
@@ -51,7 +57,7 @@ public class FinalPanel extends JPanel {
 
         setupButton(actionButton);
         setupHoverEffect();
-    } // <-- fim do construtor
+    }
 
     private String carregarRecord() {
         try {
@@ -65,17 +71,18 @@ public class FinalPanel extends JPanel {
         } catch (IOException e) {
             System.out.println("Não foi possível ler o record: " + e.getMessage());
         }
-        return "00:00:00";
+        return DEFAULT_RECORD;
     }
 
     private void salvarRecordSeNecessario() {
         try {
             Path path = Paths.get(RECORD_FILE);
-            String recordAtual = carregarRecord();
-            if (scoreTexto.compareTo(recordAtual) < 0) {
+            
+            // Se não tinha recorde prévio ou o tempo de vitória atual for menor que o recorde antigo
+            if (recordTexto.equals(DEFAULT_RECORD) || scoreTexto.compareTo(recordTexto) < 0) {
                 Files.writeString(path, scoreTexto + System.lineSeparator(), StandardCharsets.UTF_8,
                         StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE);
-                recordTexto = scoreTexto;
+                this.recordTexto = scoreTexto; // Atualiza a variável local para exibir o novo recorde na tela
             }
         } catch (IOException e) {
             System.out.println("Não foi possível salvar o record: " + e.getMessage());
@@ -83,7 +90,6 @@ public class FinalPanel extends JPanel {
     }
 
     private void setupHoverEffect() {
-
         actionButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -99,11 +105,9 @@ public class FinalPanel extends JPanel {
                 repaint();
             }
         });
-    } // setupHoverEffect
+    }
 
     private void setupButton(JButton actionButton) {
-        // x, y, largura, altura
-
         actionButton.addActionListener(e -> {
             if (win) {
                 frame.getContentPane().removeAll();
@@ -114,7 +118,6 @@ public class FinalPanel extends JPanel {
             } else {
                 frame.getContentPane().removeAll();
                 GamePanel gamePanel = new GamePanel((GameFrame) frame);
-                // Forçar início na fase 1
                 gamePanel.currentLevel = 1;
                 frame.add(gamePanel);
                 frame.revalidate();
@@ -124,51 +127,52 @@ public class FinalPanel extends JPanel {
         });
 
         this.add(actionButton);
-    } // setupbutton
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // background
-        String backgroundPath = win ? "/assets/telas_e_botoes/VictoryBG.jpg" : "/assets/telas_e_botoes/GameOverBG.jpg";
-        ImageIcon icon = new ImageIcon(getClass().getResource(backgroundPath));
-        Image bg = icon.getImage();
-
-        int imgWidth = bg.getWidth(null);
-        int imgHeight = bg.getHeight(null);
-
+        // Renderizar fundo
+        int imgWidth = bgImage.getWidth(null);
+        int imgHeight = bgImage.getHeight(null);
         int panelWidth = this.getWidth();
 
-        // fixar o topo da img no topo do painel
-        double scaleFactor = (double) panelWidth / imgWidth;
-        int scaleAltura = (int) (imgHeight * scaleFactor) - 110;
+        if (imgWidth > 0) {
+            double scaleFactor = (double) panelWidth / imgWidth;
+            int scaleAltura = (int) (imgHeight * scaleFactor) - 110;
+            g.drawImage(bgImage, 0, 0, panelWidth, scaleAltura, null);
+        }
 
-        g.drawImage(bg, 0, 0, panelWidth, scaleAltura, null);
-
-        salvarRecordSeNecessario();
-
+        // Renderizar texto informativo
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(Color.WHITE);
-        g2d.setFont(new Font("Arial", Font.BOLD, 24));
-        String textoScore = "Seu Score foi: " + scoreTexto + ". Record: " + recordTexto;
+        g2d.setFont(new Font("Arial", Font.BOLD, 22));
+        
+        String exibiRecord = recordTexto.equals(DEFAULT_RECORD) ? "--:--:--" : recordTexto;
+        String textoScore;
+
+        if (win) {
+            textoScore = "Seu Tempo: " + scoreTexto + "  |  Recorde: " + exibiRecord;
+        } else {
+            textoScore = "Você durou: " + scoreTexto + "  |  Recorde: " + exibiRecord;
+        }
+        
         FontMetrics fm = g2d.getFontMetrics();
         int textWidth = fm.stringWidth(textoScore);
         int textX = (getWidth() - textWidth) / 2;
-        int textY = 120;
+        int textY = 30;
         g2d.drawString(textoScore, textX, textY);
         g2d.dispose();
 
-        // Outline de botão
+        // Destaque (Outline) no botão ao passar o mouse
         if (isHover) {
             Graphics2D g2dButton = (Graphics2D) g.create();
             g2dButton.setColor(Color.WHITE);
             g2dButton.setStroke(new BasicStroke(3));
-            // botão é (300, 500, 180, 70);
-            int m = 1; // margem
-            g2dButton.drawRect(300 - m, 500 - m, 180 + (2 * m), 70 + (2 * m)); // 4px de margem
+            int m = 1;
+            g2dButton.drawRect(300 - m, 500 - m, 180 + (2 * m), 70 + (2 * m));
             g2dButton.dispose();
         }
-    } // fim paint component
-
+    }
 }
