@@ -47,6 +47,10 @@ public class GamePanel extends JPanel implements ActionListener {
     private Level level;
     private Image backgroundImage;
 
+    private long tempoInicioJogo = -1L;
+    private long tempoDecorridoAcumulado = 0L;
+    private boolean cronometroAtivo = false;
+
     private List<Integer> filaFases;
 
     private int vida = 10;
@@ -167,6 +171,16 @@ public class GamePanel extends JPanel implements ActionListener {
             g.drawImage(barraVidaImages[vida], 10, 550, 200, 48, this); // x, y, largura, altura
         }
 
+        Graphics2D timerG2d = (Graphics2D) g.create();
+        timerG2d.setColor(Color.WHITE);
+        timerG2d.setFont(new Font("Arial", Font.BOLD, 22));
+        String tempoTexto = formatarTempo(getTempoDecorridoMillis());
+        FontMetrics fm = timerG2d.getFontMetrics();
+        int timerX = getWidth() - fm.stringWidth(tempoTexto) - 15;
+        int timerY = 30;
+        timerG2d.drawString(tempoTexto, timerX, timerY);
+        timerG2d.dispose();
+
         // IMAGEM DE EXIT
         if (level.isShowExit() && level.getExitImage() != null) {
             g.drawImage(level.getExitImage(),
@@ -259,6 +273,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 // só executa gameover dps do delay
                 currentLevel = 1;
                 vida = MAX_VIDAS;
+                pararCronometro();
                 toFinalPanel(false);
             }
             return; // Pula o restante do update enquanto espera
@@ -271,6 +286,10 @@ public class GamePanel extends JPanel implements ActionListener {
 
         if (currentLevel == 1 && level instanceof Level01) {
             ((Level01) level).updateInstructions();
+        }
+
+        if (cronometroAtivo && tempoInicioJogo > 0L) {
+            repaint();
         }
 
         if (!godMode && level.checkLaserCollision(player)) {
@@ -359,6 +378,7 @@ public class GamePanel extends JPanel implements ActionListener {
                     // Fim do jogo
                     System.out.println("Parabéns! Você terminou o jogo!");
                     estadoTrans = EstadoTrans.NORMAL; // Volta ao normal para não tentar FADEIN
+                    pararCronometro();
                     timer.stop();
                     toFinalPanel(true);
                 }
@@ -374,9 +394,44 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
+    public void iniciarCronometro() {
+        if (!cronometroAtivo) {
+            tempoInicioJogo = System.currentTimeMillis();
+            tempoDecorridoAcumulado = 0L;
+            cronometroAtivo = true;
+        }
+    }
+
+    public void pararCronometro() {
+        if (cronometroAtivo && tempoInicioJogo > 0L) {
+            tempoDecorridoAcumulado = System.currentTimeMillis() - tempoInicioJogo;
+        }
+        cronometroAtivo = false;
+    }
+
+    public long getTempoDecorridoMillis() {
+        if (cronometroAtivo && tempoInicioJogo > 0L) {
+            return System.currentTimeMillis() - tempoInicioJogo;
+        }
+        return tempoDecorridoAcumulado;
+    }
+
+    public String getTempoTextoAtual() {
+        return formatarTempo(getTempoDecorridoMillis());
+    }
+
+    public static String formatarTempo(long millis) {
+        long totalSeconds = millis / 1000L;
+        long hours = totalSeconds / 3600L;
+        long minutes = (totalSeconds % 3600L) / 60L;
+        long seconds = totalSeconds % 60L;
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
     private void toFinalPanel(boolean win) {
+        String scoreTexto = getTempoTextoAtual();
         gameFrame.getContentPane().removeAll();
-        FinalPanel finalPanel = new FinalPanel(gameFrame, win);
+        FinalPanel finalPanel = new FinalPanel(gameFrame, win, scoreTexto);
         gameFrame.add(finalPanel);
         gameFrame.revalidate();
         gameFrame.repaint();

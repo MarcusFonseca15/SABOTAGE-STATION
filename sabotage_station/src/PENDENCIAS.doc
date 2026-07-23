@@ -1,20 +1,20 @@
+CONCLUIDOS:
+###StartPanel: INICIAR COM ESPAÇO
+Instruções: "Aperte qualquer tecla para continuar"
+- Titulo com background preto opacidade (pra melhor visualização)
+- Sprite de sangue (ou outra coisa) aparece no lugar onde morreu (e esmaece por 2 segs)
+
+*****************
 StartPanel: Selecionar Modos
 - Modo FÁCIL: 20 Vidas por fase
 - Modo DIFÍCIL: 10 Vidas por fase
-###StartPanel: INICIAR COM ESPAÇO
-Instruções: "Aperte qualquer tecla para continuar"
 
 Controles:
-- Andar com WASD e setas
-- Pular com Espaço e setas
-- Input para controles
-
-Titulo:
-- Titulo com background preto opacidade (pra melhor visualização)
-
+- Permitir Andar com WASD e setas
+- Pular com Espaço e seta pra cima
+- Input para controles de console
 
 Morte:
-- Sprite de sangue (ou outra coisa) aparece no lugar onde morreu (e esmaece por 2 segs)
 - Travar movimento por 1seg dps q carrega a fase (evitar movimento e morte desnecessario)
 
 Transição e Tela Final(gameover|win):
@@ -38,12 +38,6 @@ ADIÇÕES:
 - Objeto COLA: Prende personagem no chão (tipo pistão da fase8, ou com impulso negativo)
 - Animação de Morte
 - Animação de Lasers (particulas)
-
-
-
-
-
-
 
 -----------🚀 Complexos (Novas Funcionalidades)
 - Modos de jogo (StartPanel): Implementar seleção de Modo FÁCIL (20 Vidas por fase) e Modo DIFÍCIL (10 Vidas por fase).

@@ -55,6 +55,7 @@ public class Level01 extends Level {
     public Level01(Player player, GamePanel gamePanel) {
         super(1);
         this.player = player;
+        this.gamePanel = gamePanel;
         this.player.level = this;
         designTraps();
 
@@ -143,6 +144,7 @@ public class Level01 extends Level {
         if (showInstructs) {
             showInstructs = false;
             player.wantToJump = false;
+            gamePanel.iniciarCronometro();
             return;
         }
     }
