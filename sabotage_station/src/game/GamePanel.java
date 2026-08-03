@@ -73,9 +73,24 @@ public class GamePanel extends JPanel implements ActionListener {
     EstadoTrans estadoTrans = EstadoTrans.NORMAL;
 
     public GamePanel(GameFrame frame) {
-
         this.gameFrame = frame;
+        // usa o MAX_VIDAS padrão definido na declaração (10)
+        this.vida = this.MAX_VIDAS;
+        commonInit();
+    }
 
+    public GamePanel(GameFrame frame, ModoJogo modo) {
+        this.gameFrame = frame;
+        if (modo == ModoJogo.NORMAL) {
+            this.MAX_VIDAS = 10;
+        } else {
+            this.MAX_VIDAS = 5;
+        }
+        this.vida = this.MAX_VIDAS;
+        commonInit();
+    }
+
+    private void commonInit() {
         this.setPreferredSize(new Dimension(LARGURA, ALTURA));
         this.setFocusable(true);
 
@@ -88,6 +103,7 @@ public class GamePanel extends JPanel implements ActionListener {
         loadLevel(currentLevel);
 
         // IMGS DA BARRA DE VIDA
+        barraVidaImages = new Image[MAX_VIDAS + 1];
         for (int i = 0; i <= MAX_VIDAS; i++) {
             barraVidaImages[i] = new ImageIcon(getClass().getResource("/assets/LifeBar/lifebar" + i + ".png"))
                     .getImage();
