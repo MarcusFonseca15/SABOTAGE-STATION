@@ -38,7 +38,7 @@ public class StartPanel extends JPanel {
         menuPanel = new JPanel();
         menuPanel.setLayout(null);
         menuPanel.setOpaque(false); // Importante para ver o background desenhado no pai
-        menuPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+        menuPanel.setBorder(BorderFactory.createLineBorder(Color.CYAN, 2));
         add(menuPanel);
 
         // centraliza o painel interno sempre que o tamanho do StartPanel mudar
@@ -63,7 +63,12 @@ public class StartPanel extends JPanel {
             }
         });
 
+        Font buttonFont = FontManager.getVHSFont(18f);
+        // Fonte reduzida em 30% para os botões de modo (Normal / Difícil)
+        Font modeButtonFont = buttonFont.deriveFont(buttonFont.getSize2D() * 0.5f);
+
         JButton btnIniciar = new JButton("Iniciar"); // Placeholder visual
+        btnIniciar.setFont(buttonFont);
         btnIniciar.setBounds(25, 33, 224, 48);
         btnIniciar.addActionListener(e -> iniciarJogo());
         btnIniciar.addMouseListener(new MouseAdapter() {
@@ -73,6 +78,7 @@ public class StartPanel extends JPanel {
         menuPanel.add(btnIniciar);
 
         JButton btnConfig = new JButton("Configurações"); // Placeholder visual
+        btnConfig.setFont(buttonFont);
         btnConfig.setBounds(25, 102, 224, 43); // y, x, largura, altura
         btnConfig.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) { btnConfig.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); }
@@ -87,6 +93,7 @@ public class StartPanel extends JPanel {
         for (int i = 0; i < 2; i++) {
             final int index = i;
             JButton btn = new JButton(labels[i]);
+            btn.setFont(modeButtonFont);
             // Posicionamento inicial; será recalculado no primeiro resize
             btn.setBounds(MODES_X + (i * BTN_WIDTH), MODES_Y, BTN_WIDTH, BTN_HEIGHT);
             
