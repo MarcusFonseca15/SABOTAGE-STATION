@@ -9,9 +9,9 @@ StartPanel: Selecionar Modos
 - Modo FÁCIL: 20 Vidas por fase
 - Modo DIFÍCIL: 10 Vidas por fase
 
-Controles:
-- Permitir Andar com WASD e setas
-- Pular com Espaço e seta pra cima
+Tela de Configurações:
+- Permitir Andar com WASD, ou setas, ou ambos.
+- Pular com Espaço ou seta pra cima ou ambos
 - Input para controles de console
 
 Morte:

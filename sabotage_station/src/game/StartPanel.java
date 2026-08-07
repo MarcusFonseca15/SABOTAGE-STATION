@@ -13,9 +13,73 @@ public class StartPanel extends JPanel {
     private final ModoJogo[] valoresModo = {ModoJogo.NORMAL, ModoJogo.DIFICIL};
     private JPanel menuPanel;
     private JButton[] modoButtons;
+
+    private static final Color MENU_BUTTON_BG = new Color(0x00, 0xA4, 0xFF, 77);
+    private static final Color MENU_BUTTON_HOVER_BG = new Color(0x59, 0xE1, 0xFF);
+    private static final Color MENU_BUTTON_BORDER = Color.CYAN;
+    private static final Color MENU_BUTTON_FOREGROUND = Color.WHITE;
     
     // Componente de texto para atualizar a descrição
     private JTextArea description;
+
+    private static class TranslucentButton extends JButton {
+        public TranslucentButton(String text) {
+            super(text);
+            setOpaque(false);
+            setContentAreaFilled(false);
+            setBorderPainted(false);
+            setFocusPainted(false);
+            setHorizontalAlignment(SwingConstants.CENTER);
+            setVerticalAlignment(SwingConstants.CENTER);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2d = (Graphics2D) g.create();
+            g2d.setColor(getBackground());
+            g2d.fillRect(0, 0, getWidth(), getHeight());
+            g2d.dispose();
+            super.paintComponent(g);
+        }
+
+        @Override
+        protected void paintBorder(Graphics g) {
+            Graphics2D g2d = (Graphics2D) g.create();
+            g2d.setColor(MENU_BUTTON_BORDER);
+            g2d.setStroke(new BasicStroke(2));
+            g2d.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+            g2d.dispose();
+        }
+    }
+
+    private static class CenteredTextArea extends JTextArea {
+        public CenteredTextArea() {
+            setOpaque(false);
+            setLineWrap(true);
+            setWrapStyleWord(true);
+            setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createMatteBorder(0, 4, 0, 0, Color.CYAN),
+                BorderFactory.createEmptyBorder(8, 8, 8, 8)
+            ));
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2d = (Graphics2D) g.create();
+            g2d.setColor(getBackground());
+            g2d.fillRect(0, 0, getWidth(), getHeight());
+
+            int lineHeight = getFontMetrics(getFont()).getHeight();
+            int lineCount = getLineCount();
+            int textHeight = lineHeight * lineCount;
+            Insets insets = getInsets();
+            int availableHeight = getHeight() - insets.top - insets.bottom;
+            int yOffset = Math.max(0, (availableHeight - textHeight) / 2);
+            g2d.translate(0, yOffset);
+            super.paintComponent(g2d);
+            g2d.dispose();
+        }
+    }
 
     // Coordenadas para cálculo do desenho (baseado no seu layout)
     private final int MODES_X = 25;
@@ -67,23 +131,15 @@ public class StartPanel extends JPanel {
         // Fonte reduzida em 30% para os botões de modo (Normal / Difícil)
         Font modeButtonFont = buttonFont.deriveFont(buttonFont.getSize2D() * 0.5f);
 
-        JButton btnIniciar = new JButton("Iniciar"); // Placeholder visual
-        btnIniciar.setFont(buttonFont);
+        JButton btnIniciar = new TranslucentButton("Iniciar");
         btnIniciar.setBounds(25, 33, 224, 48);
         btnIniciar.addActionListener(e -> iniciarJogo());
-        btnIniciar.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) { btnIniciar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); }
-            public void mouseExited(MouseEvent e) { btnIniciar.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR)); }
-        });
+        configureMenuButton(btnIniciar, buttonFont);
         menuPanel.add(btnIniciar);
 
-        JButton btnConfig = new JButton("Configurações"); // Placeholder visual
-        btnConfig.setFont(buttonFont);
+        JButton btnConfig = new TranslucentButton("Configurações");
         btnConfig.setBounds(25, 102, 224, 43); // y, x, largura, altura
-        btnConfig.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) { btnConfig.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); }
-            public void mouseExited(MouseEvent e) { btnConfig.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR)); }
-        });
+        configureMenuButton(btnConfig, buttonFont);
         menuPanel.add(btnConfig);
 
         // --- Lógica dos 2 Botões de Modo (Normal / Difícil) ---
@@ -123,12 +179,11 @@ public class StartPanel extends JPanel {
             modoButtons[i] = btn;
         }
 
-        description = new JTextArea();
+        description = new CenteredTextArea();
         description.setBounds(21, 236, 228, 89);
-        description.setOpaque(false); // Transparente ou com cor de fundo
+        description.setBackground(new Color(0, 0, 0, 150));
         description.setForeground(Color.WHITE);
-        description.setLineWrap(true);
-        description.setWrapStyleWord(true);
+        description.setFont(FontManager.getVHSFont(14f));
         description.setText(modoSelecionado.descricao); // Texto inicial
         description.setEditable(false);
         menuPanel.add(description);
@@ -144,6 +199,25 @@ public class StartPanel extends JPanel {
         frame.repaint();
         // solicita foco no GamePanel para capturar teclas
         javax.swing.SwingUtilities.invokeLater(() -> gp.requestFocusInWindow());
+    }
+
+    private void configureMenuButton(JButton btn, Font font) {
+        btn.setFont(font);
+        btn.setForeground(MENU_BUTTON_FOREGROUND);
+        btn.setBackground(MENU_BUTTON_BG);
+        btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        btn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btn.setBackground(MENU_BUTTON_HOVER_BG);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btn.setBackground(MENU_BUTTON_BG);
+            }
+        });
     }
 
     @Override
