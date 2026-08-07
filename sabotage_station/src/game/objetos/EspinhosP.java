@@ -20,10 +20,10 @@ public class EspinhosP extends Objeto {
         super(x, y, width, height);
 
         String path = switch (tipo) {
-            case 11 -> "/assets/espinhoSprite/espinho4.png";
-            case 111 -> "/assets/espinhoSprite/espinho-top.png";
-            case 112 -> "/assets/espinhoSprite/espinho-right.png";
-            case 113 -> "/assets/espinhoSprite/espinho-left.png";
+            case 8 -> "/assets/espinhoSprite/espinho4.png";
+            case 9 -> "/assets/espinhoSprite/espinho-top.png";
+            case 10 -> "/assets/espinhoSprite/espinho-right.png";
+            case 11 -> "/assets/espinhoSprite/espinho-left.png";
 
             default -> throw new IllegalArgumentException("Tipo" + tipo + "é inválido");
         };

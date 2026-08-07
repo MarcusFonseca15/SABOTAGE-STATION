@@ -20,10 +20,10 @@ public class FakeEspinho extends Objeto {
         super(x, y, width, height);
 
         String path = switch (tipo) {
-            case 999 -> "/assets/espinhoSprite/espinho4.png";
-            case 991 -> "/assets/espinhoSprite/espinho-top.png";
-            case 992 -> "/assets/espinhoSprite/espinho-right.png";
-            case 993 -> "/assets/espinhoSprite/espinho-left.png";
+            case 23 -> "/assets/espinhoSprite/espinho4.png";
+            case 24 -> "/assets/espinhoSprite/espinho-top.png";
+            case 25 -> "/assets/espinhoSprite/espinho-right.png";
+            case 26 -> "/assets/espinhoSprite/espinho-left.png";
 
             default -> throw new IllegalArgumentException("Tipo" + tipo + "é inválido");
         };

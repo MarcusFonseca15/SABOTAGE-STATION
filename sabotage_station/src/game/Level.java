@@ -247,29 +247,29 @@ public abstract class Level {
                 return new Pistao(x, y, TILE_SIZE, TILE_SIZE, 1, false);
             case 6: // pistao camuflado
                 return new Pistao(x, y, TILE_SIZE, TILE_SIZE, 1, true);
-            case 7: // feixe de laser
+            case 12, 15: // feixe de laser (tipo 1 e tipo 2)
                 return new Laser(x, y + 15, TILE_SIZE, 20, tipo);
-            case 36: // feixe de laser
+            case 19: // feixe de laser vertical
                 return new Laser(x + 1, y + 15, TILE_SIZE, 60, tipo);
-            case 8, 9: // base do laser
+            case 13, 14, 16, 17: // base do laser (dir/esq tipo 1 e tipo 2)
                 return new Laser(x, y, TILE_SIZE, TILE_SIZE, tipo);
-            case 35, 37: // base do laser
+            case 18, 20: // base do laser (topo/baixo)
                 return new Laser(x, y, TILE_SIZE, 75, tipo);
-            case 10: // espinhos
+            case 7: // espinhos (animado)
                 return new Espinhos(x, y + 30, TILE_SIZE, TILE_SIZE);
-            case 11: // espinhosP
+            case 8: // espinhosP piso
                 return new EspinhosP(x, y + 30, TILE_SIZE, TILE_SIZE, tipo);
-            case 111: // espinhosP
+            case 9: // espinhosP topo
                 return new EspinhosP(x, y - 10, TILE_SIZE, TILE_SIZE, tipo);
-            case 112, 113: // espinhosP
+            case 10, 11: // espinhosP direita/esquerda
                 return new EspinhosP(x, y, TILE_SIZE, TILE_SIZE, tipo);
-            case 999, 992, 993: // fakeEspinho
+            case 23, 25, 26: // fakeEspinho (piso, direita, esquerda)
                 return new FakeEspinho(x, y + 30, TILE_SIZE, TILE_SIZE, tipo);
-            case 991: // fakeEspinho
+            case 24: // fakeEspinho topo
                 return new FakeEspinho(x, y - 10, TILE_SIZE, TILE_SIZE, tipo);
-            case 15: // laser grande vertical
+            case 21: // laser grande vertical
                 return new LaserGrande(x, y, 530, 40, tipo);
-            case 16: // laser grande horizontal
+            case 22: // laser grande horizontal
                 return new LaserGrande(x, y, 40, 270, tipo);
             default:
                 return null;

@@ -19,8 +19,8 @@ public class LaserGrande extends Objeto {
         super(x, y, width, height);
 
         String path = switch (tipo) {
-            case 15 -> "/assets/laserSprites/laserGrandeH.png";
-            case 16 -> "/assets/laserSprites/laserGrandeV.png";
+            case 21 -> "/assets/laserSprites/laserGrandeH.png";
+            case 22 -> "/assets/laserSprites/laserGrandeV.png";
             default -> throw new IllegalArgumentException("Tipo" + tipo + "é inválido");
         };
 
@@ -36,8 +36,8 @@ public class LaserGrande extends Objeto {
 
     public static Dimension getImageDimension(int tipo) {
         String path = switch (tipo) {
-            case 15 -> "/assets/laserSprites/laserGrandeH.png";
-            case 16 -> "/assets/laserSprites/laserGrandeV.png";
+            case 21 -> "/assets/laserSprites/laserGrandeH.png";
+            case 22 -> "/assets/laserSprites/laserGrandeV.png";
             default -> throw new IllegalArgumentException("Tipo" + tipo + " é inválido");
         };
 
