@@ -4,10 +4,10 @@ Instruções: "Aperte qualquer tecla para continuar"
 - Titulo com background preto opacidade (pra melhor visualização)
 - Sprite de sangue (ou outra coisa) aparece no lugar onde morreu (e esmaece por 2 segs)
 
-*****************
 StartPanel: Selecionar Modos
 - Modo FÁCIL: 20 Vidas por fase
 - Modo DIFÍCIL: 10 Vidas por fase
+*****************
 
 Tela de Configurações:
 - Permitir Andar com WASD, ou setas, ou ambos.
@@ -25,7 +25,6 @@ Transição e Tela Final(gameover|win):
 
 Bugs e glitchs:
 - Pistão com colisão inconstante (player entra)
-- Fix Fase2: Colocar plataforma do tamanho do LifeBar (para nao confundir)
 - Fase2 -> Colocar no final
 - Fix Fase4: Terminar de preencher a lateral direita superior com plataforma
 - Fix Fase6: Repensar sobre a antigravidade -> Fix AntiG nem sempre ativa

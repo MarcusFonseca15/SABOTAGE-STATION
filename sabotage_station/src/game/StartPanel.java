@@ -5,14 +5,16 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class StartPanel extends JPanel {
-    private JFrame frame;
+    private GameFrame frame;
     
     // Variáveis de controle do Hover/Seleção
     private ModoJogo modoSelecionado = ModoJogo.NORMAL;
-    private boolean[] modoHover = new boolean[2]; // 0=Normal, 1=Dificil
     private final ModoJogo[] valoresModo = {ModoJogo.NORMAL, ModoJogo.DIFICIL};
     private JPanel menuPanel;
     private JButton[] modoButtons;
+
+    // Imagem declarada aqui para ser carregada apenas UMA vez
+    private Image bgImage;
 
     private static final Color MENU_BUTTON_BG = new Color(0x00, 0xA4, 0xFF, 77);
     private static final Color MENU_BUTTON_HOVER_BG = new Color(0x59, 0xE1, 0xFF);
@@ -81,123 +83,171 @@ public class StartPanel extends JPanel {
         }
     }
 
-    // Coordenadas para cálculo do desenho (baseado no seu layout)
-    private final int MODES_X = 25;
-    private final int MODES_Y = 166;
-    private final int BTN_WIDTH = 74; // 224 dividido por 3
-    private final int BTN_HEIGHT = 43;
+    // Classe própria para o Botão de Modo.
+    private class ModeButton extends JButton {
+        private final ModoJogo modo;
+        private boolean hovered = false;
 
-    public StartPanel(JFrame frame) {
-        this.frame = frame;
-        this.setLayout(null);
-
-        this.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_SPACE) iniciarJogo();
-            }
-        });
-
-        // --- Painel Interno ---
-        menuPanel = new JPanel();
-        menuPanel.setLayout(null);
-        menuPanel.setOpaque(false); // Importante para ver o background desenhado no pai
-        menuPanel.setBorder(BorderFactory.createLineBorder(Color.CYAN, 2));
-        add(menuPanel);
-
-        // centraliza o painel interno sempre que o tamanho do StartPanel mudar
-        this.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                int pw = 280;
-                int ph = 363;
-                menuPanel.setBounds((getWidth() - pw) / 2, (getHeight() - ph) / 2 + 40, pw, ph);
-
-                // reajusta posição dos botões de modo para centralizá-los dentro do menuPanel
-                if (modoButtons != null) {
-                    int gap = 10;
-                    int n = modoButtons.length;
-                    int totalW = (BTN_WIDTH * n) + (gap * (n - 1));
-                    int startX = (menuPanel.getWidth() - totalW) / 2;
-                    for (int i = 0; i < n; i++) {
-                        modoButtons[i].setBounds(startX + i * (BTN_WIDTH + gap), MODES_Y, BTN_WIDTH, BTN_HEIGHT);
-                    }
-                    // description e demais componentes permanecem com as mesmas coordenadas relativas
-                }
-            }
-        });
-
-        Font buttonFont = FontManager.getVHSFont(18f);
-        // Fonte reduzida em 30% para os botões de modo (Normal / Difícil)
-        Font modeButtonFont = buttonFont.deriveFont(buttonFont.getSize2D() * 0.5f);
-
-        JButton btnIniciar = new TranslucentButton("Iniciar");
-        btnIniciar.setBounds(25, 33, 224, 48);
-        btnIniciar.addActionListener(e -> iniciarJogo());
-        configureMenuButton(btnIniciar, buttonFont);
-        menuPanel.add(btnIniciar);
-
-        JButton btnConfig = new TranslucentButton("Configurações");
-        btnConfig.setBounds(25, 102, 224, 43); // y, x, largura, altura
-        configureMenuButton(btnConfig, buttonFont);
-        menuPanel.add(btnConfig);
-
-        // --- Lógica dos 2 Botões de Modo (Normal / Difícil) ---
-        String[] labels = {"Normal", "Difícil"};
-        
-        modoButtons = new JButton[2];
-        for (int i = 0; i < 2; i++) {
-            final int index = i;
-            JButton btn = new JButton(labels[i]);
-            btn.setFont(modeButtonFont);
-            // Posicionamento inicial; será recalculado no primeiro resize
-            btn.setBounds(MODES_X + (i * BTN_WIDTH), MODES_Y, BTN_WIDTH, BTN_HEIGHT);
+        public ModeButton(String text, ModoJogo modo) {
+            super(text);
+            this.modo = modo;
             
-            // Estilo invisível (desenharemos no paintComponent)
-            btn.setOpaque(false);
-            btn.setContentAreaFilled(false);
-            btn.setBorderPainted(false);
-            btn.setFocusPainted(false);
-            btn.setForeground(Color.WHITE); // Cor do texto do botão
+            // Estilo invisível
+            setOpaque(false);
+            setContentAreaFilled(false);
+            setBorderPainted(false);
+            setFocusPainted(false);
+            setForeground(MENU_BUTTON_FOREGROUND);
 
-            btn.addMouseListener(new MouseAdapter() {
+            addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent e) {
-                    modoHover[index] = true;
+                    hovered = true;
                     repaint();
                 }
                 public void mouseExited(MouseEvent e) {
-                    modoHover[index] = false;
+                    hovered = false;
                     repaint();
                 }
                 public void mouseClicked(MouseEvent e) {
-                    modoSelecionado = valoresModo[index];
+                    modoSelecionado = modo;
                     description.setText(modoSelecionado.descricao); // Atualiza texto
-                    repaint();
+                    for (JButton btn : modoButtons) {
+                        btn.repaint();
+                    }
                 }
             });
-            menuPanel.add(btn);
-            modoButtons[i] = btn;
         }
 
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g); 
+            
+            if (hovered || modoSelecionado == modo) {
+                Graphics2D g2d = (Graphics2D) g.create();
+                Color c = (modoSelecionado == modo) ? Color.CYAN : Color.WHITE;
+                g2d.setColor(c);
+                g2d.setStroke(new BasicStroke(2));
+                g2d.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+                g2d.dispose();
+            }
+        }
+    }
+
+    private final int BTN_WIDTH = 74; 
+    private final int BTN_HEIGHT = 43;
+
+    public StartPanel(GameFrame frame) { 
+        this.frame = frame;
+        
+        // Carrega a imagem no construtor uma única vez
+        ImageIcon icon = new ImageIcon(getClass().getResource("/assets/telas_e_botoes/StartBG.jpg"));
+        this.bgImage = icon.getImage();
+
+        this.setLayout(new GridBagLayout()); 
+
+        // Key Bindings ao invés de KeyListener
+        InputMap im = this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap am = this.getActionMap();
+        im.put(KeyStroke.getKeyStroke("SPACE"), "iniciarJogo");
+        am.put("iniciarJogo", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                iniciarJogo();
+            }
+        });
+
+        // --- FIX APLICADO AQUI: Painel Interno customizado para aceitar translucidez ---
+        menuPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2d = (Graphics2D) g.create();
+                // Desenha manualmente a cor de fundo translúcida
+                g2d.setColor(getBackground());
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+                g2d.dispose();
+                super.paintComponent(g);
+            }
+        };
+        
+        // A regra de Ouro: setOpaque false faz o Java apagar e desenhar a imagem de trás antes!
+        menuPanel.setOpaque(false); 
+        
+        menuPanel.setLayout(new GridBagLayout()); 
+        menuPanel.setBackground(new Color(0, 0, 0, 70));
+        menuPanel.setBorder(BorderFactory.createLineBorder(Color.CYAN, 2));
+        menuPanel.setPreferredSize(new Dimension(280, 363));
+        
+        // Regras (Constraints) para alinhar tudo
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(10, 0, 10, 0);
+        gbc.anchor = GridBagConstraints.CENTER;
+
+        Font buttonFont = FontManager.getVHSFont(18f);
+        Font modeButtonFont = buttonFont.deriveFont(buttonFont.getSize2D() * 0.5f);
+
+        JButton btnIniciar = new TranslucentButton("Iniciar");
+        btnIniciar.setPreferredSize(new Dimension(224, 48)); 
+        btnIniciar.addActionListener(e -> iniciarJogo());
+        configureMenuButton(btnIniciar, buttonFont);
+        menuPanel.add(btnIniciar, gbc);
+
+        gbc.gridy++;
+        JButton btnConfig = new TranslucentButton("Configurações");
+        btnConfig.setPreferredSize(new Dimension(224, 43)); 
+        configureMenuButton(btnConfig, buttonFont);
+        menuPanel.add(btnConfig, gbc);
+
+        // Lógica dos Botões de Modo
+        gbc.gridy++;
+        JPanel modosContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+        modosContainer.setOpaque(false);
+        
+        String[] labels = {"Normal", "Difícil"};
+        modoButtons = new JButton[valoresModo.length];
+        
+        for (int i = 0; i < valoresModo.length; i++) {
+            ModeButton btn = new ModeButton(labels[i], valoresModo[i]);
+            btn.setFont(modeButtonFont);
+            btn.setPreferredSize(new Dimension(BTN_WIDTH, BTN_HEIGHT));
+            
+            modosContainer.add(btn);
+            modoButtons[i] = btn;
+        }
+        menuPanel.add(modosContainer, gbc);
+
+        gbc.gridy++;
         description = new CenteredTextArea();
-        description.setBounds(21, 236, 228, 89);
+        description.setPreferredSize(new Dimension(228, 89));
         description.setBackground(new Color(0, 0, 0, 150));
         description.setForeground(Color.WHITE);
         description.setFont(FontManager.getVHSFont(14f));
-        description.setText(modoSelecionado.descricao); // Texto inicial
+        description.setText(modoSelecionado.descricao); 
         description.setEditable(false);
-        menuPanel.add(description);
+        menuPanel.add(description, gbc);
+
+        GridBagConstraints mainGbc = new GridBagConstraints();
+        mainGbc.insets = new Insets(40, 0, 0, 0); 
+        this.add(menuPanel, mainGbc);
     }
 
     private void iniciarJogo() {
         System.out.println("Iniciando jogo no modo: " + modoSelecionado);
-        // Troca para GamePanel e passa o modo selecionado para ajustar vidas
-        frame.getContentPane().removeAll();
-        GamePanel gp = new GamePanel((GameFrame) frame, modoSelecionado);
-        frame.add(gp);
-        frame.revalidate();
-        frame.repaint();
-        // solicita foco no GamePanel para capturar teclas
+        
+        GamePanel gp = new GamePanel(frame, modoSelecionado);
+        
+        if (frame.getContentPane().getLayout() instanceof CardLayout) {
+            frame.getContentPane().add(gp, "GamePanel");
+            CardLayout cl = (CardLayout) frame.getContentPane().getLayout();
+            cl.show(frame.getContentPane(), "GamePanel");
+        } else {
+            frame.getContentPane().removeAll();
+            frame.getContentPane().add(gp);
+            frame.revalidate();
+            frame.repaint();
+        }
+        
         javax.swing.SwingUtilities.invokeLater(() -> gp.requestFocusInWindow());
     }
 
@@ -224,44 +274,14 @@ public class StartPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // 1. Background Image
-        ImageIcon icon = new ImageIcon(getClass().getResource("/assets/telas_e_botoes/StartBG.jpg"));
-        Image bg = icon.getImage();
-        
-        // Sua lógica de escala
-        int imgWidth = bg.getWidth(null);
-        int imgHeight = bg.getHeight(null);
-        int panelWidth = this.getWidth();
-        double scaleFactor = (double) panelWidth / imgWidth;
-        int scaleAltura = (int) (imgHeight * scaleFactor) - 110;
-        
-        g.drawImage(bg, 0, 0, panelWidth, scaleAltura, null);
-
-        Graphics2D g2d = (Graphics2D) g.create();
-
-        // 2. Outline dos Botões de Modo (NOVA LÓGICA)
-        // Usa a posição atual do menuPanel para desenhar os contornos relativos
-        if (menuPanel != null) {
-            int absoluteRefY = menuPanel.getY() + MODES_Y;
-            int gap = 10;
-            int n = valoresModo.length;
-            int totalW = (BTN_WIDTH * n) + (gap * (n - 1));
-            int startLocalX = menuPanel.getX() + (menuPanel.getWidth() - totalW) / 2;
-
-            for (int i = 0; i < n; i++) {
-                if (modoHover[i] || modoSelecionado == valoresModo[i]) {
-                    Color c = (modoSelecionado == valoresModo[i]) ? Color.CYAN : Color.WHITE;
-                    g2d.setColor(c);
-                    g2d.setStroke(new BasicStroke(2));
-                    g2d.drawRect(
-                        startLocalX + i * (BTN_WIDTH + gap),
-                        absoluteRefY,
-                        BTN_WIDTH,
-                        BTN_HEIGHT
-                    );
-                }
-            }
+        if (bgImage != null) {
+            int imgWidth = bgImage.getWidth(null);
+            int imgHeight = bgImage.getHeight(null);
+            int panelWidth = this.getWidth();
+            double scaleFactor = (double) panelWidth / imgWidth;
+            int scaleAltura = (int) (imgHeight * scaleFactor) - 110;
+            
+            g.drawImage(bgImage, 0, 0, panelWidth, scaleAltura, null);
         }
-        g2d.dispose();
     }
 }

@@ -16,7 +16,7 @@ public class FinalPanel extends JPanel {
     private static final String RECORD_FILE = "record.txt";
     private static final String DEFAULT_RECORD = "99:99:99"; // Sentinela para quando ainda não há recorde registrado
 
-    private JFrame frame;
+    private GameFrame frame;
     private boolean win;
     private boolean isHover = false;
     private JButton actionButton;
@@ -24,7 +24,7 @@ public class FinalPanel extends JPanel {
     private String recordTexto;
     private Image bgImage;
 
-    FinalPanel(JFrame frame, boolean win, String scoreTexto) {
+    FinalPanel(GameFrame frame, boolean win, String scoreTexto) {
         this.frame = frame;
         this.win = win;
         this.scoreTexto = scoreTexto;
