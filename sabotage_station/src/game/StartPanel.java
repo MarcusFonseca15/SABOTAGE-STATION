@@ -13,7 +13,6 @@ public class StartPanel extends JPanel {
     private JPanel menuPanel;
     private JButton[] modoButtons;
 
-    // Imagem declarada aqui para ser carregada apenas UMA vez
     private Image bgImage;
 
     private static final Color MENU_BUTTON_BG = new Color(0x00, 0xA4, 0xFF, 77);
@@ -21,7 +20,6 @@ public class StartPanel extends JPanel {
     private static final Color MENU_BUTTON_BORDER = Color.CYAN;
     private static final Color MENU_BUTTON_FOREGROUND = Color.WHITE;
     
-    // Componente de texto para atualizar a descrição
     private JTextArea description;
 
     private static class TranslucentButton extends JButton {
@@ -139,13 +137,11 @@ public class StartPanel extends JPanel {
     public StartPanel(GameFrame frame) { 
         this.frame = frame;
         
-        // Carrega a imagem no construtor uma única vez
         ImageIcon icon = new ImageIcon(getClass().getResource("/assets/telas_e_botoes/StartBG.jpg"));
         this.bgImage = icon.getImage();
 
         this.setLayout(new GridBagLayout()); 
 
-        // Key Bindings ao invés de KeyListener
         InputMap im = this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap am = this.getActionMap();
         im.put(KeyStroke.getKeyStroke("SPACE"), "iniciarJogo");
@@ -156,7 +152,6 @@ public class StartPanel extends JPanel {
             }
         });
 
-        // --- FIX APLICADO AQUI: Painel Interno customizado para aceitar translucidez ---
         menuPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -169,7 +164,6 @@ public class StartPanel extends JPanel {
             }
         };
         
-        // A regra de Ouro: setOpaque false faz o Java apagar e desenhar a imagem de trás antes!
         menuPanel.setOpaque(false); 
         
         menuPanel.setLayout(new GridBagLayout()); 
