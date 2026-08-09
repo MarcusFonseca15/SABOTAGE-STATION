@@ -7,11 +7,30 @@ Instruções: "Aperte qualquer tecla para continuar"
 StartPanel: Selecionar Modos
 - Modo FÁCIL: 20 Vidas por fase
 - Modo DIFÍCIL: 10 Vidas por fase
-*****************
 
-Tela de Configurações:
+
 - Permitir Andar com WASD, ou setas, ou ambos.
 - Pular com Espaço ou seta pra cima ou ambos
+
+- Aleatorização das fases a partir da 2° -> 2,3,4,5 
+*****************
+
+
++++++++++++++++++++++++++++++
+Start Screen
+Game Over screen
+Win Screen
+Cenário de fundo (3 variações)
+Animação de dano
+Animação de morte
+Animação nos lasers
++++++++++++++++++++++
++
++
++
++
+/
+Tela de Configurações:
 - Input para controles de console
 
 Morte:
@@ -33,7 +52,6 @@ Bugs e glitchs:
  // colocar platafrma na area do lifebar
 
 ADIÇÕES:
-- Aleatorização das fases a partir da 2° -> 2,3,4,5 
 - Objeto COLA: Prende personagem no chão (tipo pistão da fase8, ou com impulso negativo)
 - Animação de Morte
 - Animação de Lasers (particulas)
