@@ -72,6 +72,9 @@ public class GamePanel extends JPanel implements ActionListener {
     float alphaFade = 0.0f;
     EstadoTrans estadoTrans = EstadoTrans.NORMAL;
 
+    // Bloqueio temporário de entrada (evita movimento logo após respawn)
+    private boolean inputBlocked = false;
+
     public GamePanel(GameFrame frame) {
         this.gameFrame = frame;
         // usa o MAX_VIDAS padrão definido na declaração (10)
@@ -112,6 +115,7 @@ public class GamePanel extends JPanel implements ActionListener {
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
+                if (inputBlocked) return;
                 if (currentLevel == 1 && level instanceof Level01) {
                     ((Level01) level).keyPressed(e);
                 }
@@ -128,6 +132,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
             @Override
             public void keyReleased(KeyEvent e) {
+                if (inputBlocked) return;
                 player.keyReleased(e);
             }
 
@@ -367,9 +372,18 @@ public class GamePanel extends JPanel implements ActionListener {
             // Volta para fase 1
             System.out.println("Você perdeu todas as vidas! Reiniciando o jogo...");
         } else {
-            // ainda tem vida: reset da posição
+            // se ainda tem vida: reset da posição
             player.reset();
+            // bloqueia entrada por 0,7s pra evitar movimento acidental pós-respawn
+            blockInput(700);
         }
+    }
+
+    private void blockInput(int millis) {
+        inputBlocked = true;
+        Timer unblockTimer = new Timer(millis, ev -> inputBlocked = false);
+        unblockTimer.setRepeats(false);
+        unblockTimer.start();
     }
 
     private void updateTransition() {
