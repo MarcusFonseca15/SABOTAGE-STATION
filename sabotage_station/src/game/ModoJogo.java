@@ -1,10 +1,7 @@
 package game;
 
-/**
- * Enum representando os modos de dificuldade do jogo.
- * Ainda em desenvolvimento — integração com StartPanel via starpanelALT.txt (rascunhos/).
- */
 public enum ModoJogo {
+    FACIL("Modo Fácil: 20 vidas. Para os betinhas."),
     NORMAL("Modo Normal: 10 vidas. Experiência padrão do jogo."),
     DIFICIL("Modo Difícil: 5 vidas. Vai encarar?");
 

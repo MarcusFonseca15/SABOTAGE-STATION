@@ -9,7 +9,7 @@ public class StartPanel extends JPanel {
     
     // Variáveis de controle do Hover/Seleção
     private ModoJogo modoSelecionado = ModoJogo.NORMAL;
-    private final ModoJogo[] valoresModo = {ModoJogo.NORMAL, ModoJogo.DIFICIL};
+    private final ModoJogo[] valoresModo = {ModoJogo.FACIL, ModoJogo.NORMAL, ModoJogo.DIFICIL};
     private JPanel menuPanel;
     private JButton[] modoButtons;
 
@@ -198,7 +198,7 @@ public class StartPanel extends JPanel {
         JPanel modosContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
         modosContainer.setOpaque(false);
         
-        String[] labels = {"Normal", "Difícil"};
+        String[] labels = {"Fácil","Normal", "Difícil"};
         modoButtons = new JButton[valoresModo.length];
         
         for (int i = 0; i < valoresModo.length; i++) {

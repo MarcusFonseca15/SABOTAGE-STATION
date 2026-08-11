@@ -55,7 +55,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private int vida = 10;
     private int MAX_VIDAS = 10;
-    private Image[] barraVidaImages = new Image[11];
+    private Image[] barraVidaImages = new Image[21]; // suporta até 20 vidas + estado 0
 
     // VARIÁVEIS PARA DELAY PÓS MORTE
     private long morteTime = 0;
@@ -86,6 +86,8 @@ public class GamePanel extends JPanel implements ActionListener {
         this.gameFrame = frame;
         if (modo == ModoJogo.NORMAL) {
             this.MAX_VIDAS = 10;
+        } else if (modo == ModoJogo.FACIL) {
+            this.MAX_VIDAS = 20;
         } else {
             this.MAX_VIDAS = 5;
         }
@@ -187,9 +189,27 @@ public class GamePanel extends JPanel implements ActionListener {
 
         // ---------------- ELEMENTOS DA FASE
 
-        // BARRA DE VIDA
-        if (barraVidaImages[vida] != null) {
-            g.drawImage(barraVidaImages[vida], 10, 550, 200, 48, this); // x, y, largura, altura
+        // BARRA DE VIDA (preserva aspect ratio dentro do bounding box 200x48)
+        if (vida >= 0 && vida < barraVidaImages.length && barraVidaImages[vida] != null) {
+            Image imgVida = barraVidaImages[vida];
+            int imgW = imgVida.getWidth(this);
+            int imgH = imgVida.getHeight(this);
+            int boxW = 200;
+            int boxH = 48;
+            int drawW, drawH;
+            if (imgW <= 0 || imgH <= 0) {
+                drawW = boxW;
+                drawH = boxH;
+            } else {
+                double scaleW = (double) boxW / imgW;
+                double scaleH = (double) boxH / imgH;
+                double scale = Math.min(scaleW, scaleH);
+                drawW = (int) (imgW * scale);
+                drawH = (int) (imgH * scale);
+            }
+            int drawX = 10;
+            int drawY = 550 + (boxH - drawH) / 2; // centraliza verticalmente
+            g.drawImage(imgVida, drawX, drawY, drawW, drawH, this);
         }
 
         Graphics2D timerG2d = (Graphics2D) g.create();
