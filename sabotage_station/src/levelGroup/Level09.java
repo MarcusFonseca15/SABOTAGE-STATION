@@ -22,7 +22,7 @@ public class Level09 extends Level {
     private static int[][] mapa = {
     { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
     { 0, 0, 0, 24, 24, 24, 9, 9, 9, 9, 9, 9, 9, 9, 9, 4 },
-    { 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
     { 0, 4, 0, 4, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8 }, // laser em 22
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4 },
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9 },
@@ -57,9 +57,6 @@ public class Level09 extends Level {
         LaserGrande l1 = (LaserGrande) mapaObjetos[3][4];
         laserAnda(l1, l1.getX() - 100, l1.getX() + 500, vel);
         // (LaserGrande laser, int posMin, int posMax, int vel)
-
-        EspinhosP sp1 = (EspinhosP) mapaObjetos[2][3];
-        sp1.visible = false;
 
         for (int col = 6; col <= 14; col++) {
             if (mapaObjetos[1][col] instanceof EspinhosP) {

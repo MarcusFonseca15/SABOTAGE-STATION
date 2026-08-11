@@ -181,14 +181,14 @@ public class StartPanel extends JPanel {
         Font buttonFont = FontManager.getVHSFont(18f);
         Font modeButtonFont = buttonFont.deriveFont(buttonFont.getSize2D() * 0.5f);
 
-        JButton btnIniciar = new TranslucentButton("Iniciar");
+        JButton btnIniciar = new TranslucentButton("[   Iniciar   ]");
         btnIniciar.setPreferredSize(new Dimension(224, 48)); 
         btnIniciar.addActionListener(e -> iniciarJogo());
         configureMenuButton(btnIniciar, buttonFont);
         menuPanel.add(btnIniciar, gbc);
 
         gbc.gridy++;
-        JButton btnConfig = new TranslucentButton("Configurações");
+        JButton btnConfig = new TranslucentButton("[   Configurações   ]");
         btnConfig.setPreferredSize(new Dimension(224, 43)); 
         configureMenuButton(btnConfig, buttonFont);
         menuPanel.add(btnConfig, gbc);
