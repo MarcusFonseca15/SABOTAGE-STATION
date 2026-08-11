@@ -26,7 +26,7 @@ import levelGroup.Level02;
 import levelGroup.Level03;
 import levelGroup.Level04;
 
-public class GamePanel extends JPanel implements ActionListener {
+public class GamePanel extends JPanel implements ActionListener, LifeEventListener {
 
     public int currentLevel = 1;
     int proximoLevel = 0; // apenas de inicialização
@@ -34,7 +34,6 @@ public class GamePanel extends JPanel implements ActionListener {
     int numFase = 1;
 
     private boolean godMode = false;
-    private boolean modoVida = false;
 
     private GameFrame gameFrame;
 
@@ -53,14 +52,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private List<Integer> filaFases;
 
-    private int vida = 10;
-    private int MAX_VIDAS = 10;
-    private Image[] barraVidaImages = new Image[21]; // suporta até 20 vidas + estado 0
-
-    // VARIÁVEIS PARA DELAY PÓS MORTE
-    private long morteTime = 0;
-    private boolean waitMorte = false;
-    private static final long MORTE_DELAY = 1000;
+    private LifeSystem lifeSystem;
 
     private java.util.ArrayList<DeathSprite> blood = new ArrayList<>();
 
@@ -77,21 +69,13 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public GamePanel(GameFrame frame) {
         this.gameFrame = frame;
-        // usa o MAX_VIDAS padrão definido na declaração (10)
-        this.vida = this.MAX_VIDAS;
+        lifeSystem = new LifeSystem(this, this); // modo padrão: NORMAL (10 vidas)
         commonInit();
     }
 
     public GamePanel(GameFrame frame, ModoJogo modo) {
         this.gameFrame = frame;
-        if (modo == ModoJogo.NORMAL) {
-            this.MAX_VIDAS = 10;
-        } else if (modo == ModoJogo.FACIL) {
-            this.MAX_VIDAS = 20;
-        } else {
-            this.MAX_VIDAS = 5;
-        }
-        this.vida = this.MAX_VIDAS;
+        lifeSystem = new LifeSystem(modo, this, this);
         commonInit();
     }
 
@@ -107,12 +91,7 @@ public class GamePanel extends JPanel implements ActionListener {
         initRandomFases();
         loadLevel(currentLevel);
 
-        // IMGS DA BARRA DE VIDA
-        barraVidaImages = new Image[MAX_VIDAS + 1];
-        for (int i = 0; i <= MAX_VIDAS; i++) {
-            barraVidaImages[i] = new ImageIcon(getClass().getResource("/assets/LifeBar/lifebar" + i + ".png"))
-                    .getImage();
-        }
+        // sprites da lifebar carregados por LifeSystem
 
         this.addKeyListener(new KeyAdapter() {
             @Override
@@ -189,28 +168,8 @@ public class GamePanel extends JPanel implements ActionListener {
 
         // ---------------- ELEMENTOS DA FASE
 
-        // BARRA DE VIDA (preserva aspect ratio dentro do bounding box 200x48)
-        if (vida >= 0 && vida < barraVidaImages.length && barraVidaImages[vida] != null) {
-            Image imgVida = barraVidaImages[vida];
-            int imgW = imgVida.getWidth(this);
-            int imgH = imgVida.getHeight(this);
-            int boxW = 200;
-            int boxH = 48;
-            int drawW, drawH;
-            if (imgW <= 0 || imgH <= 0) {
-                drawW = boxW;
-                drawH = boxH;
-            } else {
-                double scaleW = (double) boxW / imgW;
-                double scaleH = (double) boxH / imgH;
-                double scale = Math.min(scaleW, scaleH);
-                drawW = (int) (imgW * scale);
-                drawH = (int) (imgH * scale);
-            }
-            int drawX = 10;
-            int drawY = 550 + (boxH - drawH) / 2; // centraliza verticalmente
-            g.drawImage(imgVida, drawX, drawY, drawW, drawH, this);
-        }
+        // BARRA DE VIDA
+        lifeSystem.draw(g);
 
         Graphics2D timerG2d = (Graphics2D) g.create();
         timerG2d.setColor(Color.WHITE);
@@ -305,20 +264,8 @@ public class GamePanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         player.update();
 
-        // Delay pós morte
-        if (waitMorte) {
-            long elapsed = System.currentTimeMillis() - morteTime;
-            if (elapsed >= MORTE_DELAY) {
-                waitMorte = false;
-
-                // só executa gameover dps do delay
-                currentLevel = 1;
-                vida = MAX_VIDAS;
-                pararCronometro();
-                toFinalPanel(false);
-            }
-            return; // Pula o restante do update enquanto espera
-        }
+        // Delay pós morte (gerenciado por LifeSystem — chama onGameOver() quando expira)
+        if (lifeSystem.tickDelay()) return;
 
         level.checkPlatformCollision(player);
         level.checkPistaoCollision(player);
@@ -379,24 +326,25 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void perderVida() {
         blood.add(new DeathSprite(player.getX(), player.getY(), null));
-
-        vida--;
         gameFrame.vibrarTela(300, 5);
+        lifeSystem.perderVida(); // dispara onGameOver() ou onPlayerReset() via callback
+    }
 
-        if (vida <= 0 && !modoVida) {
+    // ── LifeEventListener callbacks ──────────────────────────────────────────
 
-            // espera antes de mostrar GameOver
-            waitMorte = true;
-            morteTime = System.currentTimeMillis();
+    @Override
+    public void onGameOver() {
+        // Chamado por LifeSystem após o delay pós-morte expirar
+        currentLevel = 1;
+        pararCronometro();
+        toFinalPanel(false);
+    }
 
-            // Volta para fase 1
-            System.out.println("Você perdeu todas as vidas! Reiniciando o jogo...");
-        } else {
-            // se ainda tem vida: reset da posição
-            player.reset();
-            // bloqueia entrada por 0,7s pra evitar movimento acidental pós-respawn
-            blockInput(700);
-        }
+    @Override
+    public void onPlayerReset() {
+        // Chamado por LifeSystem quando o player ainda tem vidas (respawn)
+        player.reset();
+        blockInput(700);
     }
 
     private void blockInput(int millis) {
@@ -422,7 +370,7 @@ public class GamePanel extends JPanel implements ActionListener {
                     numFase++;
                     loadLevel(currentLevel);
                     System.out.println("Avançando para o nível " + currentLevel);
-                    vida = MAX_VIDAS;
+                    lifeSystem.resetarVidas();
                     estadoTrans = EstadoTrans.FADEIN; // INICIA O ESMAECER PARA FORA
                 } else {
                     // Fim do jogo

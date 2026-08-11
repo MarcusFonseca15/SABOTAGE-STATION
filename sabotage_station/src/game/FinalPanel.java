@@ -47,7 +47,7 @@ public class FinalPanel extends JPanel {
         String buttonPath = win ? "/assets/telas_e_botoes/btnPlayAgain.png" : "/assets/telas_e_botoes/btnTryAgain.png";
         ImageIcon buttonIcon = new ImageIcon(getClass().getResource(buttonPath));
         Image scaledBtnImg = buttonIcon.getImage().getScaledInstance(180, 70, Image.SCALE_SMOOTH);
-        
+
         this.actionButton = new JButton(new ImageIcon(scaledBtnImg));
         actionButton.setOpaque(false);
         actionButton.setContentAreaFilled(false);
@@ -77,8 +77,9 @@ public class FinalPanel extends JPanel {
     private void salvarRecordSeNecessario() {
         try {
             Path path = Paths.get(RECORD_FILE);
-            
-            // Se não tinha recorde prévio ou o tempo de vitória atual for menor que o recorde antigo
+
+            // Se não tinha recorde prévio ou o tempo de vitória atual for menor que o
+            // recorde antigo
             if (recordTexto.equals(DEFAULT_RECORD) || scoreTexto.compareTo(recordTexto) < 0) {
                 Files.writeString(path, scoreTexto + System.lineSeparator(), StandardCharsets.UTF_8,
                         StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE);
@@ -109,21 +110,11 @@ public class FinalPanel extends JPanel {
 
     private void setupButton(JButton actionButton) {
         actionButton.addActionListener(e -> {
-            if (win) {
-                frame.getContentPane().removeAll();
-                StartPanel startPanel = new StartPanel(frame);
-                frame.add(startPanel);
-                frame.revalidate();
-                frame.repaint();
-            } else {
-                frame.getContentPane().removeAll();
-                GamePanel gamePanel = new GamePanel((GameFrame) frame);
-                gamePanel.currentLevel = 1;
-                frame.add(gamePanel);
-                frame.revalidate();
-                frame.repaint();
-                gamePanel.requestFocusInWindow();
-            }
+            frame.getContentPane().removeAll();
+            StartPanel startPanel = new StartPanel(frame);
+            frame.add(startPanel);
+            frame.revalidate();
+            frame.repaint();
         });
 
         this.add(actionButton);
@@ -148,7 +139,7 @@ public class FinalPanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(Color.WHITE);
         g2d.setFont(new Font("Arial", Font.BOLD, 22));
-        
+
         String exibiRecord = recordTexto.equals(DEFAULT_RECORD) ? "--:--:--" : recordTexto;
         String textoScore;
 
@@ -157,7 +148,7 @@ public class FinalPanel extends JPanel {
         } else {
             textoScore = "Você durou: " + scoreTexto + "  |  Recorde: " + exibiRecord;
         }
-        
+
         FontMetrics fm = g2d.getFontMetrics();
         int textWidth = fm.stringWidth(textoScore);
         int textX = (getWidth() - textWidth) / 2;

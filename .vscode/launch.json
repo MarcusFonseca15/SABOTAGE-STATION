@@ -9,8 +9,38 @@
       "projectName": "sabotage_station"
     },
     {
-      "name": "GameFrame",
       "type": "java",
+      "name": "GameFrame",
+      "request": "launch",
+      "mainClass": "game.GameFrame",
+      "projectName": "sabotage_station",
+      "cwd": "${workspaceFolder}/sabotage_station",
+      "modulePaths": [
+        "${workspaceFolder}/sabotage_station/bin"
+      ],
+      "classPaths": [
+        "${workspaceFolder}/sabotage_station/bin"
+      ],
+      "preLaunchTask": "Build and sync assets"
+    },
+    {
+      "type": "java",
+      "name": "GamePanel",
+      "request": "launch",
+      "mainClass": "game.GameFrame",
+      "projectName": "sabotage_station",
+      "cwd": "${workspaceFolder}/sabotage_station",
+      "modulePaths": [
+        "${workspaceFolder}/sabotage_station/bin"
+      ],
+      "classPaths": [
+        "${workspaceFolder}/sabotage_station/bin"
+      ],
+      "preLaunchTask": "Build and sync assets"
+    },
+    {
+      "type": "java",
+      "name": "StartPanel",
       "request": "launch",
       "mainClass": "game.GameFrame",
       "projectName": "sabotage_station",

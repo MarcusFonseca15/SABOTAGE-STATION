@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Build and sync assets",
+      "label": "Build Java (release 21)",
       "type": "shell",
       "command": "powershell",
       "args": [
@@ -10,8 +10,36 @@
         "-ExecutionPolicy",
         "Bypass",
         "-Command",
-        "Set-Location '${workspaceFolder}'; if (!(Test-Path '.\\sabotage_station\\bin\\assets')) { New-Item -ItemType Directory -Path '.\\sabotage_station\\bin\\assets' -Force | Out-Null }; Copy-Item -Recurse -Force '.\\sabotage_station\\src\\assets\\*' '.\\sabotage_station\\bin\\assets\\'"
+        "& 'C:\\Program Files\\Java\\jdk-25.0.2\\bin\\javac.exe' -encoding UTF-8 --release 21 -cp '${workspaceFolder}\\sabotage_station\\src' -d '${workspaceFolder}\\sabotage_station\\bin' (Get-ChildItem -Recurse -Path '${workspaceFolder}\\sabotage_station\\src' -Filter '*.java' | Select-Object -ExpandProperty FullName)"
       ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": "$javac",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Sync assets",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        "if (!(Test-Path '${workspaceFolder}\\sabotage_station\\bin\\assets')) { New-Item -ItemType Directory -Path '${workspaceFolder}\\sabotage_station\\bin\\assets' -Force | Out-Null }; Copy-Item -Recurse -Force '${workspaceFolder}\\sabotage_station\\src\\assets\\*' '${workspaceFolder}\\sabotage_station\\bin\\assets\\'"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Build and sync assets",
+      "dependsOn": ["Build Java (release 21)", "Sync assets"],
+      "dependsOrder": "sequence",
+      "group": "build",
       "problemMatcher": []
     }
   ]
