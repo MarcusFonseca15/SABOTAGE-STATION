@@ -104,11 +104,12 @@ public class Level06 extends Level {
             while (ativo) {
                 if (player.wantToJump && player.onGround) {
                     if (g.getGravity() != 0) {
-                        g.setGravity(0);
-                        g.setPulo(-500);
+                        g.setGravity(0.0);   // força 0 = "desliga" gravidade neste momento
+                        g.setPulo(500.0);    // magnitude positiva; sentido calculado pelo Player
                         setTitulo(gamePanel.getNumFase() + "." + " Eita, um bug?... Não, é o jogo!");
                     }
-                    player.velY = -15;
+                    player.velY = -15; // hardcoded intencional do Level06 (gravidade normal sempre)
+
                     player.jumping = true;
                     player.onGround = false;
                     player.wantToJump = false;

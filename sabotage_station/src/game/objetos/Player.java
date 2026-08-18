@@ -84,8 +84,8 @@ public class Player {
             Lado = TrocaTroca ? PersoParadoD[PControleDoIndex] : PersoParadoE[PControleDoIndex];
         }
 
-        // SE GRAVIDADE INVERTIDA, DE CABEÇA PARA BAIXO
-        if (this.g.valor == -1) {
+        // SE GRAVIDADE INVERTIDA, RENDERIZA DE CABEÇA PARA BAIXO
+        if (this.g.getDirecao() == -1) {
             gh.drawImage(Lado, x, y + height, x + width, y, 0, 0, Lado.getWidth(null), Lado.getHeight(null), null);
         } else {
             gh.drawImage(Lado, x, y, width, height, null);
@@ -96,12 +96,13 @@ public class Player {
         x += velX;
 
         if (!onGround) {
-            velY += g.getGravity();
+            velY += g.getDirecao() * g.getForca();
         }
 
         if (wantToJump) {
             if (onGround) {
-                velY = g.getDirection() * -15;
+                // Impulso na direção OPOSTA da gravidade vigente
+                velY = (int) (-g.getDirecao() * g.getForcaPulo());
                 jumping = true;
                 onGround = false;
                 wantToJump = false; // só reseta aqui
@@ -116,8 +117,6 @@ public class Player {
         if (x + width > 800)
             x = 800 - width;
 
-        // FAILSAFE: mantém player dentro da tela (não define onGround —
-        // responsabilidade do ColisionManager)
         if (g.getDirection() == 1 && y + height >= 600) {
             y = 600 - height;
             velY = 0;

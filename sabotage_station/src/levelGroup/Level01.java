@@ -83,8 +83,7 @@ public class Level01 extends Level {
         pt3.forca = 3.0f;
 
         // gravidade padrão
-        player.g.setGravity(1.0);
-        player.g.setPulo(-15);
+        player.g.setGravity(1, 1.0, 15.0);
 
         EspinhosP spInv1 = (EspinhosP) mapaObjetos[1][0];
         EspinhosP spInv2 = (EspinhosP) mapaObjetos[1][1];

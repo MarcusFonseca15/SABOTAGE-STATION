@@ -127,8 +127,7 @@ public class GamePanel extends JPanel implements ActionListener, LifeEventListen
     }
 
     private void loadLevel(int number) {
-        player.g.setGravity(1.0);
-        player.g.setPulo(-15);
+        player.g.setGravity(1, 1.0, 15.0); // reset para gravidade normal (Terra)
         player.onGround = true;
         player.jumping = false;
         player.velY = 0;
