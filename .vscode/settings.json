@@ -10,11 +10,6 @@
       "name": "JavaSE-25",
       "path": "C:\\Program Files\\Java\\jdk-25.0.2",
       "default": true
-    },
-    {
-      "name": "JavaSE-21",
-      "path": "C:\\Users\\marcu\\.vscode\\extensions\\redhat.java-1.55.0-win32-x64\\jre\\21.0.11-win32-x86_64"
     }
   ]
 }
-

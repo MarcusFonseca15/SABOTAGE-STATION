@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Build Java (release 21)",
+      "label": "Build Java",
       "type": "shell",
       "command": "powershell",
       "args": [
@@ -10,7 +10,7 @@
         "-ExecutionPolicy",
         "Bypass",
         "-Command",
-        "& 'C:\\Program Files\\Java\\jdk-25.0.2\\bin\\javac.exe' -encoding UTF-8 --release 21 -cp '${workspaceFolder}\\sabotage_station\\src' -d '${workspaceFolder}\\sabotage_station\\bin' (Get-ChildItem -Recurse -Path '${workspaceFolder}\\sabotage_station\\src' -Filter '*.java' | Select-Object -ExpandProperty FullName)"
+        "& 'C:\\Program Files\\Java\\jdk-25.0.2\\bin\\javac.exe' -encoding UTF-8 -cp '${workspaceFolder}\\sabotage_station\\src' -d '${workspaceFolder}\\sabotage_station\\bin' (Get-ChildItem -Recurse -Path '${workspaceFolder}\\sabotage_station\\src' -Filter '*.java' | Select-Object -ExpandProperty FullName)"
       ],
       "group": {
         "kind": "build",
@@ -37,7 +37,7 @@
     },
     {
       "label": "Build and sync assets",
-      "dependsOn": ["Build Java (release 21)", "Sync assets"],
+      "dependsOn": ["Build Java", "Sync assets"],
       "dependsOrder": "sequence",
       "group": "build",
       "problemMatcher": []

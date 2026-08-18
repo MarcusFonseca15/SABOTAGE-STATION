@@ -89,8 +89,10 @@ public abstract class Level {
     }
 
     public void draw(Graphics g) {
-        for (Platform p : platforms)
+        for (Platform p : platforms) {
+            p.updateGlow();
             p.draw(g);
+        }
 
         for (Laser t : lasers)
             t.draw(g);

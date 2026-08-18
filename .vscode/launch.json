@@ -3,55 +3,16 @@
   "configurations": [
     {
       "type": "java",
-      "name": "GameFrame",
-      "request": "launch",
-      "mainClass": "sabotage_station/game.GameFrame",
-      "projectName": "sabotage_station"
-    },
-    {
-      "type": "java",
-      "name": "GameFrame",
+      "name": "Sabotage Station",
       "request": "launch",
       "mainClass": "game.GameFrame",
       "projectName": "sabotage_station",
       "cwd": "${workspaceFolder}/sabotage_station",
-      "modulePaths": [
-        "${workspaceFolder}/sabotage_station/bin"
-      ],
       "classPaths": [
         "${workspaceFolder}/sabotage_station/bin"
       ],
-      "preLaunchTask": "Build and sync assets"
-    },
-    {
-      "type": "java",
-      "name": "GamePanel",
-      "request": "launch",
-      "mainClass": "game.GameFrame",
-      "projectName": "sabotage_station",
-      "cwd": "${workspaceFolder}/sabotage_station",
-      "modulePaths": [
-        "${workspaceFolder}/sabotage_station/bin"
-      ],
-      "classPaths": [
-        "${workspaceFolder}/sabotage_station/bin"
-      ],
-      "preLaunchTask": "Build and sync assets"
-    },
-    {
-      "type": "java",
-      "name": "StartPanel",
-      "request": "launch",
-      "mainClass": "game.GameFrame",
-      "projectName": "sabotage_station",
-      "cwd": "${workspaceFolder}/sabotage_station",
-      "modulePaths": [
-        "${workspaceFolder}/sabotage_station/bin"
-      ],
-      "classPaths": [
-        "${workspaceFolder}/sabotage_station/bin"
-      ],
-      "preLaunchTask": "Build and sync assets"
+      "preLaunchTask": "Build and sync assets",
+      "javaExec": "C:\\Program Files\\Java\\jdk-25.0.2\\bin\\java.exe"
     }
   ]
 }

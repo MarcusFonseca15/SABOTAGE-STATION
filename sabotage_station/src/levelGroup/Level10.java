@@ -47,7 +47,7 @@ public class Level10 extends Level {
         for (int linha = 0; linha < mapaObjetos.length - 1; linha++) {
             for (int coluna = 0; coluna < mapaObjetos[linha].length; coluna++) {
                 if (mapaObjetos[linha][coluna] instanceof Platform) {
-                    ((Platform) mapaObjetos[linha][coluna]).setVisible(false);
+                    ((Platform) mapaObjetos[linha][coluna]).setState(false, true);
                 }
             }
         }
