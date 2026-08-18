@@ -16,19 +16,20 @@ import java.util.List;
 import java.util.Collections;
 
 import levelGroup.Level01;
-import levelGroup.Level10;
+import levelGroup.Level02;
+import levelGroup.Level03;
+import levelGroup.Level04;
 import levelGroup.Level05;
 import levelGroup.Level06;
 import levelGroup.Level07;
 import levelGroup.Level08;
 import levelGroup.Level09;
-import levelGroup.Level02;
-import levelGroup.Level03;
-import levelGroup.Level04;
+import levelGroup.Level10;
+import levelGroup.Level11;
 
 public class GamePanel extends JPanel implements ActionListener, LifeEventListener {
 
-    public int currentLevel = 1;
+    public int currentLevel = 10;
     int proximoLevel = 0; // apenas de inicialização
     private final int maxLevels = 10;
     int numFase = 1;
@@ -101,6 +102,9 @@ public class GamePanel extends JPanel implements ActionListener, LifeEventListen
                 if (currentLevel == 1 && level instanceof Level01) {
                     ((Level01) level).keyPressed(e);
                 }
+                if (level instanceof Level11) {
+                    ((Level11) level).keyPressed(e);
+                }
                 // GOD MODE =====================
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     godMode = !godMode;
@@ -143,6 +147,7 @@ public class GamePanel extends JPanel implements ActionListener, LifeEventListen
             case 8 -> level = new Level08(player, this);
             case 9 -> level = new Level09(player, this);
             case 10 -> level = new Level10(player, this);
+            case 11 -> level = new Level11(player, this);
             default -> {
                 System.out.println("Level inválido!");
                 System.exit(0);
