@@ -56,7 +56,6 @@ public class Level01 extends Level {
         super(1);
         this.player = player;
         this.gamePanel = gamePanel;
-        this.player.level = this;
         designTraps();
 
         InstruIMG = new ImageIcon(getClass().getResource("/assets/telas_e_botoes/imgInstrucoes.png")).getImage();

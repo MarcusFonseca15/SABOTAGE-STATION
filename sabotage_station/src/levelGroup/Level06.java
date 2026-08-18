@@ -46,7 +46,6 @@ public class Level06 extends Level {
     public Level06(Player player, GamePanel gamePanel) {
         super(6);
         this.player = player;
-        this.player.level = this;
         this.g = player.g;
         this.gamePanel = gamePanel;
 

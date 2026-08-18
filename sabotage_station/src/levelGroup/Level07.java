@@ -38,7 +38,6 @@ public class Level07 extends Level {
     public Level07(Player player, GamePanel gamePanel) {
         super(3);
         this.player = player;
-        this.player.level = this;
         designTraps();// TODO Auto-generated constructor stub
         this.titulo = formatarTitulo("Tente de novo!", gamePanel.getNumFase());
 

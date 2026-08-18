@@ -64,12 +64,12 @@ public class GamePanel extends JPanel implements ActionListener, LifeEventListen
     float alphaFade = 0.0f;
     EstadoTrans estadoTrans = EstadoTrans.NORMAL;
 
-    // Bloqueio temporário de entrada (evita movimento logo após respawn)
+    // Bloqueio temporário de entrada (evita movimento após respawn)
     private boolean inputBlocked = false;
 
     public GamePanel(GameFrame frame) {
         this.gameFrame = frame;
-        lifeSystem = new LifeSystem(this, this); // modo padrão: NORMAL (10 vidas)
+        lifeSystem = new LifeSystem(this, this);
         commonInit();
     }
 
@@ -96,7 +96,8 @@ public class GamePanel extends JPanel implements ActionListener, LifeEventListen
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (inputBlocked) return;
+                if (inputBlocked)
+                    return;
                 if (currentLevel == 1 && level instanceof Level01) {
                     ((Level01) level).keyPressed(e);
                 }
@@ -113,7 +114,8 @@ public class GamePanel extends JPanel implements ActionListener, LifeEventListen
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if (inputBlocked) return;
+                if (inputBlocked)
+                    return;
                 player.keyReleased(e);
             }
 
@@ -264,11 +266,15 @@ public class GamePanel extends JPanel implements ActionListener, LifeEventListen
     public void actionPerformed(ActionEvent e) {
         player.update();
 
-        // Delay pós morte (gerenciado por LifeSystem — chama onGameOver() quando expira)
-        if (lifeSystem.tickDelay()) return;
+        // Delay pós morte (LifeSystem chama onGameOver() quando expira)
+        if (lifeSystem.tickDelay())
+            return;
 
-        level.checkPlatformCollision(player);
-        level.checkPistaoCollision(player);
+        ColisionManager.resolverColisoes(
+                player,
+                level.getPlatforms(),
+                level.getPistoes(),
+                player.g.getDirection());
         level.updatePistaos(player);
         level.updateEspinhos();
 
@@ -334,7 +340,6 @@ public class GamePanel extends JPanel implements ActionListener, LifeEventListen
 
     @Override
     public void onGameOver() {
-        // Chamado por LifeSystem após o delay pós-morte expirar
         currentLevel = 1;
         pararCronometro();
         toFinalPanel(false);
@@ -342,7 +347,6 @@ public class GamePanel extends JPanel implements ActionListener, LifeEventListen
 
     @Override
     public void onPlayerReset() {
-        // Chamado por LifeSystem quando o player ainda tem vidas (respawn)
         player.reset();
         blockInput(700);
     }

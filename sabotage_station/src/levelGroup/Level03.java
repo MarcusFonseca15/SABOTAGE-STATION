@@ -45,7 +45,6 @@ public class Level03 extends Level {
     public Level03(Player player, GamePanel gamePanel) {
         super(3);
         this.player = player;
-        this.player.level = this;
         designTraps();
         this.titulo = formatarTitulo("Um pouco mais pra direita", gamePanel.getNumFase());
         this.setTitlePos(titleX, 70);

@@ -33,7 +33,6 @@ public class Level08 extends Level {
     public Level08(Player player, GamePanel gamePanel) {
         super(3);
         this.player = player;
-        this.player.level = this;
         designTraps();
         this.titulo = formatarTitulo("De olho no pixel!", gamePanel.getNumFase());
         this.setTitlePos(titleX, titleY - 10);

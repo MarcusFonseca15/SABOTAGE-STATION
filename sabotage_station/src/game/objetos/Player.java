@@ -5,17 +5,13 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.Rectangle;
 
-import game.ColisionManager;
 import game.Gravity;
-import game.Level;
 
 public class Player {
     int x, y;
     int width = 50, height = 50;
 
     public Gravity g;
-
-    public Level level;
 
     public int velX = 0;
     public int velY = 0;
@@ -100,9 +96,7 @@ public class Player {
         x += velX;
 
         if (!onGround) {
-            ColisionManager.checarColisoes(this, level.getMapaObjetos(), g.getDirection());
             velY += g.getGravity();
-
         }
 
         if (wantToJump) {
@@ -122,29 +116,16 @@ public class Player {
         if (x + width > 800)
             x = 800 - width;
 
-        // DETECÇÃO DE CHAO/TETO de acordo com gravidade
-        // grav normal
-        if (g.getDirection() == 1) {
-            if (y + height >= 600) {
-                y = 600 - height;
-                velY = 0;
-                onGround = true;
-            }
-            // grav invertida
-        } else if (g.getDirection() == -1) {
-            if (y > 0) {
-                y = 0;
-                if (velY < 0)
-                    velY = 0;
-                System.out.println("Colidiu com teto, velY agora: " + velY + ", x: " + x);
-            }
-
-        } else if (g.getDirection() == 0) { // sem gravidade
-            //
-            //
+        // FAILSAFE: mantém player dentro da tela (não define onGround —
+        // responsabilidade do ColisionManager)
+        if (g.getDirection() == 1 && y + height >= 600) {
+            y = 600 - height;
+            velY = 0;
+        } else if (g.getDirection() == -1 && y <= 0) {
+            y = 0;
+            velY = 0;
         }
 
-        // fiz isso aqui para atualizar o pulo
         jumping = !onGround;
 
         if (velX != 0) {
@@ -172,7 +153,8 @@ public class Player {
             velX = -5;
             TrocaTroca = false;
         }
-        if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_W) {
+        if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_SPACE
+                || e.getKeyCode() == KeyEvent.VK_W) {
             wantToJump = true;
         }
     }
@@ -182,7 +164,8 @@ public class Player {
                 || e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_A) {
             velX = 0;
         }
-        if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
+        if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP
+                || e.getKeyCode() == KeyEvent.VK_W) {
             wantToJump = false;
         }
 

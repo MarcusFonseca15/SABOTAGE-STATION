@@ -2,6 +2,7 @@ package game;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 
@@ -124,51 +125,9 @@ public abstract class Level {
         return false;
     }
 
-    public void checkPistaoCollision(Player player) {
-        Rectangle playerBounds = new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight());
-
-        for (Pistao pistao : pistoes) {
-            Rectangle pistaoBounds = pistao.getBaseBounds();
-
-            Rectangle pistaoEstendidoBounds = pistao.getBounds();
-
-            if (playerBounds.intersects(pistaoBounds)) {
-                // Colisão por cima
-                if (player.getY() + player.getHeight() - player.velY <= pistaoBounds.y) {
-                    player.setY(pistaoBounds.y - player.getHeight());
-                    player.velY = 0;
-                    player.jumping = false;
-                    player.onGround = true;
-                } else if (player.getY() - player.velY >= pistaoBounds.y + pistaoBounds.height) {
-                    // Colisão por baixo
-                    player.setY(pistaoBounds.y + pistaoBounds.height);
-                    player.velY = 0;
-                } else if (playerBounds.intersects(pistaoEstendidoBounds)) {
-                    // Nova lógica para colisão lateral quando estendido
-                    if (player.getX() + player.getWidth() - player.velX <= pistaoEstendidoBounds.x) {
-                        player.setX(pistaoEstendidoBounds.x - player.getWidth());
-                    } else if (player.getX() - player.velX >= pistaoEstendidoBounds.x + pistaoEstendidoBounds.width) {
-                        player.setX(pistaoEstendidoBounds.x + pistaoEstendidoBounds.width);
-                    }
-                }
-
-                else {
-                    // Verificar colisão horizontal
-                    if (player.getX() + player.getWidth() >= pistaoBounds.x
-                            && player.getX() <= pistaoBounds.x + pistaoBounds.width) {
-                        // Colisão pela esquerda
-                        if (player.getX() + player.getWidth() - player.velX <= pistaoBounds.x) {
-                            player.setX(pistaoBounds.x - player.getWidth());
-                        }
-                        // Colisão pela direita
-                        else if (player.getX() - player.velX >= pistaoBounds.x + pistaoBounds.width) {
-                            player.setX(pistaoBounds.x + pistaoBounds.width);
-                        }
-                    }
-                }
-            }
-        }
-    }
+    // Getters para as listas de objetos físicos — usados por ColisionManager
+    public List<Platform> getPlatforms() { return platforms; }
+    public List<Pistao>   getPistoes()   { return pistoes; }
 
     public boolean checkEspinhosCollision(Player player) {
         for (Espinhos l : espinhos) {
@@ -203,40 +162,6 @@ public abstract class Level {
         return false;
     }
 
-    public void checkPlatformCollision(Player player) {
-        Rectangle playerBounds = new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight());
-        player.onGround = false;
-
-        for (Platform p : platforms) {
-            Rectangle platformBounds = p.getBounds();
-
-            if (playerBounds.intersects(platformBounds)) {
-                if (player.getY() + player.getHeight() - player.velY <= p.getY()) {
-                    // colisão por cima
-                    player.setY(p.getY() - player.getHeight());
-                    player.velY = 0;
-                    player.jumping = false;
-                    player.onGround = true;
-                } else if (player.getY() - player.velY >= p.getY() + p.getHeight()) {
-                    // colisão por baixo
-                    player.setY(p.getY() + p.getHeight());
-                    player.velY = 0;
-                }
-
-                // Verificar colisão horizontal
-                if (player.getX() + player.getWidth() >= p.getX() && player.getX() <= p.getX() + p.getWidth()) {
-                    // Colisão pela esquerda
-                    if (player.getX() + player.getWidth() - player.velX <= p.getX()) {
-                        player.setX(p.getX() - player.getWidth());
-                    }
-                    // Colisão pela direita
-                    else if (player.getX() - player.velX >= p.getX() + p.getWidth()) {
-                        player.setX(p.getX() + p.getWidth());
-                    }
-                }
-            }
-        }
-    }
 
     protected Objeto criarObjetoPorCodigo(int tipo, int x, int y) {
 

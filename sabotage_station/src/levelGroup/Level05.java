@@ -42,7 +42,6 @@ public class Level05 extends Level {
     public Level05(Player player, GamePanel gamePanel) {
         super(2);
         this.player = player;
-        this.player.level = this;
         designTraps();
         this.titulo = formatarTitulo("Nem tudo se vê", gamePanel.getNumFase());
     }

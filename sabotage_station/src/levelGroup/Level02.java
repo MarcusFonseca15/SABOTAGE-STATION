@@ -33,7 +33,6 @@ public class Level02 extends Level {
     public Level02(Player player, GamePanel gamePanel) {
         super(3);
         this.player = player;
-        this.player.level = this;
         designTraps();
         this.titulo = formatarTitulo("Ah, você tava aí, safado?", gamePanel.getNumFase());
         this.setTitlePos(titleX, titleY - 5);

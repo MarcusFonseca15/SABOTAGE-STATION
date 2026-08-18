@@ -42,7 +42,6 @@ public class Level09 extends Level {
     public Level09(Player player, GamePanel gamePanel) {
         super(9);
         this.player = player;
-        this.player.level = this;
         this.g = player.g;
 
         designTraps();
