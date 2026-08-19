@@ -29,7 +29,7 @@ import levelGroup.Level11;
 
 public class GamePanel extends JPanel implements ActionListener, LifeEventListener {
 
-    public int currentLevel = 10;
+    public int currentLevel = 9;
     int proximoLevel = 0; // apenas de inicialização
     private final int maxLevels = 10;
     int numFase = 1;
@@ -281,6 +281,7 @@ public class GamePanel extends JPanel implements ActionListener, LifeEventListen
                 player.g.getDirection());
         level.updatePistaos(player);
         level.updateEspinhos();
+        level.updateLasers();
 
         if (currentLevel == 1 && level instanceof Level01) {
             ((Level01) level).updateInstructions();

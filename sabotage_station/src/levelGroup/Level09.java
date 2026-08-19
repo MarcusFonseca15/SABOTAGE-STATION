@@ -4,7 +4,7 @@ import game.Gravity;
 import game.Level;
 import game.objetos.EspinhosP;
 import game.objetos.Laser;
-import game.objetos.LaserGrande;
+
 import game.objetos.Pistao;
 import game.objetos.Platform;
 import game.objetos.Player;
@@ -20,19 +20,19 @@ public class Level09 extends Level {
     private boolean ativo = true;
 
     private static int[][] mapa = {
-    { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
-    { 0, 0, 0, 24, 24, 24, 9, 9, 9, 9, 9, 9, 9, 9, 9, 4 },
-    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 4, 0, 4, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8 }, // laser em 22
-    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4 },
-    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9 },
-    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 8, 0, 0, 0, 8 },
-    { 5, 2, 3, 1, 0, 1, 6, 0, 0, 2, 6, 3, 0, 5, 0, 1 },
-    { 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 23, 23 },
-    { 1, 1, 2, 3, 3, 1, 1, 3, 6, 1, 1, 3, 1, 1, 1, 1 }
-};
+            { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+            { 0, 0, 0, 24, 24, 24, 9, 9, 9, 9, 9, 9, 9, 9, 9, 4 },
+            { 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 4, 0, 4, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8 },
+            { 0, 0, 0, 0, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4 },
+            { 0, 0, 0, 0, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9 },
+            { 0, 0, 0, 0, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 8, 0, 0, 0, 8 },
+            { 5, 2, 3, 1, 0, 1, 6, 0, 0, 2, 6, 3, 0, 5, 0, 1 },
+            { 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 23, 23 },
+            { 1, 1, 2, 3, 3, 1, 1, 3, 6, 1, 1, 3, 1, 1, 1, 1 }
+    };
 
     @Override
     protected int[][] getMapa() {
@@ -53,9 +53,12 @@ public class Level09 extends Level {
     @Override
     protected void designTraps() {
 
-        LaserGrande l1 = (LaserGrande) mapaObjetos[3][4];
-        laserAnda(l1, l1.getX() - 100, l1.getX() + 500, vel);
-        // (LaserGrande laser, int posMin, int posMax, int vel)
+        int posXBase = ((Laser) mapaObjetos[3][4]).getX();
+        for (int row = 2; row <= 7; row++) {
+            Laser l = (Laser) mapaObjetos[row][4];
+            int dx = l.getX() - posXBase;
+            l.configMovHorizontal(posXBase - 100 + dx, posXBase + 500 + dx, vel, 0);
+        }
 
         for (int col = 6; col <= 14; col++) {
             if (mapaObjetos[1][col] instanceof EspinhosP) {
@@ -84,31 +87,6 @@ public class Level09 extends Level {
         espFinal1.visible = false;
         EspinhosP espFinal2 = (EspinhosP) mapaObjetos[5][15];
         espFinal2.visible = false;
-    }
-
-    private void laserAnda(LaserGrande laser, int posMin, int posMax, int vel) {
-        new Thread(() -> {
-            try {
-                boolean indo = true;
-                while (true) {
-                    if (indo) {
-                        laser.setX(laser.getX() + vel);
-                        if (laser.getX() >= posMax) {
-                            indo = false;
-                        }
-                    } else {
-                        laser.setX(laser.getX() - vel);
-                        if (laser.getX() <= posMin) {
-                            indo = true;
-                        }
-                    }
-
-                    Thread.sleep(20); // suavidade do movimento
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
     }
 
     @Override

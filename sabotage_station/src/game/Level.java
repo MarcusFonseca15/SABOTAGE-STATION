@@ -10,7 +10,7 @@ import game.objetos.Espinhos;
 import game.objetos.EspinhosP;
 import game.objetos.FakeEspinho;
 import game.objetos.Laser;
-import game.objetos.LaserGrande;
+
 import game.objetos.Objeto;
 import game.objetos.Pistao;
 import game.objetos.Platform;
@@ -28,7 +28,7 @@ public abstract class Level {
     ArrayList<Espinhos> espinhos = new ArrayList<>();
     ArrayList<EspinhosP> espinhosP = new ArrayList<>();
     ArrayList<FakeEspinho> fakeEspinho = new ArrayList<>();
-    ArrayList<LaserGrande> laserG = new ArrayList<>();
+
 
     ////////////// TITULO
     protected String titulo = "";
@@ -79,8 +79,6 @@ public abstract class Level {
                         espinhosP.add((EspinhosP) obj);
                     } else if (obj instanceof FakeEspinho) {
                         fakeEspinho.add((FakeEspinho) obj);
-                    } else if (obj instanceof LaserGrande) {
-                        laserG.add((LaserGrande) obj);
                     }
                 }
 
@@ -109,8 +107,7 @@ public abstract class Level {
         for (FakeEspinho fakeEspinho : fakeEspinho)
             fakeEspinho.draw(g);
 
-        for (LaserGrande laserG : laserG)
-            laserG.draw(g);
+
     }
 
     public boolean checkLaserCollision(Player player) {
@@ -119,10 +116,7 @@ public abstract class Level {
                 return true;
         }
 
-        for (LaserGrande lg : laserG) {
-            if (lg.checkCollision(player))
-                return true;
-        }
+
 
         return false;
     }
@@ -194,10 +188,6 @@ public abstract class Level {
                 return new FakeEspinho(x, y + 30, TILE_SIZE, TILE_SIZE, tipo);
             case 24: // fakeEspinho topo
                 return new FakeEspinho(x, y - 10, TILE_SIZE, TILE_SIZE, tipo);
-            case 21: // laser grande vertical
-                return new LaserGrande(x, y, 530, 40, tipo);
-            case 22: // laser grande horizontal
-                return new LaserGrande(x, y, 40, 270, tipo);
             default:
                 return null;
         }
@@ -217,6 +207,18 @@ public abstract class Level {
     public void updateEspinhos() {
         for (Espinhos espinho : espinhos) {
             espinho.update();
+        }
+    }
+
+    /**
+     * Avança o frame global de animação de brilho (uma vez por tick) e chama
+     * {@link game.objetos.Laser#update()} em cada laser com movimento configurado.
+     * Deve ser chamado exatamente uma vez por tick em {@code GamePanel.actionPerformed()}.
+     */
+    public void updateLasers() {
+        Laser.updateFrameGlobal();
+        for (Laser laser : lasers) {
+            laser.update();
         }
     }
 

@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "GameFrame",
+      "request": "launch",
+      "mainClass": "sabotage_station/game.GameFrame",
+      "projectName": "sabotage_station"
+    },
+    {
+      "type": "java",
       "name": "Sabotage Station",
       "request": "launch",
       "mainClass": "game.GameFrame",
