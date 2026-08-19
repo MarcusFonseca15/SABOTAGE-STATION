@@ -17,17 +17,19 @@ StartPanel: Selecionar Modos
 
 - Fix Fase8:  Pistao[11x4] mudar força para 1f e o outro pistao de cima está bugado (entrar)
  // colocar platafrma na area do lifebar
+
+Start Screen
+ - Animação de Lasers (particulas)
 *****************
 
 
 +++++++++++++++++++++++++++++
-Start Screen
+
 Game Over screen
 Win Screen
 Cenário de fundo (3 variações)
 Animação de dano
 Animação de morte
-Animação nos lasers
 +++++++++++++++++++++
 +
 +
@@ -48,7 +50,7 @@ Bugs e glitchs:
 ADIÇÕES:
 - Objeto COLA: Prende personagem no chão (tipo pistão da fase8, ou com impulso negativo)
 - Animação de Morte
-- Animação de Lasers (particulas)
+
 - Fase 6: sacrifique-se e ganhe asas (3 vidas extras) coraçao dourado
 
 -----------🚀 Complexos (Novas Funcionalidades)

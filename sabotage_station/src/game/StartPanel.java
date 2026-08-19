@@ -9,7 +9,7 @@ public class StartPanel extends JPanel {
 
     // Variáveis de controle do Hover/Seleção
     private ModoJogo modoSelecionado = ModoJogo.NORMAL;
-    private final ModoJogo[] valoresModo = { ModoJogo.FACIL, ModoJogo.NORMAL, ModoJogo.DIFICIL };
+    private final ModoJogo[] valoresModo = { ModoJogo.TREINO, ModoJogo.NORMAL, ModoJogo.DIFICIL };
     private JPanel menuPanel;
     private JButton[] modoButtons;
 
@@ -57,8 +57,13 @@ public class StartPanel extends JPanel {
             setOpaque(false);
             setLineWrap(true);
             setWrapStyleWord(true);
+            setAccentColor(Color.CYAN);
+        }
+
+        /** Atualiza a cor da borda lateral esquerda da descrição. */
+        public void setAccentColor(Color cor) {
             setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createMatteBorder(0, 4, 0, 0, Color.CYAN),
+                    BorderFactory.createMatteBorder(0, 4, 0, 0, cor),
                     BorderFactory.createEmptyBorder(8, 8, 8, 8)));
         }
 
@@ -109,7 +114,9 @@ public class StartPanel extends JPanel {
 
                 public void mouseClicked(MouseEvent e) {
                     modoSelecionado = modo;
-                    description.setText(modoSelecionado.descricao); // Atualiza texto
+                    description.setText(modoSelecionado.descricao);
+                    ((CenteredTextArea) description).setAccentColor(modoSelecionado.cor);
+                    description.repaint();
                     for (JButton btn : modoButtons) {
                         btn.repaint();
                     }
@@ -123,7 +130,8 @@ public class StartPanel extends JPanel {
 
             if (hovered || modoSelecionado == modo) {
                 Graphics2D g2d = (Graphics2D) g.create();
-                Color c = (modoSelecionado == modo) ? Color.CYAN : Color.WHITE;
+                // Botão selecionado usa a cor do modo; hover usa branco
+                Color c = (modoSelecionado == modo) ? modo.cor : Color.WHITE;
                 g2d.setColor(c);
                 g2d.setStroke(new BasicStroke(2));
                 g2d.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
@@ -199,7 +207,7 @@ public class StartPanel extends JPanel {
         JPanel modosContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
         modosContainer.setOpaque(false);
 
-        String[] labels = { "Fácil", "Normal", "Difícil" };
+        String[] labels = { "Treino", "Normal", "Difícil" };
         modoButtons = new JButton[valoresModo.length];
 
         for (int i = 0; i < valoresModo.length; i++) {
@@ -219,6 +227,7 @@ public class StartPanel extends JPanel {
         description.setForeground(Color.WHITE);
         description.setFont(FontManager.getVHSFont(14f));
         description.setText(modoSelecionado.descricao);
+        ((CenteredTextArea) description).setAccentColor(modoSelecionado.cor);
         description.setEditable(false);
         menuPanel.add(description, gbc);
 

@@ -16,7 +16,7 @@ public class Gravity {
 
     // ── Perfis estáticos ──────────────────────────────────────────────────────
     public static final Gravity NORMAL = new Gravity(1, 1.0, 15.0);
-    public static final Gravity LUNAR = new Gravity(1, 0.3, 15.0);
+    public static final Gravity LUNAR = new Gravity(1, 0.5, 15.0);
     public static final Gravity SOLAR = new Gravity(1, 4.0, 15.0);
     public static final Gravity INVERTIDA = new Gravity(-1, 1.0, 15.0);
 

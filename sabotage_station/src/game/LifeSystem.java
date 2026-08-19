@@ -13,7 +13,9 @@ interface LifeEventListener {
     /** Called when the player runs out of lives (after the death delay expires). */
     void onGameOver();
 
-    /** Called when the player loses a life but still has lives remaining (respawn). */
+    /**
+     * Called when the player loses a life but still has lives remaining (respawn).
+     */
     void onPlayerReset();
 }
 
@@ -37,12 +39,12 @@ public class LifeSystem {
     private static final long MORTE_DELAY = 1000; // ms
 
     // ── Configurações de desenho ──────────────────────────────────────────────
-    private static final int BOX_H = 48;  // altura máxima da área da lifebar
+    private static final int BOX_H = 48; // altura máxima da área da lifebar
     private static final int DRAW_X = 10; // posição X na tela
     private static final int DRAW_Y = 550; // posição Y na tela (topo da área)
 
     // ── Dependências externas ─────────────────────────────────────────────────
-    private final Component observer;       // ImageObserver para drawImage
+    private final Component observer; // ImageObserver para drawImage
     private final LifeEventListener listener; // callbacks de evento
 
     // ─────────────────────────────────────────────────────────────────────────
@@ -53,14 +55,15 @@ public class LifeSystem {
      * Construtor com modo de jogo explícito.
      *
      * @param modo     define o número máximo de vidas
-     * @param observer componente usado como ImageObserver no drawImage (geralmente o GamePanel)
+     * @param observer componente usado como ImageObserver no drawImage (geralmente
+     *                 o GamePanel)
      * @param listener recebe callbacks de onGameOver() e onPlayerReset()
      */
     public LifeSystem(ModoJogo modo, Component observer, LifeEventListener listener) {
         this.observer = observer;
         this.listener = listener;
 
-        if (modo == ModoJogo.FACIL) {
+        if (modo == ModoJogo.TREINO) {
             this.MAX_VIDAS = 20;
         } else if (modo == ModoJogo.NORMAL) {
             this.MAX_VIDAS = 10;
@@ -86,7 +89,10 @@ public class LifeSystem {
     // Inicialização
     // ─────────────────────────────────────────────────────────────────────────
 
-    /** Carrega os sprites da lifebar do classpath. Erros de sprite ausente são logados sem lançar exceção. */
+    /**
+     * Carrega os sprites da lifebar do classpath. Erros de sprite ausente são
+     * logados sem lançar exceção.
+     */
     private void carregarSprites() {
         barraVidaImages = new Image[MAX_VIDAS + 1];
         for (int i = 0; i <= MAX_VIDAS; i++) {
@@ -108,11 +114,13 @@ public class LifeSystem {
      * Verifica e avança o delay pós-morte. Deve ser chamado no início de cada frame
      * (em {@code actionPerformed}).
      *
-     * @return {@code true} se o delay ainda está ativo e o chamador deve pular o restante
+     * @return {@code true} se o delay ainda está ativo e o chamador deve pular o
+     *         restante
      *         do update; {@code false} se não há morte pendente.
      */
     public boolean tickDelay() {
-        if (!waitMorte) return false;
+        if (!waitMorte)
+            return false;
 
         long elapsed = System.currentTimeMillis() - morteTime;
         if (elapsed >= MORTE_DELAY) {
@@ -128,8 +136,10 @@ public class LifeSystem {
     // ─────────────────────────────────────────────────────────────────────────
 
     /**
-     * Registra a perda de uma vida. Se ainda houver vidas, chama {@code onPlayerReset()};
-     * caso contrário inicia o delay pós-morte que culminará em {@code onGameOver()}.
+     * Registra a perda de uma vida. Se ainda houver vidas, chama
+     * {@code onPlayerReset()};
+     * caso contrário inicia o delay pós-morte que culminará em
+     * {@code onGameOver()}.
      */
     public void perderVida() {
         vida--;
@@ -164,7 +174,8 @@ public class LifeSystem {
      * @param g contexto gráfico do componente pai
      */
     public void draw(Graphics g) {
-        if (vida < 0 || vida >= barraVidaImages.length || barraVidaImages[vida] == null) return;
+        if (vida < 0 || vida >= barraVidaImages.length || barraVidaImages[vida] == null)
+            return;
 
         Image img = barraVidaImages[vida];
         int imgW = img.getWidth(observer);
@@ -191,7 +202,15 @@ public class LifeSystem {
     // Getters
     // ─────────────────────────────────────────────────────────────────────────
 
-    public int getVida() { return vida; }
-    public int getMaxVidas() { return MAX_VIDAS; }
-    public boolean isWaitingMorte() { return waitMorte; }
+    public int getVida() {
+        return vida;
+    }
+
+    public int getMaxVidas() {
+        return MAX_VIDAS;
+    }
+
+    public boolean isWaitingMorte() {
+        return waitMorte;
+    }
 }

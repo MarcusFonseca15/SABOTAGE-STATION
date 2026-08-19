@@ -29,9 +29,9 @@ import levelGroup.Level11;
 
 public class GamePanel extends JPanel implements ActionListener, LifeEventListener {
 
-    public int currentLevel = 9;
+    public int currentLevel = 11;
     int proximoLevel = 0; // apenas de inicialização
-    private final int maxLevels = 10;
+    private final int maxLevels = 11;
     int numFase = 1;
 
     private boolean godMode = false;
