@@ -23,7 +23,6 @@ public final class SpriteUtils {
     private static final Map<String, BufferedImage> cache = new HashMap<>();
 
     private SpriteUtils() {
-
     }
 
     public static BufferedImage[] cortarFrames(BufferedImage spritesheet,

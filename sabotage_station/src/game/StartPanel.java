@@ -6,10 +6,10 @@ import java.awt.event.*;
 
 public class StartPanel extends JPanel {
     private GameFrame frame;
-    
+
     // Variáveis de controle do Hover/Seleção
     private ModoJogo modoSelecionado = ModoJogo.NORMAL;
-    private final ModoJogo[] valoresModo = {ModoJogo.FACIL, ModoJogo.NORMAL, ModoJogo.DIFICIL};
+    private final ModoJogo[] valoresModo = { ModoJogo.FACIL, ModoJogo.NORMAL, ModoJogo.DIFICIL };
     private JPanel menuPanel;
     private JButton[] modoButtons;
 
@@ -19,7 +19,7 @@ public class StartPanel extends JPanel {
     private static final Color MENU_BUTTON_HOVER_BG = new Color(0x59, 0xE1, 0xFF);
     private static final Color MENU_BUTTON_BORDER = Color.CYAN;
     private static final Color MENU_BUTTON_FOREGROUND = Color.WHITE;
-    
+
     private JTextArea description;
 
     private static class TranslucentButton extends JButton {
@@ -58,9 +58,8 @@ public class StartPanel extends JPanel {
             setLineWrap(true);
             setWrapStyleWord(true);
             setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createMatteBorder(0, 4, 0, 0, Color.CYAN),
-                BorderFactory.createEmptyBorder(8, 8, 8, 8)
-            ));
+                    BorderFactory.createMatteBorder(0, 4, 0, 0, Color.CYAN),
+                    BorderFactory.createEmptyBorder(8, 8, 8, 8)));
         }
 
         @Override
@@ -89,7 +88,7 @@ public class StartPanel extends JPanel {
         public ModeButton(String text, ModoJogo modo) {
             super(text);
             this.modo = modo;
-            
+
             // Estilo invisível
             setOpaque(false);
             setContentAreaFilled(false);
@@ -102,10 +101,12 @@ public class StartPanel extends JPanel {
                     hovered = true;
                     repaint();
                 }
+
                 public void mouseExited(MouseEvent e) {
                     hovered = false;
                     repaint();
                 }
+
                 public void mouseClicked(MouseEvent e) {
                     modoSelecionado = modo;
                     description.setText(modoSelecionado.descricao); // Atualiza texto
@@ -118,8 +119,8 @@ public class StartPanel extends JPanel {
 
         @Override
         protected void paintComponent(Graphics g) {
-            super.paintComponent(g); 
-            
+            super.paintComponent(g);
+
             if (hovered || modoSelecionado == modo) {
                 Graphics2D g2d = (Graphics2D) g.create();
                 Color c = (modoSelecionado == modo) ? Color.CYAN : Color.WHITE;
@@ -131,16 +132,16 @@ public class StartPanel extends JPanel {
         }
     }
 
-    private final int BTN_WIDTH = 74; 
+    private final int BTN_WIDTH = 74;
     private final int BTN_HEIGHT = 43;
 
-    public StartPanel(GameFrame frame) { 
+    public StartPanel(GameFrame frame) {
         this.frame = frame;
-        
-        ImageIcon icon = new ImageIcon(getClass().getResource("/assets/telas_e_botoes/StartBG.jpg"));
+
+        ImageIcon icon = new ImageIcon(getClass().getResource("/assets/telas_e_botoes/StartBG.png"));
         this.bgImage = icon.getImage();
 
-        this.setLayout(new GridBagLayout()); 
+        this.setLayout(null);
 
         InputMap im = this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap am = this.getActionMap();
@@ -163,14 +164,14 @@ public class StartPanel extends JPanel {
                 super.paintComponent(g);
             }
         };
-        
-        menuPanel.setOpaque(false); 
-        
-        menuPanel.setLayout(new GridBagLayout()); 
+
+        menuPanel.setOpaque(false);
+
+        menuPanel.setLayout(new GridBagLayout());
         menuPanel.setBackground(new Color(0, 0, 0, 70));
         menuPanel.setBorder(BorderFactory.createLineBorder(Color.CYAN, 2));
         menuPanel.setPreferredSize(new Dimension(280, 363));
-        
+
         // Regras (Constraints) para alinhar tudo
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -182,14 +183,14 @@ public class StartPanel extends JPanel {
         Font modeButtonFont = buttonFont.deriveFont(buttonFont.getSize2D() * 0.5f);
 
         JButton btnIniciar = new TranslucentButton("[   Iniciar   ]");
-        btnIniciar.setPreferredSize(new Dimension(224, 48)); 
+        btnIniciar.setPreferredSize(new Dimension(224, 48));
         btnIniciar.addActionListener(e -> iniciarJogo());
         configureMenuButton(btnIniciar, buttonFont);
         menuPanel.add(btnIniciar, gbc);
 
         gbc.gridy++;
         JButton btnConfig = new TranslucentButton("[   Configurações   ]");
-        btnConfig.setPreferredSize(new Dimension(224, 43)); 
+        btnConfig.setPreferredSize(new Dimension(224, 43));
         configureMenuButton(btnConfig, buttonFont);
         menuPanel.add(btnConfig, gbc);
 
@@ -197,15 +198,15 @@ public class StartPanel extends JPanel {
         gbc.gridy++;
         JPanel modosContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
         modosContainer.setOpaque(false);
-        
-        String[] labels = {"Fácil","Normal", "Difícil"};
+
+        String[] labels = { "Fácil", "Normal", "Difícil" };
         modoButtons = new JButton[valoresModo.length];
-        
+
         for (int i = 0; i < valoresModo.length; i++) {
             ModeButton btn = new ModeButton(labels[i], valoresModo[i]);
             btn.setFont(modeButtonFont);
             btn.setPreferredSize(new Dimension(BTN_WIDTH, BTN_HEIGHT));
-            
+
             modosContainer.add(btn);
             modoButtons[i] = btn;
         }
@@ -217,20 +218,19 @@ public class StartPanel extends JPanel {
         description.setBackground(new Color(0, 0, 0, 150));
         description.setForeground(Color.WHITE);
         description.setFont(FontManager.getVHSFont(14f));
-        description.setText(modoSelecionado.descricao); 
+        description.setText(modoSelecionado.descricao);
         description.setEditable(false);
         menuPanel.add(description, gbc);
 
-        GridBagConstraints mainGbc = new GridBagConstraints();
-        mainGbc.insets = new Insets(40, 0, 0, 0); 
-        this.add(menuPanel, mainGbc);
+        this.add(menuPanel);
+        menuPanel.setBounds(70, 220, 280, 363); // x, y, width, height
     }
 
     private void iniciarJogo() {
         System.out.println("Iniciando jogo no modo: " + modoSelecionado);
-        
+
         GamePanel gp = new GamePanel(frame, modoSelecionado);
-        
+
         if (frame.getContentPane().getLayout() instanceof CardLayout) {
             frame.getContentPane().add(gp, "GamePanel");
             CardLayout cl = (CardLayout) frame.getContentPane().getLayout();
@@ -241,7 +241,7 @@ public class StartPanel extends JPanel {
             frame.revalidate();
             frame.repaint();
         }
-        
+
         javax.swing.SwingUtilities.invokeLater(() -> gp.requestFocusInWindow());
     }
 
@@ -269,13 +269,7 @@ public class StartPanel extends JPanel {
         super.paintComponent(g);
 
         if (bgImage != null) {
-            int imgWidth = bgImage.getWidth(null);
-            int imgHeight = bgImage.getHeight(null);
-            int panelWidth = this.getWidth();
-            double scaleFactor = (double) panelWidth / imgWidth;
-            int scaleAltura = (int) (imgHeight * scaleFactor) - 110;
-            
-            g.drawImage(bgImage, 0, 0, panelWidth, scaleAltura, null);
+            g.drawImage(bgImage, 0, 0, getWidth(), getHeight(), null);
         }
     }
 }
