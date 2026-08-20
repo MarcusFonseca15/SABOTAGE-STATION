@@ -1,12 +1,6 @@
 package game;
 
 /**
- * direcao – sentido da gravidade: 1 = normal (para baixo), -1 = invertida (para
- * cima)
- * forca – taxa de aceleração por frame, SEMPRE positiva (padrão 1.0)
- * forcaPulo – velocidade inicial do pulo, SEMPRE positiva (padrão 15.0)
- *
- * Perfis prontos:
  * Gravity.NORMAL → direcao=1, forca=1.0, forcaPulo=15.0
  * Gravity.LUNAR → direcao=1, forca=0.3, forcaPulo=15.0
  * Gravity.SOLAR → direcao=1, forca=4.0, forcaPulo=15.0
@@ -16,7 +10,7 @@ public class Gravity {
 
     // ── Perfis estáticos ──────────────────────────────────────────────────────
     public static final Gravity NORMAL = new Gravity(1, 1.0, 15.0);
-    public static final Gravity LUNAR = new Gravity(1, 0.5, 15.0);
+    public static final Gravity LUNAR = new Gravity(1, 0.1, 15.0);
     public static final Gravity SOLAR = new Gravity(1, 4.0, 15.0);
     public static final Gravity INVERTIDA = new Gravity(-1, 1.0, 15.0);
 
@@ -39,17 +33,9 @@ public class Gravity {
         this.forcaPulo = Math.abs(forcaPulo);
     }
 
-    /**
-     * Construtor de compatibilidade com a assinatura antiga: new Gravity(double
-     * vInit).
-     * O sinal de vInit define a direção; a magnitude define a força.
-     * Exemplos: new Gravity(1.0) → normal; new Gravity(-1.0) → invertida.
-     */
     public Gravity(double vInit) {
         this(vInit >= 0 ? 1 : -1, Math.abs(vInit) == 0 ? 0.0 : Math.abs(vInit), 15.0);
     }
-
-    // ── Setter unificado (novo) ───────────────────────────────────────────────
 
     /**
      * Define todos os parâmetros de uma vez.
@@ -86,26 +72,17 @@ public class Gravity {
         this.forcaPulo = Math.abs(magnitude);
     }
 
-    // ── Getters ──────────────────────────────────────────────────────────────
-
-    /**
-     * Direção da gravidade: 1 = normal (para baixo), -1 = invertida (para cima).
-     */
     public int getDirecao() {
         return direcao;
     }
 
-    /** Força de aceleração por frame (sempre positiva). */
     public double getForca() {
         return forca;
     }
 
-    /** Magnitude da velocidade inicial do pulo (sempre positiva). */
     public double getForcaPulo() {
         return forcaPulo;
     }
-
-    // ── Aliases retroativos ──────────────────────────────────────────────────
 
     /** @deprecated Use {@link #getDirecao()} — mantido para ColisionManager. */
     @Deprecated

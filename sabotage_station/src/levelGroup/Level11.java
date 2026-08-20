@@ -13,20 +13,19 @@ public class Level11 extends Level {
     private Player player;
     private GamePanel gamePanel;
 
-    // Chão completo (linha 11) e teto completo (linha 0) de plataformas
     private static int[][] mapa = {
-        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, // linha 0: teto
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, // linha 11: chão
+            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, // linha 0: teto
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, // linha 11: chão
     };
 
     @Override
@@ -46,17 +45,13 @@ public class Level11 extends Level {
 
     @Override
     protected void designTraps() {
-        // Sem armadilhas — nível de teste puro de gravidade.
-        // As teclas I / L / S / N mudam a gravidade via keyPressed().
     }
 
     /**
-     * Chamado pelo GamePanel sempre que uma tecla é pressionada neste nível.
-     *
-     * I → Gravity.INVERTIDA  (direcao=-1, forca=1.0)
-     * L → Gravity.LUNAR      (direcao=+1, forca=0.3)
-     * S → Gravity.SOLAR      (direcao=+1, forca=4.0)
-     * N → Gravity.NORMAL     (direcao=+1, forca=1.0)
+     * I → Gravity.INVERTIDA (direcao=-1, forca=1.0)
+     * L → Gravity.LUNAR (direcao=+1, forca=0.3)
+     * S → Gravity.SOLAR (direcao=+1, forca=4.0)
+     * N → Gravity.NORMAL (direcao=+1, forca=1.0)
      */
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
@@ -65,7 +60,7 @@ public class Level11 extends Level {
                 System.out.println("[Level11] Gravidade: INVERTIDA");
             }
             case KeyEvent.VK_L -> {
-                player.g.setGravity(1, 0.3, 15.0);
+                player.g.setGravity(1, 0.1, 8.0);
                 System.out.println("[Level11] Gravidade: LUNAR");
             }
             case KeyEvent.VK_S -> {

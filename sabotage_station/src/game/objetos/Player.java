@@ -14,7 +14,7 @@ public class Player {
     public Gravity g;
 
     public int velX = 0;
-    public int velY = 0;
+    public double velY = 0;
     public boolean jumping = false;
     public boolean onGround = true;
     public boolean wantToJump = false;
@@ -102,14 +102,14 @@ public class Player {
         if (wantToJump) {
             if (onGround) {
                 // Impulso na direção OPOSTA da gravidade vigente
-                velY = (int) (-g.getDirecao() * g.getForcaPulo());
+                velY = -g.getDirecao() * g.getForcaPulo();
                 jumping = true;
                 onGround = false;
                 wantToJump = false; // só reseta aqui
             }
         }
 
-        y += velY;
+        y += (int) velY;
 
         // Limitar na tela
         if (x < 0)
@@ -174,7 +174,7 @@ public class Player {
         this.x = 70;
         this.y = 500;
         this.velX = 0;
-        this.velY = 0;
+        this.velY = 0.0;
         this.jumping = false;
         this.onGround = true;
     }
