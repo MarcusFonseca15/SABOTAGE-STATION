@@ -167,8 +167,10 @@ public abstract class Level {
     protected Objeto criarObjetoPorCodigo(int tipo, int x, int y) {
 
         switch (tipo) {
-            case 1, 2, 3, 4:
+            case 1, 2, 3, 4: // plataformas metalTile 1–4
                 return new Platform(x, y, TILE_SIZE, TILE_SIZE, tipo);
+            case 34: // plataforma metalTile5 (invertida)
+                return new Platform(x, y, TILE_SIZE, TILE_SIZE, 5);
             case 5: // pistao normal
                 return new Pistao(x, y, TILE_SIZE, TILE_SIZE, 1, false);
             case 6: // pistao camuflado

@@ -3,8 +3,6 @@ package game.objetos;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -13,6 +11,12 @@ public class Platform extends Objeto {
     private boolean debug = false;
     public boolean visible = true;
     public boolean showGlow = false;
+
+    // Tile spritesheet
+    private static final int TILE_FRAME_W = 114;
+    private static final int TILE_FRAME_H = 116;
+    private static final int TILE_FRAME_COUNT = 5;
+    private static final BufferedImage[] sprites = new BufferedImage[TILE_FRAME_COUNT];
 
     // Glow animation
     private static final int GLOW_FRAME_COUNT = 10;
@@ -27,14 +31,13 @@ public class Platform extends Objeto {
     private long glowCycleStart = System.currentTimeMillis();
     private boolean animating = false;
 
-    private static final Map<Integer, BufferedImage> sprites = new HashMap<>();
-
     static {
         try {
-            sprites.put(1, ImageIO.read(Platform.class.getResourceAsStream("/assets/metal_Tiles/metalTile1.png")));
-            sprites.put(2, ImageIO.read(Platform.class.getResourceAsStream("/assets/metal_Tiles/metalTile2.png")));
-            sprites.put(3, ImageIO.read(Platform.class.getResourceAsStream("/assets/metal_Tiles/metalTile3.png")));
-            sprites.put(4, ImageIO.read(Platform.class.getResourceAsStream("/assets/metal_Tiles/metalTile4.png")));
+            BufferedImage tileSheet = ImageIO.read(
+                    Platform.class.getResourceAsStream("/assets/metal_Tiles/metalTile-sheet.png"));
+            for (int i = 0; i < TILE_FRAME_COUNT; i++) {
+                sprites[i] = tileSheet.getSubimage(i * TILE_FRAME_W, 0, TILE_FRAME_W, TILE_FRAME_H);
+            }
 
             // Carregamento do spritesheet de glow
             glowSheet = ImageIO.read(Platform.class.getResourceAsStream("/assets/effects/showglow-sheet.png"));
@@ -45,7 +48,9 @@ public class Platform extends Objeto {
 
     public Platform(int x, int y, int width, int height, int tipo) {
         super(x, y, width, height);
-        this.sprite = sprites.get(tipo);
+        if (tipo >= 1 && tipo <= TILE_FRAME_COUNT) {
+            this.sprite = sprites[tipo - 1];
+        }
     }
 
     public void setState(boolean visible, boolean showGlow) {
