@@ -3,6 +3,7 @@ package game;
 import javax.swing.*;
 
 import game.objetos.DeathSprite;
+import game.objetos.Graviton;
 import game.objetos.Player;
 
 import java.awt.*;
@@ -200,6 +201,9 @@ public class GamePanel extends JPanel implements ActionListener, LifeEventListen
         ///////// PLAYER /////////////
         player.draw(g);
 
+        // OVERLAY DE GRAVIDADE (borda)
+        drawGravityOverlay(g);
+
         // ------------ TITULO COM CONTORNO
         {
             Graphics2D g2d = (Graphics2D) g.create();
@@ -254,6 +258,69 @@ public class GamePanel extends JPanel implements ActionListener, LifeEventListen
         if (currentLevel == 1 && level instanceof Level01) {
             ((Level01) level).drawInstructions(g);
         }
+    }
+
+    /**
+     * Desenha o overlay visual de gravidade para gravitons
+     * Exibe uma borda interna colorida e um texto central quando
+     * a gravidade for Invertida (amarela), Solar (vermelha) ou Lunar (azul).
+     */
+    private void drawGravityOverlay(Graphics g) {
+        if (!(level instanceof Level06))
+            return;
+
+        int direcao = player.g.getDirecao();
+        double forca = player.g.getForca();
+
+        Color borderColor;
+        String nomeGravidade;
+
+        if (direcao == -1) {
+            borderColor = new Color(255, 220, 0);
+            nomeGravidade = "Invertida";
+        } else if (forca >= 3.0) {
+            borderColor = new Color(255, 80, 40);
+            nomeGravidade = "Solar";
+        } else if (forca <= 0.5) {
+            borderColor = new Color(80, 160, 255);
+            nomeGravidade = "Lunar";
+        } else {
+            return;
+        }
+
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        int espessura = 8;
+        long now = System.currentTimeMillis();
+        // oscila a opacidade
+        float pulse = (float) (Math.sin(now / 500.0 * Math.PI) * 0.5 + 0.5);
+        int alpha = 120 + (int) (pulse * 100);
+        g2d.setColor(new Color(borderColor.getRed(), borderColor.getGreen(), borderColor.getBlue(), alpha));
+        g2d.setStroke(new BasicStroke(espessura * 2));
+        // top
+        g2d.fillRect(0, 0, getWidth(), espessura);
+        // bottom
+        g2d.fillRect(0, getHeight() - espessura, getWidth(), espessura);
+        // left
+        g2d.fillRect(0, 0, espessura, getHeight());
+        // right
+        g2d.fillRect(getWidth() - espessura, 0, espessura, getHeight());
+
+        String texto = "Gravidade: " + nomeGravidade;
+        Font fonte = new Font("Arial", Font.BOLD, 18);
+        g2d.setFont(fonte);
+        FontMetrics fm = g2d.getFontMetrics();
+        int tx = (getWidth() - fm.stringWidth(texto)) / 2;
+        int ty = 585;
+
+        // sombra do texto
+        g2d.setColor(new Color(0, 0, 0, 180));
+        g2d.drawString(texto, tx + 2, ty + 2);
+        g2d.setColor(new Color(borderColor.getRed(), borderColor.getGreen(), borderColor.getBlue(), 230));
+        g2d.drawString(texto, tx, ty);
+
+        g2d.dispose();
     }
 
     private void initRandomFases() {
