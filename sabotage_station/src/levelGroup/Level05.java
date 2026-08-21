@@ -52,7 +52,7 @@ public class Level05 extends Level {
         // TITULO: "05. NÃO É COMO VOCE ACHA"
 
         Pistao pistaoForte = (Pistao) mapaObjetos[11][14];
-        pistaoForte.forca = 1.5f;
+        pistaoForte.forca = 3.5f;
 
         Pistao pistCam = (Pistao) mapaObjetos[11][10];
         pistCam.forca = 1.5f;

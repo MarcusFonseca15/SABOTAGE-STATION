@@ -84,7 +84,7 @@ public class GamePanel extends JPanel implements ActionListener, LifeEventListen
         this.setPreferredSize(new Dimension(LARGURA, ALTURA));
         this.setFocusable(true);
 
-        backgroundImage = new ImageIcon(getClass().getResource("/assets/background2.png")).getImage();
+        backgroundImage = new ImageIcon(getClass().getResource("/assets/bg1.png")).getImage();
 
         Gravity gravityInit = new Gravity(1.0);
         player = new Player(100, 500, gravityInit);
