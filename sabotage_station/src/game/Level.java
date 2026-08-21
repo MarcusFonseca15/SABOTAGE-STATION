@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import game.objetos.Espinhos;
 import game.objetos.EspinhosP;
 import game.objetos.FakeEspinho;
+import game.objetos.Graviton;
 import game.objetos.Laser;
 
 import game.objetos.Objeto;
@@ -28,7 +29,7 @@ public abstract class Level {
     ArrayList<Espinhos> espinhos = new ArrayList<>();
     ArrayList<EspinhosP> espinhosP = new ArrayList<>();
     ArrayList<FakeEspinho> fakeEspinho = new ArrayList<>();
-
+    ArrayList<Graviton> gravitons = new ArrayList<>();
 
     ////////////// TITULO
     protected String titulo = "";
@@ -79,6 +80,8 @@ public abstract class Level {
                         espinhosP.add((EspinhosP) obj);
                     } else if (obj instanceof FakeEspinho) {
                         fakeEspinho.add((FakeEspinho) obj);
+                    } else if (obj instanceof Graviton) {
+                        gravitons.add((Graviton) obj);
                     }
                 }
 
@@ -87,6 +90,9 @@ public abstract class Level {
     }
 
     public void draw(Graphics g) {
+        for (Graviton graviton : gravitons)
+            graviton.draw(g);
+
         for (Platform p : platforms) {
             p.updateGlow();
             p.draw(g);
@@ -106,8 +112,6 @@ public abstract class Level {
 
         for (FakeEspinho fakeEspinho : fakeEspinho)
             fakeEspinho.draw(g);
-
-
     }
 
     public boolean checkLaserCollision(Player player) {
@@ -116,14 +120,16 @@ public abstract class Level {
                 return true;
         }
 
-
-
         return false;
     }
 
-    // Getters para as listas de objetos físicos — usados por ColisionManager
-    public List<Platform> getPlatforms() { return platforms; }
-    public List<Pistao>   getPistoes()   { return pistoes; }
+    public List<Platform> getPlatforms() {
+        return platforms;
+    }
+
+    public List<Pistao> getPistoes() {
+        return pistoes;
+    }
 
     public boolean checkEspinhosCollision(Player player) {
         for (Espinhos l : espinhos) {
@@ -158,7 +164,6 @@ public abstract class Level {
         return false;
     }
 
-
     protected Objeto criarObjetoPorCodigo(int tipo, int x, int y) {
 
         switch (tipo) {
@@ -188,6 +193,11 @@ public abstract class Level {
                 return new FakeEspinho(x, y + 30, TILE_SIZE, TILE_SIZE, tipo);
             case 24: // fakeEspinho topo
                 return new FakeEspinho(x, y - 10, TILE_SIZE, TILE_SIZE, tipo);
+            case Graviton.TIPO_NORMAL: // 30 – graviton normal
+            case Graviton.TIPO_LUNAR: // 31 – graviton lunar
+            case Graviton.TIPO_SOLAR: // 32 – graviton solar
+            case Graviton.TIPO_INVERTIDA: // 33 – graviton invertida
+                return new Graviton(x, y, TILE_SIZE, TILE_SIZE, tipo);
             default:
                 return null;
         }
@@ -210,16 +220,27 @@ public abstract class Level {
         }
     }
 
-    /**
-     * Avança o frame global de animação de brilho (uma vez por tick) e chama
-     * {@link game.objetos.Laser#update()} em cada laser com movimento configurado.
-     * Deve ser chamado exatamente uma vez por tick em {@code GamePanel.actionPerformed()}.
-     */
     public void updateLasers() {
         Laser.updateFrameGlobal();
         for (Laser laser : lasers) {
             laser.update();
         }
+    }
+
+    public void updateGravitons(java.awt.Rectangle playerBounds, game.Gravity playerGravity) {
+        for (Graviton grav : gravitons) {
+            grav.checkAndActivate(playerBounds, playerGravity, gravitons);
+        }
+    }
+
+    public void resetGravitons() {
+        for (Graviton grav : gravitons) {
+            grav.desativar();
+        }
+    }
+
+    public List<Graviton> getGravitons() {
+        return gravitons;
     }
 
     protected abstract int[][] getMapa();

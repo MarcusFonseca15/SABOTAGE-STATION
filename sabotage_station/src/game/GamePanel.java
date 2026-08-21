@@ -29,9 +29,9 @@ import levelGroup.Level11;
 
 public class GamePanel extends JPanel implements ActionListener, LifeEventListener {
 
-    public int currentLevel = 11;
+    public int currentLevel = 1;
     int proximoLevel = 0; // apenas de inicialização
-    private final int maxLevels = 11;
+    private final int maxLevels = 10;
     int numFase = 1;
 
     private boolean godMode = false;
@@ -282,6 +282,7 @@ public class GamePanel extends JPanel implements ActionListener, LifeEventListen
         level.updatePistaos(player);
         level.updateEspinhos();
         level.updateLasers();
+        level.updateGravitons(player.getBounds(), player.g);
 
         if (currentLevel == 1 && level instanceof Level01) {
             ((Level01) level).updateInstructions();
@@ -352,6 +353,8 @@ public class GamePanel extends JPanel implements ActionListener, LifeEventListen
 
     @Override
     public void onPlayerReset() {
+        level.resetGravitons();
+        player.g.setGravity(1, 1.0, 15.0); // volta à gravidade normal (Terra) ao respawnar
         player.reset();
         blockInput(700);
     }

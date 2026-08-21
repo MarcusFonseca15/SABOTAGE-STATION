@@ -21,21 +21,25 @@ public class Level06 extends Level {
     Player player;
     private GamePanel gamePanel;
     Gravity g;
-    private boolean ativo = true;
+
+    private EspinhosP espInv1;
+    private EspinhosP espInv2;
+    private EspinhosP espInv3;
+    private EspinhosP espInv4;
 
     private static int[][] mapa = {
-            { 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4 },
-            { 4, 14, 12, 12, 12, 12, 12, 13, 0, 0, 0, 0, 0, 0, 0, 8 },
-            { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4 },
-            { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4 },
-            { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4 },
-            { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4 },
-            { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4 },
-            { 4, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 },
-            { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8 },
-            { 1, 1, 1, 1, 1, 8, 8, 8, 8, 8, 8, 8, 1, 1, 5, 1 }
+            { 1, 1, 9, 9, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+            { 0, 0, 0, 0, 0, 0, 24, 24, 24, 24, 24, 24, 24, 24, 24, 9 },
+            { 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 8 },
+            { 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 32, 0, 0, 1, 1, 0, 30, 8 },
+            { 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 8 },
+            { 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0 },
+            { 0, 0, 0, 33, 0, 8, 0, 0, 0, 0, 8, 8, 8, 8, 0, 0 },
+            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
     };
 
     @Override
@@ -50,73 +54,26 @@ public class Level06 extends Level {
         this.gamePanel = gamePanel;
 
         designTraps();
-        monitorarPulo();
 
-        this.titulo = formatarTitulo("Eita, um bug?...", gamePanel.getNumFase());
+        this.titulo = formatarTitulo("Gravitons!", gamePanel.getNumFase());
         setShowExit(false);
     }
 
     @Override
     protected void designTraps() {
 
-        Pistao pF = (Pistao) mapaObjetos[11][14];
-        pF.forca = 2f;
+        espInv1 = (EspinhosP) mapaObjetos[10][5];
+        espInv1.setVisible(false);
 
-        EspinhosP esp = (EspinhosP) mapaObjetos[10][15];
-        esp.visible = false;
+        espInv2 = (EspinhosP) mapaObjetos[2][15];
+        espInv2.setVisible(false);
 
-        EspinhosP esp2 = (EspinhosP) mapaObjetos[1][15];
-        esp2.visible = false;
+        espInv3 = (EspinhosP) mapaObjetos[4][15];
+        espInv3.setVisible(false);
 
-        int baseY = 1 * 50;
-        int yMin = 20, yMax = 450;
-        for (int col = 1; col <= 7; col++) {
-            Laser l = (Laser) mapaObjetos[1][col];
-            int dy = l.getY() - baseY;
-            l.configMovVertical(yMin + dy, yMax + dy, 2, 0);
-        }
+        espInv4 = (EspinhosP) mapaObjetos[6][15];
+        espInv4.setVisible(false);
 
     } // -----------------------------
 
-    private void monitorarPulo() {
-        new Thread(() -> {
-            while (ativo) {
-                if (player.wantToJump && player.onGround) {
-                    if (g.getGravity() != 0) {
-                        g.setGravity(0.0); // força 0 = "desliga" gravidade neste momento
-                        g.setPulo(500.0); // magnitude positiva; sentido calculado pelo Player
-                        setTitulo(gamePanel.getNumFase() + "." + " Eita, um bug?... Não, é o jogo!");
-                    }
-                    player.velY = -15; // hardcoded intencional do Level06 (gravidade normal sempre)
-
-                    player.jumping = true;
-                    player.onGround = false;
-                    player.wantToJump = false;
-
-                    // RESET DE ESTADO APÓS 2 SEGUNDOS
-                    new Thread(() -> {
-                        try {
-                            Thread.sleep(4500);
-                            g.setGravity(1);
-                            player.onGround = true;
-                            player.jumping = false;
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }).start();
-                }
-
-                try {
-                    Thread.sleep(20);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
-    @Override
-    public void pararThread() {
-        ativo = false;
-    }
 }
